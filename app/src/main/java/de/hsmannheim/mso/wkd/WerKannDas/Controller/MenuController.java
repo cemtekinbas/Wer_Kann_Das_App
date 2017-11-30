@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class LoginController {
+public class MenuController {
 
-	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String login(Model model) {
-		return "login";
-	}
-	
+    @RequestMapping(value = "menu", method = RequestMethod.GET)
+    public String showMenu(Model model)
+    {
+        return "menu";
+    }
 }
