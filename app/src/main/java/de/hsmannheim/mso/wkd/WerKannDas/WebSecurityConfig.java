@@ -6,6 +6,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -19,16 +22,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .formLogin()
                 .loginPage("/login")
+                .passwordParameter("password")
+                .usernameParameter("username")
+                .failureForwardUrl("/login?error")
+                .successForwardUrl("/dashboard")
                 .permitAll()
                 .and()
             .logout()
-                .permitAll();
+                .permitAll()
+                .and()
+            .exceptionHandling().accessDeniedPage("/403");
     }
 
     @Autowired
+    PasswordEncoder bcryptPasswordEncoder;
+
+    @Autowired
+    DataSource ds;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
+        auth.jdbcAuthentication()
+                .dataSource(ds)
+                .usersByUsernameQuery("select username,password, enabled from users where username=?")
+                .passwordEncoder(bcryptPasswordEncoder);
+        auth.inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER");
     }
 }
