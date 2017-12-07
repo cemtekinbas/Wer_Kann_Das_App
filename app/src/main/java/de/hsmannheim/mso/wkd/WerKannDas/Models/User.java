@@ -1,11 +1,13 @@
 package de.hsmannheim.mso.wkd.WerKannDas.Models;
 
+import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class User {
-    private int  pk;
+    private int pk;
     private String mail;
     private String user_name;
     private String plz;
@@ -29,17 +31,17 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public User (ResultSet results) throws SQLException {
-        this.pk = results.getInt("pk");
-        this.mail = results.getString("mail");
-        this.user_name = results.getString("user_name");
-        this.plz = results.getString("plz");
-        this.password = results.getString("password");
-        this.forename = results.getString("forename");
-        this.surename = results.getString("surename");
-        this.village = results.getString("village");
-        this.street_with_number = results.getString("street_with_number");
-        this.birthdate = results.getDate("birthdate");
+    public User(ResultSet results) throws SQLException {
+        this.pk = results.getInt(UserService.colPk);
+        this.mail = results.getString(UserService.colMail);
+        this.user_name = results.getString(UserService.colUserName);
+        this.plz = results.getString(UserService.colPlz);
+        this.password = results.getString(UserService.colPassword);
+        this.forename = results.getString(UserService.colForename);
+        this.surename = results.getString(UserService.colSurname);
+        this.village = results.getString(UserService.colVillage);
+        this.street_with_number = results.getString(UserService.colStreetWithNumber);
+        this.birthdate = results.getDate(UserService.colBirthday);
     }
 
     public int getPk() {

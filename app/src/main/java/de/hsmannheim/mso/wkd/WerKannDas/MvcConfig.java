@@ -1,7 +1,6 @@
 package de.hsmannheim.mso.wkd.WerKannDas;
 
-import com.sun.org.apache.xerces.internal.parsers.SecurityConfiguration;
-import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
+import de.hsmannheim.mso.wkd.WerKannDas.Services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -15,7 +14,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
-@Import({SecurityConfiguration.class})
+@Import({WebSecurityConfig.class})
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
@@ -40,7 +39,16 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         driverManagerDataSource.setPassword("");
 
         try {
-            driverManagerDataSource.getConnection().createStatement().execute(UserService.schemaUsers);
+            driverManagerDataSource.getConnection().createStatement().execute(UserService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(AchievementService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(SettingService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(RequestService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(ChatService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(RequestResponseService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(RequestTagService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(RequestTagMapperService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(UserAchievementMapperService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(UserSettingMapperService.schema);
         } catch (SQLException e) {
             //e.printStackTrace();
         }

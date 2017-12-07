@@ -19,7 +19,7 @@ CREATE TABLE user (
 
 -- add settings and achievments as column (fewer joins but less dynamic) or seperate tables?
 
-CREATE TABLE achievment (
+CREATE TABLE achievement (
   pk               INT(11) NOT NULL AUTO_INCREMENT,
   name             VARCHAR(250),
   description VARCHAR(250),
@@ -28,7 +28,7 @@ CREATE TABLE achievment (
   PRIMARY KEY (pk)
 );
 
-CREATE TABLE user_has_achievment (
+CREATE TABLE user_has_achievement (
   user_fk       INT(11),
   achievment_fk INT(11),
   PRIMARY KEY (user_fk, achievment_fk),
@@ -76,19 +76,6 @@ CREATE TABLE chat (
     ON UPDATE CASCADE
 );
 
-
-CREATE TABLE request_state (
-  pk          INT(11)     NOT NULL AUTO_INCREMENT,
-  description VARCHAR(50) NOT NULL,
-  PRIMARY KEY (pk)
-);
-
-INSERT INTO request_state (pk, description) VALUES
-  (1, "OPEN"),
-  (2, "CLOSED"),
-  (3, "FULLFILLED"),
-  (4, "TRASH");
-
 CREATE TABLE request (
   pk           INT(11)      NOT NULL AUTO_INCREMENT,
   from_user_fk INT(11),
@@ -96,12 +83,9 @@ CREATE TABLE request (
   message      VARCHAR(250) NOT NULL, -- limit size!?
   is_premium   BIT(1), -- validate datatype bit, replace with TINYINT(1) if invalid
   create_date  DATETIME     NOT NULL DEFAULT now(), -- validate now(), remove if invalid
-  state_fk     INT(11)      NOT NULL DEFAULT 1,
+  state     INT(11)      NOT NULL DEFAULT 1,
   PRIMARY KEY (pk),
   CONSTRAINT request_from_user_fk FOREIGN KEY (from_user_fk) REFERENCES user (pk)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT request_state_fk FOREIGN KEY (state_fk) REFERENCES request_state (pk)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
