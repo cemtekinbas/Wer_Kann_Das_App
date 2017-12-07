@@ -5,39 +5,24 @@ import de.hsmannheim.mso.wkd.WerKannDas.Services.ChatService;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Chat {
-    private int pk;
-    private String message;
     private int from_user_fk;
     private int to_user_fk;
-    private Date sent_date;
-    private Date read_date;
+    private int request_fk;
+    private List<ChatMessage> chatMessages;
 
-    public Chat(int pk, String message, int from_user_fk, int to_user_fk, Date sent_date, Date read_date) {
-        this.pk = pk;
-        this.message = message;
+    public Chat(int pk, String message, int from_user_fk, int to_user_fk, int request_fk, Date sent_date, Date read_date) {
         this.from_user_fk = from_user_fk;
         this.to_user_fk = to_user_fk;
-        this.sent_date = sent_date;
-        this.read_date = read_date;
+        this.request_fk = request_fk;
     }
 
-    public Chat (ResultSet results) throws SQLException {
-        this.pk = results.getInt(ChatService.colPk);
-        this.message = results.getString(ChatService.colMessage);
+    public Chat(ResultSet results) throws SQLException {
         this.from_user_fk = results.getInt(ChatService.colFromUserFk);
         this.to_user_fk = results.getInt(ChatService.colToUserFk);
-        this.sent_date = results.getDate(ChatService.colSentDate);
-        this.read_date = results.getDate(ChatService.colReadDate);
-    }
-
-    public int getPk() {
-        return pk;
-    }
-
-    public String getMessage() {
-        return message;
+        this.request_fk = results.getInt(ChatService.colRequestFk);
     }
 
     public int getFrom_user_fk() {
@@ -48,11 +33,15 @@ public class Chat {
         return to_user_fk;
     }
 
-    public Date getSent_date() {
-        return sent_date;
+    public int getRequest_fk() {
+        return request_fk;
     }
 
-    public Date getRead_date() {
-        return read_date;
+    public List<ChatMessage> getChatMessages() {
+        return chatMessages;
+    }
+
+    public void setChatMessages(List<ChatMessage> chatMessages) {
+        this.chatMessages = chatMessages;
     }
 }

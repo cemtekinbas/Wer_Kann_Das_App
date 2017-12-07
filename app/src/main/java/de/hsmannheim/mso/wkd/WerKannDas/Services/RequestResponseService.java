@@ -1,44 +1,37 @@
 package de.hsmannheim.mso.wkd.WerKannDas.Services;
 
-import de.hsmannheim.mso.wkd.WerKannDas.Models.Chat;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.RequestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @Service
 public class RequestResponseService {
 
 
-    public static String table = "";
-    public static String colPk = "pk";
+    public static String table = "request_response";
+    public static String colRequestFk = "request_fk";
+    public static String colUserFk = "user_fk";
+    public static String colResponseDate = "response_date";
 
-    public static String schema = "";
-            /*
-            "CREATE TABLE " + table + " ( " +
-            colPk + " INT(11)  NOT NULL AUTO_INCREMENT, " +
-            colMessage + " VARCHAR(250) NOT NULL, " +
-            colFromUserFk + " INT(11), " +
-            colToUserFk + " INT(11), " +
-            colSentDate + " DATETIME NOT NULL DEFAULT now(), " +
-            colReadDate + " DATETIME DEFAULT NULL, " +
-            "PRIMARY KEY (" + colPk + "), " +
-            "CONSTRAINT chat_from_user_fk FOREIGN KEY (" + colFromUserFk + ") REFERENCES " +
+    public static String schema = "CREATE TABLE " + table + " ( " +
+            colRequestFk + " INT(11)  NOT NULL, " +
+            colUserFk + " INT(11)  NOT NULL, " +
+            colResponseDate + " DATETIME NOT NULL DEFAULT now(), " +
+            "  PRIMARY KEY (" + colRequestFk + ", " + colUserFk + ")," +
+            "  CONSTRAINT request_response_user_fk FOREIGN KEY (" + colUserFk + ") REFERENCES " +
             UserService.table + " (" + UserService.colPk + ")" +
-            "ON DELETE CASCADE " +
-            "ON UPDATE CASCADE, " +
-            "CONSTRAINT chat_to_user_fk FOREIGN KEY (" + colToUserFk + ") REFERENCES " +
-            UserService.table + " (" + UserService.colPk + ")" +
-            "ON DELETE CASCADE " +
-            "ON UPDATE CASCADE " +
-            ");";*/
+            "    ON DELETE CASCADE" +
+            "    ON UPDATE CASCADE," +
+            "  CONSTRAINT request_response_request_fk FOREIGN KEY (" + colRequestFk + ") REFERENCES " +
+            RequestService.table + " (" + RequestService.colPk + ")" +
+            "    ON DELETE CASCADE" +
+            "    ON UPDATE CASCADE" +
+            ");";
 
-    public static String combinedCols = colPk + ", ";
-    private String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
+    public static String combinedCols = colRequestFk + ", " + colUserFk+ ", " + colResponseDate;
+    //private String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
 
     @Autowired
     private DataSource ds;
@@ -62,11 +55,11 @@ public class RequestResponseService {
 
     }
 
-    public RequestResponse update(RequestResponse rr){
+    public RequestResponse update(RequestResponse rr) {
         return null;
     }
 
-    public RequestResponse save(RequestResponse rr){
+    public RequestResponse save(RequestResponse rr) {
         return null;
     }
 
