@@ -19,9 +19,9 @@ import java.util.List;
 public class AchievementController {
 
     @Autowired
-    AchievmentService achievmentService;
+    private AchievmentService achievmentService;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/achievements", method = RequestMethod.GET)
     public String showAchievemnts(Model model)
