@@ -43,6 +43,9 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
+
+=======
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -51,6 +54,7 @@
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 		</dependency>
+>>>>>>> origin/master
 	</dependencies>
 
 	<build>

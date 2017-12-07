@@ -1,5 +1,9 @@
 package de.hsmannheim.mso.wkd.WerKannDas.Controller;
 
+import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,21 +53,42 @@ public class ChatController {
 
     }
 
+    @Autowired
+    private UserService userService;
+
+    //@Autowired
+    //private ChatService chatService;
+
+
     @RequestMapping(value = "/chat", method = RequestMethod.GET)
     public String viewChat(Model model)
     {
+        String username = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        //User user = userService.getByName(username);
+        //List<Chat> chats = chatService.getByUser(user);
+        //model.AddAttribute("chats", chats);
         return "chat";
     }
 
     @RequestMapping(value = "/chat/{requestId}", method = RequestMethod.GET)
     public String openChat(@PathVariable("requestId") String requestId, Model model)
     {
+        String username = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        //User user = userService.getByName(username);
+        //Chat chat = chatService.getByRequestID(user, requestId);
+        //model.AddAttribute("chat", chat);
         return "chat";
     }
 
     @RequestMapping(value = "/chat/{requestId}", method = RequestMethod.POST, params = {"message"})
     public String sendChatMessage(@PathVariable("requestId") String requestId, @RequestParam("message") String message, Model model)
     {
+        String username = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        //User user = userService.getByName(username);
+        //Chat chat = chatService.getByRequestID(user, requestId);
+        //boolean success = chatService.addChatMessage(chat, chatMessage);
+        //model.AddAttribute("chat", chat);
+        //model.AddAttribute("success", success);
         return "chat";
     }
 
@@ -71,6 +96,7 @@ public class ChatController {
     @ResponseBody
     public List<ChatMessage> newMessages(@PathVariable("requestId") String requestId, @PathVariable("skip") String skip, Model model)
     {
+
         return null;
     }
 }
