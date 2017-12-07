@@ -1,20 +1,215 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>Spring Security Example </title>
-    </head>
-    <body>
-        <div th:if="${param.error}">
-            Invalid username and password.
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <title>Material Design Bootstrap</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet" />
+
+    <!-- Custom Style -->
+    <link href="css/style.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+<header>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="img/svg/logo.svg" width="35"/> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                </ul>
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
+                </form>
+            </div>
         </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
+    </nav>
+    <!--/.Navbar-->
+
+</header>
+
+<main>
+
+    <!--Main layout-->
+    <div class="container">
+
+        <hr class="extra-margins">
+
+        <!--Second row-->
+        <div class="row justify-content-md-center">
+            <!--First columnn-->
+            <div class="col-lg-4 ">
+                <!-- Form login -->
+
+                <form th:action="@{/login}" method="post">
+
+                    <p class="h5 text-center mb-4">Sign in</p>
+
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix grey-text"></i>
+                        <input type="text" id="defaultForm-email" name="username" class="form-control"/>
+                        <label for="defaultForm-email">Your email</label>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <input type="password" id="defaultForm-pass" name="password" class="form-control"/>
+                        <label for="defaultForm-pass">Your password</label>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-default">Login</button>
+
+                    </div>
+                    <div class="text-center">
+                        <a href="">Neu hier? Jetzt registrieren.</a>
+
+                    </div>
+                </form>
+            </div>
+            <!--First columnn-->
+
         </div>
-        <form th:action="@{/login}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
-        </form>
-    </body>
+        </div>
+        <!--/.Main layout-->
+
+</main>
+<!--Footer-->
+<footer class="page-footer center-on-small-only">
+
+    <!--Footer links-->
+    <div class="container-fluid">
+        <div class="row">
+            <!--First column-->
+            <div class="col-lg-3 col-md-6 ml-auto">
+                <h5 class="title mb-3"><strong>About material design</strong></h5>
+                <p>Material Design (codenamed Quantum Paper) is a design language developed by Google.</p>
+                <p>Material Design for Bootstrap (MDB) is a powerful Material Design UI KIT for most popular HTML, CSS,
+                    and JS framework - Bootstrap.</p>
+            </div>
+            <!--/.First column-->
+            <hr class="w-100 clearfix d-sm-none" />
+            <!--Second column-->
+            <div class="col-lg-2 col-md-6 ml-auto">
+                <h5 class="title mb-3"><strong>First column</strong></h5>
+                <ul>
+                    <li>
+                        <a href="#!">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#!">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#!">Link 3</a>
+                    </li>
+                    <li>
+                        <a href="#!">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Second column-->
+            <hr class="w-100 clearfix d-sm-none" />
+            <!--Third column-->
+            <div class="col-lg-2 col-md-6 ml-auto">
+                <h5 class="title mb-3"><strong>Second column</strong></h5>
+                <ul>
+                    <li>
+                        <a href="#!">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#!">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#!">Link 3</a>
+                    </li>
+                    <li>
+                        <a href="#!">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Third column-->
+            <hr class="w-100 clearfix d-sm-none" />
+            <!--Fourth column-->
+            <div class="col-lg-2 col-md-6 ml-auto">
+                <h5 class="title mb-3"><strong>Third column</strong></h5>
+                <ul>
+                    <li>
+                        <a href="#!">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#!">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#!">Link 3</a>
+                    </li>
+                    <li>
+                        <a href="#!">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Fourth column-->
+        </div>
+    </div>
+    <!--/.Footer links-->
+
+    <hr />
+
+    <!--Copyright-->
+    <div class="footer-copyright">
+        <div class="container-fluid">
+            © 2015 Copyright: <a href="https://www.MDBootstrap.com"> MDBootstrap.com </a>
+        </div>
+    </div>
+    <!--/.Copyright-->
+
+</footer>
+<!--/.Footer-->
+
+
+<!-- SCRIPTS -->
+
+<!-- JQuery -->
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap dropdown -->
+<script type="text/javascript" src="js/popper.min.js"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="js/mdb.min.js"></script>
+
+<script>
+    new WOW().init();
+</script>
+
+</body>
+
 </html>
