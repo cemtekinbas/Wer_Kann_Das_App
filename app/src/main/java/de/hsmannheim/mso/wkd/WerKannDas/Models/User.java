@@ -16,9 +16,9 @@ public class User {
     private String surename;
     private String village;
     private String street_with_number;
-    private Date birthdate;
+    private Date birthday;
 
-    public User(int pk, String mail, String user_name, String plz, String password, String forename, String surename, String village, String street_with_number, Date birthdate) {
+    public User(int pk, String mail, String user_name, String plz, String password, String forename, String surename, String village, String street_with_number, Date birthday) {
         this.pk = pk;
         this.mail = mail;
         this.user_name = user_name;
@@ -28,7 +28,7 @@ public class User {
         this.surename = surename;
         this.village = village;
         this.street_with_number = street_with_number;
-        this.birthdate = birthdate;
+        this.birthday = birthday;
     }
 
     public User(ResultSet results) throws SQLException {
@@ -41,7 +41,7 @@ public class User {
         this.surename = results.getString(UserService.colSurname);
         this.village = results.getString(UserService.colVillage);
         this.street_with_number = results.getString(UserService.colStreetWithNumber);
-        this.birthdate = results.getDate(UserService.colBirthday);
+        this.birthday = results.getDate(UserService.colBirthday);
     }
 
     public int getPk() {
@@ -116,11 +116,11 @@ public class User {
         this.street_with_number = street_with_number;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }

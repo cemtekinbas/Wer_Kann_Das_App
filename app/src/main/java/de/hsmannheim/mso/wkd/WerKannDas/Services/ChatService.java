@@ -2,6 +2,7 @@ package de.hsmannheim.mso.wkd.WerKannDas.Services;
 
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Chat;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.ChatMessage;
+import de.hsmannheim.mso.wkd.WerKannDas.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,21 +19,15 @@ public class ChatService {
 
     public static String table = "chat";
     public static String colPk = "pk";
-    public static String colMessage = "message";
     public static String colFromUserFk = "from_user_fk";
     public static String colToUserFk = "to_user_fk";
     public static String colRequestFk = "request_fk";
-    public static String colSentDate = "sent_date";
-    public static String colReadDate = "read_date";
 
     public static String schema = "CREATE TABLE " + table + " ( " +
             colPk + " INT(11)  NOT NULL AUTO_INCREMENT, " +
-            colMessage + " VARCHAR(250) NOT NULL, " +
             colFromUserFk + " INT(11), " +
             colToUserFk + " INT(11), " +
             colRequestFk + " INT(11), " +
-            colSentDate + " DATETIME NOT NULL DEFAULT now(), " +
-            colReadDate + " DATETIME DEFAULT NULL, " +
             "PRIMARY KEY (" + colPk + "), " +
             "CONSTRAINT chat_from_user_fk FOREIGN KEY (" + colFromUserFk + ") REFERENCES " +
             UserService.table + " (" + UserService.colPk + ")" +
@@ -48,15 +44,17 @@ public class ChatService {
             ");";
 
     public static String combinedCols = colPk + ", " +
-            colMessage + ", " +
             colFromUserFk + ", " +
             colToUserFk + ", " +
-            colRequestFk + ", " +
-            colSentDate + ", " +
-            colReadDate;
+            colRequestFk;
 
     private String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
+    private String queryByUserID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colFromUserFk + " = ? OR " + colToUserFk + " = ?";
+    private String queryByRequestID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colRequestFk + " = ? AND (" + colFromUserFk + " = ? OR " + colToUserFk + " = ?)";
 
+
+    @Autowired
+    private ChatMessageService cms;
     @Autowired
     private DataSource ds;
 
@@ -92,4 +90,43 @@ public class ChatService {
     }
 
 
+    public List<Chat> getByUser(User user) {
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByUserID);
+            pstmt.setInt(1, user.getPk());
+            pstmt.setInt(2, user.getPk());
+            ResultSet results = pstmt.executeQuery();
+            List<Chat> chats = new ArrayList<Chat>();
+            while (results.next()) {
+                Chat chat = new Chat(results);
+                chat.setChatMessages(cms.getByChatID(chat.getPk()));
+                chats.add(chat);
+            }
+            return chats;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Chat getByRequestID(User user, String requestId) {
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByRequestID);
+            int requestIdInt = Integer.parseInt(requestId);
+            pstmt.setInt(1, requestIdInt);
+            pstmt.setInt(2, user.getPk());
+            pstmt.setInt(3, user.getPk());
+            ResultSet results = pstmt.executeQuery();
+            if (results.next()) {
+                Chat chat = new Chat(results);
+                chat.setChatMessages(cms.getByChatID(chat.getPk()));
+                return chat;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

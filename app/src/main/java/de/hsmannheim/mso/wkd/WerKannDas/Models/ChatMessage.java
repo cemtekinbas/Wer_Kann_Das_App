@@ -1,5 +1,6 @@
 package de.hsmannheim.mso.wkd.WerKannDas.Models;
 
+import de.hsmannheim.mso.wkd.WerKannDas.Services.ChatMessageService;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.ChatService;
 
 import java.sql.Date;
@@ -20,9 +21,9 @@ public class ChatMessage {
     }
     public ChatMessage (ResultSet results) throws SQLException {
         this.pk = results.getInt(ChatService.colPk);
-        this.message = results.getString(ChatService.colMessage);
-        this.sent_date = results.getDate(ChatService.colSentDate);
-        this.read_date = results.getDate(ChatService.colReadDate);
+        this.message = results.getString(ChatMessageService.colMessage);
+        this.sent_date = results.getDate(ChatMessageService.colSentDate);
+        this.read_date = results.getDate(ChatMessageService.colReadDate);
     }
 
     public Date getSent_date() {
