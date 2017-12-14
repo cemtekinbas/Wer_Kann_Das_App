@@ -23,7 +23,7 @@ public class HomeController {
     @Autowired
     RequestService requestService;
 
-	@RequestMapping(value={"","/"}, method=RequestMethod.GET)
+	@RequestMapping(value={"","/"})
 	public String dashboard(Model model) {
 	    if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof org.springframework.security.core.userdetails.User) {
             String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
@@ -36,7 +36,7 @@ public class HomeController {
 	    return "home";
 	}
 
-    @RequestMapping(value={"","/"}, method=RequestMethod.GET, params = {"search"})
+    @RequestMapping(value={"","/"}, params = {"search"})
     public String dashboardSearch(@RequestParam("search") String search, Model model) {
         if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof org.springframework.security.core.userdetails.User) {
             String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
@@ -50,7 +50,7 @@ public class HomeController {
 	    return "home";
     }
 
-    @RequestMapping(value={"","/"}, method=RequestMethod.GET, params = {"sort"})
+    @RequestMapping(value={"","/"}, params = {"sort"})
     public String dashboardSort(@RequestParam("sort") String sort, Model model) {
         if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof org.springframework.security.core.userdetails.User) {
             String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
@@ -70,7 +70,7 @@ public class HomeController {
 	    return "home";
     }
 
-    @RequestMapping(value={"","/"}, method=RequestMethod.GET, params = {"search", "sort"})
+    @RequestMapping(value={"","/"}, params = {"search", "sort"})
     public String dashboard(@RequestParam("search") String search, @RequestParam("sort") String sort, Model model) {
         if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof org.springframework.security.core.userdetails.User) {
             String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
