@@ -29,10 +29,10 @@ public class AchievementController {
     @RequestMapping(value = "/achievements", method = RequestMethod.GET)
     public String showAchievemnts(Model model)
     {
-        List<Achievement> achievements = new LinkedList<Achievement>();
+        List<Achievement> achievements;
         String userName = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(userName);
-        userAchievmentService.getByID(user);
+        achievements = userAchievmentService.getByID(user);
         model.addAttribute("achievements", achievements);
         model.addAttribute("user", user);
         return "achievements";
@@ -44,7 +44,7 @@ public class AchievementController {
         Achievement achievement = achievementService.getByID(Integer.parseInt(id));
         String userName = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(userName);
-        model.addAttribute("achievment", achievement);
+        model.addAttribute("achievement", achievement);
         model.addAttribute("user", user);
         return "achievement";
     }

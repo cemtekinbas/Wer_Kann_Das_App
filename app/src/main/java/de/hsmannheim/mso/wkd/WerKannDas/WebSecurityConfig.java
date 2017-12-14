@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .failureForwardUrl("/login")
-                .successForwardUrl("/dashboard")
+                .successForwardUrl("/")
                 .permitAll()
                 .and()
             .logout()

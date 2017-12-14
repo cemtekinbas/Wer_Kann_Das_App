@@ -44,7 +44,15 @@ public class RequestController {
         User user = userService.getByName(username);
         Request request = requestService.save(requestData);
         model.addAttribute("user", user);
-        model.addAttribute("request", request);
+        if(request != null) {
+            model.addAttribute("request", request);
+            model.addAttribute("success", true);
+        }
+        else
+        {
+            model.addAttribute("newRequest", requestData);
+            model.addAttribute("success", false);
+        }
         return "request";
     }
 
@@ -66,8 +74,15 @@ public class RequestController {
         User user = userService.getByName(username);
         Request request = requestService.save(requestData);
         model.addAttribute("user", user);
-        model.addAttribute("success", request != null);
-        model.addAttribute("request", request);
+        if(request != null) {
+            model.addAttribute("success", true);
+            model.addAttribute("request", request);
+        }
+        else
+        {
+            model.addAttribute("success", false);
+            model.addAttribute("newRequest", requestData);
+        }
         return "request";
     }
 

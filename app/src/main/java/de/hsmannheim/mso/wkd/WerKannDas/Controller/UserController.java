@@ -44,9 +44,17 @@ public class UserController {
         String username = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User currentUser = userService.getByName(username);
         User savedUser = userService.save(user);
-        model.addAttribute("success", savedUser != null);
-        model.addAttribute("user", currentUser);
-        model.addAttribute("viewUser", savedUser);
+        if(savedUser != null) {
+            model.addAttribute("success", true);
+            model.addAttribute("user", savedUser);
+            model.addAttribute("viewUser", savedUser);
+        }
+        else
+        {
+            model.addAttribute("success", false);
+            model.addAttribute("user", currentUser);
+            model.addAttribute("viewUser", currentUser);
+        }
         return "user";
     }
 }
