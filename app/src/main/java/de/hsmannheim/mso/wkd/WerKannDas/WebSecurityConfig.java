@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .passwordParameter("password")
                 .usernameParameter("username")
-                .failureForwardUrl("/login?error")
+                .failureForwardUrl("/login")
                 .successForwardUrl("/dashboard")
                 .permitAll()
                 .and()
@@ -42,10 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
+        /*auth.jdbcAuthentication()
                 .dataSource(ds)
                 .usersByUsernameQuery("select username,password, enabled from users where username=?")
-                .passwordEncoder(bcryptPasswordEncoder);
+                .passwordEncoder(bcryptPasswordEncoder);*/
         auth.inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER");
     }

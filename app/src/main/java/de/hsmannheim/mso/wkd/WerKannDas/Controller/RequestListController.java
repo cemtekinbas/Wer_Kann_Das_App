@@ -24,11 +24,14 @@ public class RequestListController {
     @Autowired
     RequestService requestService;
 
-    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    @RequestMapping(value = "/dashboard")
     public String showDashboard(Model model)
     {
-
-        return "dashboard";
+        String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        User user = userService.getByName(username);
+        List<Request> requests = requestService.getList();
+        model.addAttribute("requestList", requests);
+        return "hello";
     }
 
     @RequestMapping(value="/user/{userId}/requests", method = RequestMethod.GET, params = {"userId"})
@@ -40,6 +43,6 @@ public class RequestListController {
         List<Request> requestList = requestService.getByUser(viewUser);
         model.addAttribute("viewUser", viewUser);
         model.addAttribute("requestList", requestList);
-        return "dasboard";
+        return "hello";
     }
 }

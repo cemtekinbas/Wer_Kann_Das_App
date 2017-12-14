@@ -2,14 +2,18 @@ package de.hsmannheim.mso.wkd.WerKannDas.Services;
 
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Achievement;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Request;
+import de.hsmannheim.mso.wkd.WerKannDas.Models.RequestState;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -72,4 +76,19 @@ public class RequestService {
     public Request save(Request request) { return null; }
 
     public List<Request> getByUser(User user) { return null; }
+
+    public List<Request> getList() {
+        List<Request> requestList = new ArrayList<Request>(3);
+        Request r = new Request(0, 0, "Titel1", "Message1", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
+        requestList.add(r);
+        r = new Request(1, 1, "Titel2", "Message2", true, Date.valueOf(LocalDate.now()), RequestState.OPEN);
+        requestList.add(r);
+        r = new Request(2, 1, "Titel3", "Message3", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
+        requestList.add(r);
+        return requestList;
+    }
+
+    public List<Request> getList(String search) {
+        return null;
+    }
 }

@@ -25,7 +25,8 @@ public class HomeController {
 
 	@RequestMapping(value={"","/"}, method=RequestMethod.GET)
 	public String dashboard(Model model) {
-	    String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+	    //String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        String username = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    User user = userService.getByName(username);
 	    List<Request> requests = requestService.getList();
 		model.addAttribute("requestList", requests);
@@ -37,7 +38,7 @@ public class HomeController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         List<Request> requests = requestService.getList(search);
-        model.addAttribute("requestList", requests)
+        model.addAttribute("requestList", requests);
 	    return "home";
     }
 
@@ -53,7 +54,7 @@ public class HomeController {
             case "down":
                 break;
         }
-        model.addAttribute("requestList", requests)
+        model.addAttribute("requestList", requests);
 	    return "home";
     }
 
@@ -69,7 +70,7 @@ public class HomeController {
             case "down":
                 break;
         }
-        model.addAttribute("requestList", requests)
+        model.addAttribute("requestList", requests);
         return "home";
     }
 
