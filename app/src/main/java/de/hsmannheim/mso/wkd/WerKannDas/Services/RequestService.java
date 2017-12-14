@@ -2,6 +2,7 @@ package de.hsmannheim.mso.wkd.WerKannDas.Services;
 
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Achievement;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Request;
+import de.hsmannheim.mso.wkd.WerKannDas.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class RequestService {
@@ -66,4 +68,8 @@ public class RequestService {
         }
         return null;
     }
+
+    public Request save(Request request) { return null; }
+
+    public List<Request> getByUser(User user) { return null; }
 }

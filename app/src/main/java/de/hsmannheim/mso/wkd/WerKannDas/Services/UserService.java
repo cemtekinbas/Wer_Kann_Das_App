@@ -70,6 +70,8 @@ public class UserService {
         return null;
     }
 
+    public User getByName(String name) { return null; }
+
     public User update(User user){
         return null;
     }

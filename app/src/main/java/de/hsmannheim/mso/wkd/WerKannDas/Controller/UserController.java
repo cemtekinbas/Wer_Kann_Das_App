@@ -21,8 +21,8 @@ public class UserController {
     public String showUser(Model model)
     {
         String username = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        //User user = userService.getByName(username);
-        //model.addAttribute("user", user);
+        User user = userService.getByName(username);
+        model.addAttribute("user", user);
         return "user";
     }
 
@@ -37,8 +37,8 @@ public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.POST, params = {"user"})
     public String editUser(@RequestParam("user") User user, Model model)
     {
-        //boolean success = userService.saveUser(user);
-        //model.addAttribute("success", success);
+        User savedUser = userService.save(user);
+        model.addAttribute("success", savedUser != null);
         return "user";
     }
 }
