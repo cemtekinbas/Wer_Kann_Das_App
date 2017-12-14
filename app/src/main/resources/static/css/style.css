@@ -30,3 +30,9 @@ footer.page-footer {
 .btn-info {
     background-color: #725dd1;
 }
+
+@media (max-width: 990px) {
+    .spaceBottom30{
+        margin-bottom: 30px;
+    }
+     }

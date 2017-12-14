@@ -1,6 +1,5 @@
 package de.hsmannheim.mso.wkd.WerKannDas;
 
-import com.sun.org.apache.xerces.internal.parsers.SecurityConfiguration;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
-@Import({SecurityConfiguration.class})
+@Import({WebSecurityConfig.class})
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
