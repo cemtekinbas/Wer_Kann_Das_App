@@ -3,6 +3,7 @@ package de.hsmannheim.mso.wkd.WerKannDas.Controller;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Chat;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.ChatMessage;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.User;
+import de.hsmannheim.mso.wkd.WerKannDas.Services.ChatMessageService;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.ChatService;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ChatController {
 
     @Autowired
     private ChatService chatService;
+
+    @Autowired
+    private ChatMessageService chatMessageService;
 
 
     @RequestMapping(value = "/chat", method = RequestMethod.GET)
@@ -52,7 +56,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Chat chat = chatService.getByRequestID(user, requestId);
-        boolean success = chatService.addChatMessage(chat, chatMessage);
+        boolean success = chatMessageService.addChatMessage(chat, message);
         model.addAttribute("user", user);
         model.addAttribute("chat", chat);
         model.addAttribute("success", success);
