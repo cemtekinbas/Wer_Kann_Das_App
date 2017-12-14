@@ -20,6 +20,8 @@
 
     <!-- Custom Style -->
     <link href="css/style.css" rel="stylesheet" />
+    <!-- Custom Style -->
+    <link href="css/simple-sidebar.css" rel="stylesheet" />
 
 </head>
 
@@ -32,7 +34,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
                 <a class="navbar-brand" href="#"><img src="img/svg/logo.svg" width="35"/> </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                <button id="menu-toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -52,7 +54,38 @@
             </div>
         </nav>
         <!--/.Navbar-->
-
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Shortcuts</a>
+                </li>
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
     </header>
 
     <main>
@@ -76,7 +109,7 @@
             <!--Second row-->
             <div class="row">
                 <!--First columnn-->
-                <div class="col-lg-4">
+                <div class="col-lg-4 spaceBottom30">
                     <!--Card-->
                     <div class="card wow fadeIn" data-wow-delay="0.2s" th:each="request : ${requestList}">
 
@@ -99,7 +132,7 @@
                 <!--First columnn-->
 
                 <!--Second columnn-->
-                <div class="col-lg-4">
+                <div class="col-lg-4 spaceBottom30">
                     <!--Card-->
                     <div class="card wow fadeIn" data-wow-delay="0.4s">
 
@@ -122,7 +155,7 @@
                 <!--Second columnn-->
 
                 <!--Third columnn-->
-                <div class="col-lg-4">
+                <div class="col-lg-4 spaceBottom30">
                     <!--Card-->
                     <div class="card wow fadeIn" data-wow-delay="0.6s">
 
@@ -148,98 +181,6 @@
         <!--/.Main layout-->
 
     </main>
-
-    <!--Footer-->
-    <footer class="page-footer center-on-small-only">
-
-        <!--Footer links-->
-        <div class="container-fluid">
-            <div class="row">
-                <!--First column-->
-                <div class="col-lg-3 col-md-6 ml-auto">
-                    <h5 class="title mb-3"><strong>About material design</strong></h5>
-                    <p>Material Design (codenamed Quantum Paper) is a design language developed by Google.</p>
-                    <p>Material Design for Bootstrap (MDB) is a powerful Material Design UI KIT for most popular HTML, CSS,
-                        and JS framework - Bootstrap.</p>
-                </div>
-                <!--/.First column-->
-                <hr class="w-100 clearfix d-sm-none" />
-                <!--Second column-->
-                <div class="col-lg-2 col-md-6 ml-auto">
-                    <h5 class="title mb-3"><strong>First column</strong></h5>
-                    <ul>
-                        <li>
-                            <a href="#!">Link 1</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 2</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 3</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 4</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Second column-->
-                <hr class="w-100 clearfix d-sm-none" />
-                <!--Third column-->
-                <div class="col-lg-2 col-md-6 ml-auto">
-                    <h5 class="title mb-3"><strong>Second column</strong></h5>
-                    <ul>
-                        <li>
-                            <a href="#!">Link 1</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 2</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 3</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 4</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Third column-->
-                <hr class="w-100 clearfix d-sm-none" />
-                <!--Fourth column-->
-                <div class="col-lg-2 col-md-6 ml-auto">
-                    <h5 class="title mb-3"><strong>Third column</strong></h5>
-                    <ul>
-                        <li>
-                            <a href="#!">Link 1</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 2</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 3</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 4</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Fourth column-->
-            </div>
-        </div>
-        <!--/.Footer links-->
-
-        <hr />
-
-        <!--Copyright-->
-        <div class="footer-copyright">
-            <div class="container-fluid">
-                © 2015 Copyright: <a href="https://www.MDBootstrap.com"> MDBootstrap.com </a>
-            </div>
-        </div>
-        <!--/.Copyright-->
-
-    </footer>
-    <!--/.Footer-->
-
 
     <!-- SCRIPTS -->
 

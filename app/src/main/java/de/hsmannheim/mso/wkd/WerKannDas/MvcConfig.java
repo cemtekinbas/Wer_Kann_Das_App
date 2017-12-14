@@ -1,6 +1,6 @@
 package de.hsmannheim.mso.wkd.WerKannDas;
 
-import de.hsmannheim.mso.wkd.WerKannDas.Services.*;
+import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -39,16 +39,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         driverManagerDataSource.setPassword("");
 
         try {
-            driverManagerDataSource.getConnection().createStatement().execute(UserService.schema);
-            driverManagerDataSource.getConnection().createStatement().execute(AchievementService.schema);
-            driverManagerDataSource.getConnection().createStatement().execute(SettingService.schema);
-            driverManagerDataSource.getConnection().createStatement().execute(RequestService.schema);
-            driverManagerDataSource.getConnection().createStatement().execute(ChatService.schema);
-            driverManagerDataSource.getConnection().createStatement().execute(RequestResponseService.schema);
-            driverManagerDataSource.getConnection().createStatement().execute(RequestTagService.schema);
-            driverManagerDataSource.getConnection().createStatement().execute(RequestTagMapperService.schema);
-            driverManagerDataSource.getConnection().createStatement().execute(UserAchievementMapperService.schema);
-            driverManagerDataSource.getConnection().createStatement().execute(UserSettingMapperService.schema);
+            driverManagerDataSource.getConnection().createStatement().execute(UserService.schemaUsers);
         } catch (SQLException e) {
             //e.printStackTrace();
         }
