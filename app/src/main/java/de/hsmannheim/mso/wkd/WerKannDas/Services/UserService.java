@@ -12,20 +12,39 @@ import java.sql.SQLException;
 
 @Service
 public class UserService {
-    public static String schemaUsers = "CREATE TABLE user (" +
-            "  pk                 INT(11)      NOT NULL AUTO_INCREMENT," +
-            "  mail               VARCHAR(250) NOT NULL," +
-            "  user_name          VARCHAR(50)  NOT NULL," +
-            "  plz                VARCHAR(15)  NOT NULL," +
-            "  password           VARCHAR(50)  NOT NULL," +
-            "  forename           VARCHAR(50)," +
-            "  surename           VARCHAR(50)," +
-            "  village            VARCHAR(250)," +
-            "  street_with_number VARCHAR(250)," +
-            "  birthdate          DATE," +
-            "  PRIMARY KEY (pk)" +
+
+    public static String table = "user";
+    public static String colPk = "pk";
+    public static String colMail = "mail";
+    public static String colUserName = "user_name";
+    public static String colPlz = "plz";
+    public static String colPassword = "password";
+    public static String colForename = "forename";
+    public static String colSurname = "surname";
+    public static String colVillage = "village";
+    public static String colStreetWithNumber = "street_with_number";
+    public static String colBirthday = "birthday";
+
+
+    public static String schema = "CREATE TABLE user ( " +
+            colPk + " INT(11)      NOT NULL AUTO_INCREMENT, " +
+            colMail + " VARCHAR(250) NOT NULL, " +
+            colUserName + " VARCHAR(50)  NOT NULL, " +
+            colPlz + " VARCHAR(15)  NOT NULL, " +
+            colPassword + " VARCHAR(50)  NOT NULL, " +
+            colForename + " VARCHAR(50), " +
+            colSurname + " VARCHAR(50), " +
+            colVillage + " VARCHAR(250), " +
+            colStreetWithNumber + " VARCHAR(250), " +
+            colBirthday + " DATE, " +
+            "  PRIMARY KEY (" + colPk + ") " +
             ");";
-    private String queryByID = "SELECT pk, mail, user_name, plz, password, forename, surename, village, street_with_number, birthdate FROM user WHERE pk = ?";
+
+
+    private String combinedCols = colPk + ", " + colMail + ", " + colUserName + ", " + colPlz + ", " +
+            colPassword + ", " + colForename + ", " + colSurname + ", " + colVillage + ", " +
+            colStreetWithNumber + ", " + colBirthday;
+    private String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
 
     @Autowired
     private DataSource ds;
@@ -50,4 +69,15 @@ public class UserService {
         }
         return null;
     }
+
+    public User getByName(String name) { return null; }
+
+    public User update(User user){
+        return null;
+    }
+
+    public User save(User user){
+        return null;
+    }
+
 }

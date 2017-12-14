@@ -1,16 +1,18 @@
 package de.hsmannheim.mso.wkd.WerKannDas.Models;
 
+import de.hsmannheim.mso.wkd.WerKannDas.Services.AchievementService;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Achievment {
+public class Achievement {
     private int pk;
     private String name;
     private String description;
     private String icon_path;
     private String unlock_condition;
 
-    public Achievment(int pk, String name, String description, String icon_path, String unlock_condition) {
+    public Achievement(int pk, String name, String description, String icon_path, String unlock_condition) {
         this.pk = pk;
         this.name = name;
         this.description = description;
@@ -18,12 +20,12 @@ public class Achievment {
         this.unlock_condition = unlock_condition;
     }
 
-    public Achievment (ResultSet results) throws SQLException {
-        this.pk = results.getInt("pk");
-        this.name = results.getString("name");
-        this.description = results.getString("description");
-        this.icon_path = results.getString("icon_path");
-        this.unlock_condition = results.getString("unlock_condition");
+    public Achievement(ResultSet results) throws SQLException {
+        this.pk = results.getInt(AchievementService.colPk);
+        this.name = results.getString(AchievementService.colName);
+        this.description = results.getString(AchievementService.colDescription);
+        this.icon_path = results.getString(AchievementService.colIconPath);
+        this.unlock_condition = results.getString(AchievementService.colUnlockCondition);
     }
 
 
