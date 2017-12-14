@@ -23,22 +23,30 @@ public class UserController {
         String username = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         model.addAttribute("user", user);
+        model.addAttribute("viewUser", user);
         return "user";
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public String showUser(@PathVariable("id") String userId, Model model)
     {
-        User user = userService.getByID(Integer.parseInt(userId));
+        String username = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        User user = userService.getByName(username);
+        User viewUser = userService.getByID(Integer.parseInt(userId));
         model.addAttribute("user", user);
+        model.addAttribute("viewUser", viewUser);
         return "user";
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST, params = {"user"})
     public String editUser(@RequestParam("user") User user, Model model)
     {
+        String username = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        User currentUser = userService.getByName(username);
         User savedUser = userService.save(user);
         model.addAttribute("success", savedUser != null);
+        model.addAttribute("user", currentUser);
+        model.addAttribute("viewUser", savedUser);
         return "user";
     }
 }

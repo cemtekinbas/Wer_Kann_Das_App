@@ -29,6 +29,7 @@ public class HomeController {
             String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
             User user = userService.getByName(username);
             List<Request> requests = requestService.getList();
+            model.addAttribute("user", user);
             model.addAttribute("requestList", requests);
             return "hello";
         }
@@ -41,7 +42,9 @@ public class HomeController {
             String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
             User user = userService.getByName(username);
             List<Request> requests = requestService.getList(search);
+            model.addAttribute("user", user);
             model.addAttribute("requestList", requests);
+            model.addAttribute("search", search);
             return "hello";
         }
 	    return "home";
@@ -59,7 +62,9 @@ public class HomeController {
                 case "down":
                     break;
             }
+            model.addAttribute("user", user);
             model.addAttribute("requestList", requests);
+            model.addAttribute("sort", sort);
             return "hello";
         }
 	    return "home";
@@ -77,7 +82,10 @@ public class HomeController {
                 case "down":
                     break;
             }
+            model.addAttribute("user", user);
             model.addAttribute("requestList", requests);
+            model.addAttribute("sort", sort);
+            model.addAttribute("search", search);
             return "hello";
         }
         return "home";

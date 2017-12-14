@@ -32,6 +32,7 @@ public class RequestController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = new Request(-1,user.getPk(), "", "", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
+        model.addAttribute("user", user);
         model.addAttribute("newRequest", request);
         return "request";
     }
@@ -42,6 +43,7 @@ public class RequestController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = requestService.save(requestData);
+        model.addAttribute("user", user);
         model.addAttribute("request", request);
         return "request";
     }
@@ -52,6 +54,7 @@ public class RequestController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = requestService.getByID(Integer.parseInt(requestId));
+        model.addAttribute("user", user);
         model.addAttribute("request", request);
         return "request";
     }
@@ -62,6 +65,7 @@ public class RequestController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = requestService.save(requestData);
+        model.addAttribute("user", user);
         model.addAttribute("success", request != null);
         model.addAttribute("request", request);
         return "request";

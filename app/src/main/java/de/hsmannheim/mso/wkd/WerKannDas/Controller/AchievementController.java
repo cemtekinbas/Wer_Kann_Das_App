@@ -34,7 +34,7 @@ public class AchievementController {
         User user = userService.getByName(userName);
         userAchievmentService.getByID(user);
         model.addAttribute("achievements", achievements);
-
+        model.addAttribute("user", user);
         return "achievements";
     }
 
@@ -42,7 +42,10 @@ public class AchievementController {
     public String showAchievemnts(@PathVariable("id") String id, Model model)
     {
         Achievement achievement = achievementService.getByID(Integer.parseInt(id));
+        String userName = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        User user = userService.getByName(userName);
         model.addAttribute("achievment", achievement);
+        model.addAttribute("user", user);
         return "achievement";
     }
 

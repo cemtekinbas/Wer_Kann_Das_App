@@ -1,6 +1,7 @@
 package de.hsmannheim.mso.wkd.WerKannDas.Controller;
 
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Chat;
+import de.hsmannheim.mso.wkd.WerKannDas.Models.ChatMessage;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.User;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.ChatService;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
@@ -29,6 +30,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         List<Chat> chats = chatService.getByUser(user);
+        model.addAttribute("user", user);
         model.addAttribute("chats", chats);
         return "chat";
     }
@@ -39,6 +41,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Chat chat = chatService.getByRequestID(user, requestId);
+        model.addAttribute("user", user);
         model.addAttribute("chat", chat);
         return "chat";
     }
@@ -50,6 +53,7 @@ public class ChatController {
         User user = userService.getByName(username);
         Chat chat = chatService.getByRequestID(user, requestId);
         boolean success = chatService.addChatMessage(chat, chatMessage);
+        model.addAttribute("user", user);
         model.addAttribute("chat", chat);
         model.addAttribute("success", success);
         return "chat";
