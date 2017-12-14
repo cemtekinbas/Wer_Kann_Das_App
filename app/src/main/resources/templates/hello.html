@@ -78,7 +78,7 @@
                 <!--First columnn-->
                 <div class="col-lg-4">
                     <!--Card-->
-                    <div class="card wow fadeIn" data-wow-delay="0.2s">
+                    <div class="card wow fadeIn" data-wow-delay="0.2s" th:each="request : ${requestList}">
 
                         <!--Card image-->
                         <img class="img-fluid" src="img/brush-1034901_960_720.jpg" height="640"
@@ -87,10 +87,10 @@
                         <!--Card content-->
                         <div class="card-body">
                             <!--Title-->
-                            <h4 class="card-title">Hilfe beim Streichen gesucht</h4>
+                            <h4 class="card-title" th:text="${request.title}" />
                             <!--Text-->
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-info">Read more</a>
+                            <p class="card-text" th:text="${request.message}" />
+                            <a th:href="@{/request/{requestId}/(requestId=${request.pk})}" class="btn btn-info">Read more</a>
                         </div>
 
                     </div>
