@@ -1,87 +1,103 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-
 <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <title>Android</title>
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-
-    <title>Material Design Bootstrap</title>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Material Design Bootstrap -->
-    <link href="css/mdb.min.css" rel="stylesheet" />
-
-    <!-- Custom Style -->
-    <link href="css/style.css" rel="stylesheet" />
-
+        <!-- Page styles -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.green-purple.min.css" />
 </head>
-
 <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
+        <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+            <div class="mdl-layout__header-row">
+          <span class="android-title mdl-layout-title">
+            <p>Wer kann das?</p>
+          </span>
+                <!-- Add spacer, to align navigation to the right in desktop -->
+                <div class="android-header-spacer mdl-layout-spacer"></div>
 
-<header>
+                <!-- Navigation -->
+                <div class="android-navigation-container">
+                    <nav class="android-navigation mdl-navigation">
 
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#"><img src="img/svg/logo.svg" width="35"/> </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
+                    </nav>
+                </div>
+                <span class="android-mobile-title mdl-layout-title">
+              <p>Wer kann das?</p>
+          </span>
+                <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
+                    <i class="material-icons">more_vert</i>
+                </button>
+                <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
+                    <li class="mdl-menu__item">Einstellungen</li>
+                    <li class="mdl-menu__item">Logout</li>
                 </ul>
-                <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
-                </form>
             </div>
         </div>
-    </nav>
-    <!--/.Navbar-->
 
-</header>
+        <div class="android-drawer mdl-layout__drawer">
+        <span class="mdl-layout-title">
+          <img class="android-logo-image" src="img/Logo2_minimal_klein.png"></img>
+        </span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="">Login</a>
+            </nav>
+        </div>
 
-<main>
+        <div class="android-content mdl-layout__content">
+            <a name="top"></a>
+            <div class="android-be-together-section mdl-typography--text-center">
+                <div class="logo-font android-slogan">Wer kann das?</div>
+                <div class="logo-font android-sub-slogan">Finde qualifizierte Nachbarn, die dir helfen.</div>
+                <div class="logo-font android-create-character">
+                    <a href=""> Jetzt registrieren</a>
+                </div>
 
-    <!--Main layout-->
-    <div class="container">
-        <!--First row-->
-        <div class="row wow fadeIn" data-wow-delay="0.2s">
-            <div class="col-md-12">
-                <div class="jumbotron">
-                    <h2 class="h2-responsive">Willkommen</h2>
-                    <br />
+            </div>
 
-
-                    <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
-
-
+            <div class="android-wear-section">
+                <div class="android-wear-band">
+                    <div class="android-wear-band-text">
+                        <div class="mdl-typography--display-2 mdl-typography--font-thin">Sei der Held deines Dorfes.</div>
+                        <p class="mdl-typography--headline mdl-typography--font-thin">
+                            Helfe anderen.
+                        </p>
+                        <p>
+                            <a class="mdl-typography--font-regular mdl-typography--text-uppercase android-alt-link" href="">
+                                Jetzt registrieren<i class="material-icons">chevron_right</i>
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
+            <div class="android-customized-section">
+                <div class="android-customized-section-text">
+                    <div class="mdl-typography--font-light mdl-typography--display-1-color-contrast">Stärke die Gemeinschaft in deinem Dorf.</div>
+                    <p class="mdl-typography--font-light">
+                        Einer für alle, alle für einen.
+                        <br>
+
+                    </p>
+                </div>
+                <div class="android-customized-section-image"></div>
+            </div>
+            <div class="android-more-section">
+            </div>
+
         </div>
-
     </div>
-    <!--/.Main layout-->
 
-</main>
-
-
-
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 <!-- SCRIPTS -->
 

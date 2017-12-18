@@ -16,8 +16,8 @@ public class RequestResponseService {
     public static String colResponseDate = "response_date";
 
     public static String schema = "CREATE TABLE " + table + " ( " +
-            colRequestFk + " INT(11)  NOT NULL, " +
-            colUserFk + " INT(11)  NOT NULL, " +
+            colRequestFk + " INT  NOT NULL, " +
+            colUserFk + " INT  NOT NULL, " +
             colResponseDate + " DATETIME NOT NULL DEFAULT now(), " +
             "  PRIMARY KEY (" + colRequestFk + ", " + colUserFk + ")," +
             "  CONSTRAINT request_response_user_fk FOREIGN KEY (" + colUserFk + ") REFERENCES " +

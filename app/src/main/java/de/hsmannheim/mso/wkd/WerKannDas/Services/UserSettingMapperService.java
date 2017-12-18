@@ -14,8 +14,8 @@ public class UserSettingMapperService {
     public static String colSettingValue = "setting_value";
 
     public static String schema = "CREATE TABLE user_has_setting (" +
-            colUserFk + " INT(11), " +
-            colSettingFk + " INT(11), " +
+            colUserFk + " INT, " +
+            colSettingFk + " INT, " +
             colSettingValue + " VARCHAR(250), " +
             "  PRIMARY KEY (" + colUserFk + ", " + colSettingFk + ")," +
             "  CONSTRAINT user_has_setting_user_fk FOREIGN KEY (" + colUserFk + ") REFERENCES " +

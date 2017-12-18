@@ -21,7 +21,7 @@ public class AchievementService {
 
 
     public static String schema = "CREATE TABLE " + table + " ( " +
-            colPk + " INT(11) NOT NULL AUTO_INCREMENT, " +
+            colPk + " INT NOT NULL AUTO_INCREMENT, " +
             colName + " VARCHAR(250), " +
             colDescription + " VARCHAR(250), " +
             colIconPath + " VARCHAR(250), " +

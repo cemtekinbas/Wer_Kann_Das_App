@@ -19,8 +19,8 @@ public class UserAchievementMapperService {
     public static String colAchievementFk = "achievement_fk";
 
     public static String schema = "CREATE TABLE " + table + " (" +
-            colUserFk + " INT(11)," +
-            colAchievementFk + " INT(11)," +
+            colUserFk + " INT," +
+            colAchievementFk + " INT," +
             "  PRIMARY KEY (" + colUserFk + ", " + colAchievementFk + ")," +
             "  CONSTRAINT user_has_achievment_user_fk FOREIGN KEY (" + colUserFk + ") REFERENCES " +
             UserService.table + " (" + UserService.colPk + ")" +

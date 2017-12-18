@@ -29,13 +29,13 @@ public class RequestService {
 
 
     public static String schema = "CREATE TABLE " + table + " (" +
-            colPk + " INT(11)      NOT NULL AUTO_INCREMENT," +
-            colFromUserFk + " INT(11)," +
+            colPk + " INT      NOT NULL AUTO_INCREMENT," +
+            colFromUserFk + " INT," +
             colTitle + " VARCHAR(250) NOT NULL, -- limit size!?" +
             colMessage + " VARCHAR(250) NOT NULL, -- limit size!?" +
             colIsPremium + " BIT(1), -- validate datatype bit, replace with TINYINT(1) if invalid" +
             colCreateDate + " DATETIME     NOT NULL DEFAULT now(), -- validate now(), remove if invalid" +
-            colState + " INT(11)      NOT NULL DEFAULT 1," +
+            colState + " INT      NOT NULL DEFAULT 1," +
             "  PRIMARY KEY (" + colPk + ")," +
             "  CONSTRAINT request_from_user_fk FOREIGN KEY (" + colFromUserFk + ") REFERENCES "
             + UserService.table + " (" + UserService.colPk + ")" +

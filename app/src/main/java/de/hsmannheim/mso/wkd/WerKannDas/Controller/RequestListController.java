@@ -24,16 +24,6 @@ public class RequestListController {
     @Autowired
     RequestService requestService;
 
-    @RequestMapping(value = "/dashboard")
-    public String showDashboard(Model model)
-    {
-        String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User user = userService.getByName(username);
-        List<Request> requests = requestService.getList();
-        model.addAttribute("requestList", requests);
-        return "hello";
-    }
-
     @RequestMapping(value="/user/{userId}/requests", method = RequestMethod.GET, params = {"userId"})
     public String showUserDasboard(@PathVariable("userId") String userId, Model model)
     {
@@ -41,6 +31,7 @@ public class RequestListController {
         User user = userService.getByName(username);
         User viewUser = userService.getByID(Integer.parseInt(userId));
         List<Request> requestList = requestService.getByUser(viewUser);
+        model.addAttribute("user", user);
         model.addAttribute("viewUser", viewUser);
         model.addAttribute("requestList", requestList);
         return "hello";

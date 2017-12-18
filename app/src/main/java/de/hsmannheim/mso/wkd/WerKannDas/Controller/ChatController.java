@@ -29,6 +29,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         List<Chat> chats = chatService.getByUser(user);
+        model.addAttribute("user", user);
         model.addAttribute("chats", chats);
         return "chat";
     }
@@ -39,9 +40,9 @@ public class ChatController {
         //TODO requires two users (from and to), optional a list of chats is returned (if user is owner of request and therefore can have chats with multiple users)
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        List<Chat> chats = chatService.getByRequestID(user, requestId);
-        model.addAttribute("chat", chats);
-        //model.addAttribute("chat", chat);
+        Chat chat = chatService.getByRequestID(user, requestId);
+        model.addAttribute("user", user);
+        model.addAttribute("chat", chat);
         return "chat";
     }
 
@@ -51,10 +52,11 @@ public class ChatController {
         //TODO requires two users (from and to)
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        //Chat chat = chatService.getByRequestID(user, requestId);
-        //boolean success = chatService.addChatMessage(chat, message);
-        //model.addAttribute("chat", chat);
-        //model.addAttribute("success", success);
+        Chat chat = chatService.getByRequestID(user, requestId);
+        boolean success = chatMessageService.addChatMessage(chat, message);
+        model.addAttribute("user", user);
+        model.addAttribute("chat", chat);
+        model.addAttribute("success", success);
         return "chat";
     }
 

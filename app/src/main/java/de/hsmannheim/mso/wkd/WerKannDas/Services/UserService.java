@@ -25,7 +25,7 @@ public class UserService {
 
 
     public static String schema = "CREATE TABLE user ( " +
-            colPk + " INT(11)      NOT NULL AUTO_INCREMENT, " +
+            colPk + " INT      NOT NULL AUTO_INCREMENT, " +
             colMail + " VARCHAR(250) NOT NULL, " +
             colUserName + " VARCHAR(50)  NOT NULL, " +
             colPlz + " VARCHAR(15)  NOT NULL, " +

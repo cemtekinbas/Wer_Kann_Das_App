@@ -13,8 +13,8 @@ public class RequestTagMapperService {
     public static String colTagFk = "tag_fk";
 
     public static String schema = "CREATE TABLE " + table + " (" +
-            colRequestFk + " INT(11) NOT NULL, " +
-            colTagFk + " INT(11) NOT NULL, " +
+            colRequestFk + " INT NOT NULL, " +
+            colTagFk + " INT NOT NULL, " +
             "  PRIMARY KEY (" + colRequestFk + ", " + colTagFk + ")," +
             "  CONSTRAINT request_has_tag_request_fk FOREIGN KEY (" + colRequestFk + ") REFERENCES " +
             RequestService.table + " (" + RequestService.colPk + ")" +

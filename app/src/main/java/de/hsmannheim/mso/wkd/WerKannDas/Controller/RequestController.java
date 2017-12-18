@@ -32,6 +32,7 @@ public class RequestController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = new Request(-1,user.getPk(), "", "", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
+        model.addAttribute("user", user);
         model.addAttribute("newRequest", request);
         return "request";
     }
@@ -42,7 +43,16 @@ public class RequestController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = requestService.save(requestData);
-        model.addAttribute("request", request);
+        model.addAttribute("user", user);
+        if(request != null) {
+            model.addAttribute("request", request);
+            model.addAttribute("success", true);
+        }
+        else
+        {
+            model.addAttribute("newRequest", requestData);
+            model.addAttribute("success", false);
+        }
         return "request";
     }
 
@@ -52,6 +62,7 @@ public class RequestController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = requestService.getByID(Integer.parseInt(requestId));
+        model.addAttribute("user", user);
         model.addAttribute("request", request);
         return "request";
     }
@@ -62,8 +73,16 @@ public class RequestController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = requestService.save(requestData);
-        model.addAttribute("success", request != null);
-        model.addAttribute("request", request);
+        model.addAttribute("user", user);
+        if(request != null) {
+            model.addAttribute("success", true);
+            model.addAttribute("request", request);
+        }
+        else
+        {
+            model.addAttribute("success", false);
+            model.addAttribute("newRequest", requestData);
+        }
         return "request";
     }
 

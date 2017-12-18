@@ -26,10 +26,10 @@ public class ChatService {
     public static String colReadDate = "read_date";
 
     public static String schema = "CREATE TABLE " + table + " ( " +
-            colPk + " INT(11)  NOT NULL AUTO_INCREMENT, " +
-            colFromUserFk + " INT(11), " +
-            colToUserFk + " INT(11), " +
-            colRequestFk + " INT(11), " +
+            colPk + " INT  NOT NULL AUTO_INCREMENT, " +
+            colFromUserFk + " INT, " +
+            colToUserFk + " INT, " +
+            colRequestFk + " INT, " +
             colMessage + " VARCHAR(250) NOT NULL, " +
             colSentDate + " DATETIME NOT NULL DEFAULT now(), " +
             colReadDate + " DATETIME DEFAULT NULL, " +
