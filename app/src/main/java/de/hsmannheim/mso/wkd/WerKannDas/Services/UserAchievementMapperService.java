@@ -19,18 +19,18 @@ public class UserAchievementMapperService {
     public static String colAchievementFk = "achievement_fk";
 
     public static String schema = "CREATE TABLE " + table + " (" +
-            colUserFk + " INT," +
-            colAchievementFk + " INT," +
+            colUserFk + " INTEGER NOT NULL, " +
+            colAchievementFk + " INTEGER NOT NULL, " +
             "  PRIMARY KEY (" + colUserFk + ", " + colAchievementFk + ")," +
             "  CONSTRAINT user_has_achievment_user_fk FOREIGN KEY (" + colUserFk + ") REFERENCES " +
             UserService.table + " (" + UserService.colPk + ")" +
-            "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE," +
-            "  CONSTRAINT user_has_achievment_achievment_fk FOREIGN KEY (" + colAchievementFk + ") REFERENCES " +
+            " ON DELETE CASCADE" +
+            " ON UPDATE CASCADE," +
+            " CONSTRAINT user_has_achievment_achievment_fk FOREIGN KEY (" + colAchievementFk + ") REFERENCES " +
             AchievementService.table + " (" + AchievementService.colPk + ")" +
-            "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE" +
-            ");";
+            " ON DELETE CASCADE" +
+            " ON UPDATE CASCADE" +
+            " );";
 
     private String combinedCols = colUserFk + ", " + colAchievementFk;
 

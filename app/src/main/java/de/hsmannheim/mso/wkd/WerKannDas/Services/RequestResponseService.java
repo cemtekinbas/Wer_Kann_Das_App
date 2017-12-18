@@ -16,18 +16,18 @@ public class RequestResponseService {
     public static String colResponseDate = "response_date";
 
     public static String schema = "CREATE TABLE " + table + " ( " +
-            colRequestFk + " INT  NOT NULL, " +
-            colUserFk + " INT  NOT NULL, " +
-            colResponseDate + " DATETIME NOT NULL DEFAULT now(), " +
-            "  PRIMARY KEY (" + colRequestFk + ", " + colUserFk + ")," +
-            "  CONSTRAINT request_response_user_fk FOREIGN KEY (" + colUserFk + ") REFERENCES " +
+            colRequestFk + " INTEGER NOT NULL, " +
+            colUserFk + " INTEGER NOT NULL, " +
+            colResponseDate + " TIMESTAMP DEFAULT NOW, " +
+            " PRIMARY KEY (" + colRequestFk + ", " + colUserFk + ")," +
+            " CONSTRAINT request_response_user_fk FOREIGN KEY (" + colUserFk + ") REFERENCES " +
             UserService.table + " (" + UserService.colPk + ")" +
-            "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE," +
-            "  CONSTRAINT request_response_request_fk FOREIGN KEY (" + colRequestFk + ") REFERENCES " +
+            " ON DELETE CASCADE" +
+            " ON UPDATE CASCADE," +
+            " CONSTRAINT request_response_request_fk FOREIGN KEY (" + colRequestFk + ") REFERENCES " +
             RequestService.table + " (" + RequestService.colPk + ")" +
-            "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE" +
+            " ON DELETE CASCADE" +
+            " ON UPDATE CASCADE" +
             ");";
 
     public static String combinedCols = colRequestFk + ", " + colUserFk+ ", " + colResponseDate;

@@ -51,7 +51,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
             driverManagerDataSource.getConnection().createStatement().execute(RequestTagMapperService.schema);
             driverManagerDataSource.getConnection().createStatement().execute(ChatService.schema);
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return driverManagerDataSource;

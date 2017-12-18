@@ -13,9 +13,8 @@ public class RequestTagService {
     public static String colTag = "tag";
 
     public static String schema = "CREATE TABLE " + table + " (" +
-            colPk + " INT     NOT NULL AUTO_INCREMENT, " +
-            colTag + " VARCHAR(50) NOT NULL, " +
-            "PRIMARY KEY (" + colPk + ")" +
+            colPk + " INTEGER IDENTITY PRIMARY KEY, " +
+            colTag + " VARCHAR(50) NOT NULL " +
             ");";
 
     private String combinedCols = colPk + ", " + colTag;

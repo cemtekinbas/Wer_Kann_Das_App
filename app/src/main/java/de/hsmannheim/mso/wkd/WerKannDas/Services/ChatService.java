@@ -26,26 +26,25 @@ public class ChatService {
     public static String colReadDate = "read_date";
 
     public static String schema = "CREATE TABLE " + table + " ( " +
-            colPk + " INT  NOT NULL AUTO_INCREMENT, " +
-            colFromUserFk + " INT, " +
-            colToUserFk + " INT, " +
+            colPk + " INTEGER IDENTITY PRIMARY KEY, " +
+            colFromUserFk + " INT NOT NULL, " +
+            colToUserFk + " INT NOT NULL, " +
             colRequestFk + " INT, " +
             colMessage + " VARCHAR(250) NOT NULL, " +
-            colSentDate + " DATETIME NOT NULL DEFAULT now(), " +
-            colReadDate + " DATETIME DEFAULT NULL, " +
-            "PRIMARY KEY (" + colPk + "), " +
-            "CONSTRAINT chat_from_user_fk FOREIGN KEY (" + colFromUserFk + ") REFERENCES " +
+            colSentDate + " TIMESTAMP DEFAULT NOW, " +
+            colReadDate + " TIMESTAMP DEFAULT NULL, " +
+            " CONSTRAINT chat_from_user_fk FOREIGN KEY (" + colFromUserFk + ") REFERENCES " +
             UserService.table + " (" + UserService.colPk + ")" +
-            "ON DELETE CASCADE " +
-            "ON UPDATE CASCADE, " +
-            "CONSTRAINT chat_request_fk FOREIGN KEY (" + colRequestFk + ") REFERENCES " +
+            " ON DELETE CASCADE " +
+            " ON UPDATE CASCADE, " +
+            " CONSTRAINT chat_request_fk FOREIGN KEY (" + colRequestFk + ") REFERENCES " +
             RequestService.table + " (" + RequestService.colPk + ")" +
-            "ON DELETE CASCADE " +
-            "ON UPDATE CASCADE, " +
-            "CONSTRAINT chat_to_user_fk FOREIGN KEY (" + colToUserFk + ") REFERENCES " +
+            " ON DELETE CASCADE " +
+            " ON UPDATE CASCADE, " +
+            " CONSTRAINT chat_to_user_fk FOREIGN KEY (" + colToUserFk + ") REFERENCES " +
             UserService.table + " (" + UserService.colPk + ")" +
-            "ON DELETE CASCADE " +
-            "ON UPDATE CASCADE " +
+            " ON DELETE CASCADE " +
+            " ON UPDATE CASCADE " +
             ");";
 
     public static String combinedCols = colPk + ", " +

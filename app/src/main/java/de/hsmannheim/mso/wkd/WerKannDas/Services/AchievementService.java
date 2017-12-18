@@ -21,12 +21,12 @@ public class AchievementService {
 
 
     public static String schema = "CREATE TABLE " + table + " ( " +
-            colPk + " INT NOT NULL AUTO_INCREMENT, " +
+            colPk + " INTEGER IDENTITY PRIMARY KEY, " +
             colName + " VARCHAR(250), " +
             colDescription + " VARCHAR(250), " +
             colIconPath + " VARCHAR(250), " +
-            colUnlockCondition + " VARCHAR(500), " +
-            "PRIMARY KEY("+colPk+") );";
+            colUnlockCondition + " VARCHAR(500) " +
+            ");";
 
     private String combinedCols = colPk + ", " + colName + ", " + colDescription + ", " + colIconPath + ", " + colUnlockCondition;
 

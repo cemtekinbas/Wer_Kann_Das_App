@@ -13,17 +13,17 @@ public class RequestTagMapperService {
     public static String colTagFk = "tag_fk";
 
     public static String schema = "CREATE TABLE " + table + " (" +
-            colRequestFk + " INT NOT NULL, " +
-            colTagFk + " INT NOT NULL, " +
-            "  PRIMARY KEY (" + colRequestFk + ", " + colTagFk + ")," +
-            "  CONSTRAINT request_has_tag_request_fk FOREIGN KEY (" + colRequestFk + ") REFERENCES " +
+            colRequestFk + " INTEGER NOT NULL, " +
+            colTagFk + " INTEGER NOT NULL, " +
+            " PRIMARY KEY (" + colRequestFk + ", " + colTagFk + ")," +
+            " CONSTRAINT request_has_tag_request_fk FOREIGN KEY (" + colRequestFk + ") REFERENCES " +
             RequestService.table + " (" + RequestService.colPk + ")" +
-            "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE," +
+            " ON DELETE CASCADE" +
+            " ON UPDATE CASCADE," +
             "  CONSTRAINT request_has_tag_tag_fk FOREIGN KEY (" + colTagFk + ") REFERENCES " +
             RequestTagService.table + " (" + RequestTagService.colPk + ")" +
-            "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE" +
+            " ON DELETE CASCADE" +
+            " ON UPDATE CASCADE" +
             ");";
 
     private String combinedCols = colRequestFk + ", " + colTagFk;

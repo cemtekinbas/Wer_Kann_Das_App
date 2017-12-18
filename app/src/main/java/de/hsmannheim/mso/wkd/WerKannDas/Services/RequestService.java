@@ -29,18 +29,17 @@ public class RequestService {
 
 
     public static String schema = "CREATE TABLE " + table + " (" +
-            colPk + " INT      NOT NULL AUTO_INCREMENT," +
-            colFromUserFk + " INT," +
-            colTitle + " VARCHAR(250) NOT NULL, -- limit size!?" +
-            colMessage + " VARCHAR(250) NOT NULL, -- limit size!?" +
-            colIsPremium + " BIT(1), -- validate datatype bit, replace with TINYINT(1) if invalid" +
-            colCreateDate + " DATETIME     NOT NULL DEFAULT now(), -- validate now(), remove if invalid" +
-            colState + " INT      NOT NULL DEFAULT 1," +
-            "  PRIMARY KEY (" + colPk + ")," +
-            "  CONSTRAINT request_from_user_fk FOREIGN KEY (" + colFromUserFk + ") REFERENCES "
+            colPk + " INTEGER IDENTITY PRIMARY KEY, " +
+            colFromUserFk + " INTEGER NOT NULL, " +
+            colTitle + " VARCHAR(250) NOT NULL, " + // -- limit size!?
+            colMessage + " VARCHAR(250) NOT NULL, " + // -- limit size!?
+            colIsPremium + " BOOLEAN DEFAULT FALSE, " + // -- validate datatype bit, replace with TINYINT(1) if invalid
+            colCreateDate + " TIMESTAMP DEFAULT NOW, " + // -- validate now(), remove if invalid
+            colState + " INTEGER DEFAULT 1, " +
+            " CONSTRAINT request_from_user_fk FOREIGN KEY (" + colFromUserFk + ") REFERENCES "
             + UserService.table + " (" + UserService.colPk + ")" +
-            "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE" +
+            " ON DELETE CASCADE" +
+            " ON UPDATE CASCADE" +
             ");";
 
     private String combinedCols = colPk + ", " + colFromUserFk + ", " + colTitle + ", " + colMessage + ", " +

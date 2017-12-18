@@ -25,17 +25,16 @@ public class UserService {
 
 
     public static String schema = "CREATE TABLE user ( " +
-            colPk + " INT      NOT NULL AUTO_INCREMENT, " +
+            colPk + " INTEGER IDENTITY PRIMARY KEY, " +
             colMail + " VARCHAR(250) NOT NULL, " +
-            colUserName + " VARCHAR(50)  NOT NULL, " +
-            colPlz + " VARCHAR(15)  NOT NULL, " +
-            colPassword + " VARCHAR(50)  NOT NULL, " +
+            colUserName + " VARCHAR(50) NOT NULL, " +
+            colPlz + " VARCHAR(15) NOT NULL, " +
+            colPassword + " VARCHAR(50) NOT NULL, " +
             colForename + " VARCHAR(50), " +
             colSurname + " VARCHAR(50), " +
             colVillage + " VARCHAR(250), " +
             colStreetWithNumber + " VARCHAR(250), " +
-            colBirthday + " DATE, " +
-            "  PRIMARY KEY (" + colPk + ") " +
+            colBirthday + " DATE " +
             ");";
 
 

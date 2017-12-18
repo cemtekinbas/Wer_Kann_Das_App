@@ -13,9 +13,8 @@ public class SettingService {
     public static String colName = "name";
 
     public static String schema = "CREATE TABLE " + table + " (" +
-            colPk + " INT NOT NULL AUTO_INCREMENT, " +
-            colName + " VARCHAR(250), " +
-            "PRIMARY KEY (" + colPk + ")" +
+            colPk + " INTEGER IDENTITY PRIMARY KEY, " +
+            colName + " VARCHAR(250) " +
             ");";
 
     private String combinedCols = colPk + ", " + colName;
