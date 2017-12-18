@@ -59,7 +59,7 @@ public class ChatService {
     private String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
     private String queryByUserID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colFromUserFk + " = ? OR " + colToUserFk + " = ?";
     private String queryByRequestID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colRequestFk + " = ? AND (" + colFromUserFk + " = ? OR " + colToUserFk + " = ?)";
-    private String queryByUserAndRequestID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colRequestFk + " = ? AND " + colFromUserFk + " = ? AND " + colToUserFk + " = ?";
+    private String queryByOtherUserAndRequestID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colRequestFk + " = ? AND " + colFromUserFk + " = ? AND " + colToUserFk + " = ?";
     private String queryAdd = "INSERT INTO " + table + " (" + colFromUserFk + ", " + colToUserFk + ", " + colMessage +
             ", " + colRequestFk + ") VALUE (?, ?, ?, ?)";
 
@@ -137,7 +137,7 @@ public class ChatService {
 
     public Chat getByUsersAndRequestID(User to, User from, String requestId) {
         try {
-            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByUserAndRequestID);
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByOtherUserAndRequestID);
             int requestIdInt = Integer.parseInt(requestId);
             pstmt.setInt(1, requestIdInt);
             pstmt.setInt(2, from.getPk());

@@ -37,24 +37,26 @@ public class ChatController {
     @RequestMapping(value = "/chat/{requestId}", method = RequestMethod.GET)
     public String openChat(@PathVariable("requestId") String requestId, Model model)
     {
-        //TODO requires two users (from and to), optional a list of chats is returned (if user is owner of request and therefore can have chats with multiple users)
+        //requires two users (from and to), optional a list of chats is returned (if user is owner of request and therefore can have chats with multiple users)
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        Chat chat = chatService.getByRequestID(user, requestId);
+        List<Chat> chats = chatService.getByRequestID(user, requestId);
         model.addAttribute("user", user);
-        model.addAttribute("chat", chat);
+        model.addAttribute("chat", chats);
         return "chat";
     }
 
-    @RequestMapping(value = "/chat/{requestId}", method = RequestMethod.POST, params = {"message"})
-    public String sendChatMessage(@PathVariable("requestId") String requestId, @RequestParam("message") String message, Model model)
+    @RequestMapping(value = "/chat/{userId}/{requestId}", method = RequestMethod.POST, params = {"message"})
+    public String sendChatMessage(@PathVariable("requestId") String requestId, @PathVariable("userId") String user2Id, @RequestParam("message") String message, Model model)
     {
-        //TODO requires two users (from and to)
+        // requires two users (from and to)
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User user = userService.getByName(username);
-        Chat chat = chatService.getByRequestID(user, requestId);
-        boolean success = chatMessageService.addChatMessage(chat, message);
-        model.addAttribute("user", user);
+        User userFrom = userService.getByName(username);
+        User userTo = userService.getByID(Integer.valueOf(user2Id));
+        boolean success = chatService.addChatMessage(userTo, userFrom, requestId, message);
+        Chat chat = chatService.getByUsersAndRequestID(userTo, userFrom, requestId);
+        model.addAttribute("user", userFrom);
+        model.addAttribute("user2", userTo);
         model.addAttribute("chat", chat);
         model.addAttribute("success", success);
         return "chat";
