@@ -8,36 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Chat {
-    private int pk;
-    private int from_user_fk;
-    private int to_user_fk;
+    private int[] userFks;
     private int request_fk;
     private List<ChatMessage> chatMessages;
 
-    public Chat(int pk, int from_user_fk, int to_user_fk, int request_fk) {
-        this.pk = pk;
-        this.from_user_fk = from_user_fk;
-        this.to_user_fk = to_user_fk;
+    public Chat(int request_fk, int[] userFks) {
+        this.userFks = userFks;
         this.request_fk = request_fk;
     }
 
     public Chat(ResultSet results) throws SQLException {
-        this.pk = results.getInt(ChatService.colPk);
-        this.from_user_fk = results.getInt(ChatService.colFromUserFk);
-        this.to_user_fk = results.getInt(ChatService.colToUserFk);
+        int userFk1 = results.getInt(ChatService.colFromUserFk);
+        int userFk2 = results.getInt(ChatService.colToUserFk);
+        this.userFks = new int[]{userFk1, userFk2};
         this.request_fk = results.getInt(ChatService.colRequestFk);
     }
 
-    public int getPk() {
-        return pk;
-    }
-
-    public int getFrom_user_fk() {
-        return from_user_fk;
-    }
-
-    public int getTo_user_fk() {
-        return to_user_fk;
+    public int[] getUserFks() {
+        return userFks;
     }
 
     public int getRequest_fk() {
@@ -54,7 +42,7 @@ public class Chat {
 
     public void addChatMessage(ChatMessage chatMessage) {
 
-        if (this.chatMessages == null){
+        if (this.chatMessages == null) {
             this.chatMessages = new ArrayList<ChatMessage>();
         }
         this.chatMessages.add(chatMessage);
@@ -64,10 +52,12 @@ public class Chat {
     public boolean equals(Object o) {
         if (o instanceof Chat) {
             Chat c = (Chat) o;
-            return (c.getPk() == this.pk &&
-                    c.getFrom_user_fk() == this.from_user_fk &&
-                    c.getTo_user_fk() == this.to_user_fk &&
-                    c.getRequest_fk() == this.request_fk);
+            for (int userFK : c.getUserFks()) {
+                if (userFK != this.userFks[0] && userFK != this.userFks[1]) {
+                    return false;
+                }
+            }
+            return (c.getRequest_fk() == this.request_fk);
         }
         return false;
     }

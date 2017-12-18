@@ -16,18 +16,23 @@ import java.util.List;
 
 @Service
 public class ChatService {
-
     public static String table = "chat";
     public static String colPk = "pk";
     public static String colFromUserFk = "from_user_fk";
     public static String colToUserFk = "to_user_fk";
     public static String colRequestFk = "request_fk";
+    public static String colMessage = "message";
+    public static String colSentDate = "sent_date";
+    public static String colReadDate = "read_date";
 
     public static String schema = "CREATE TABLE " + table + " ( " +
             colPk + " INT(11)  NOT NULL AUTO_INCREMENT, " +
             colFromUserFk + " INT(11), " +
             colToUserFk + " INT(11), " +
             colRequestFk + " INT(11), " +
+            colMessage + " VARCHAR(250) NOT NULL, " +
+            colSentDate + " DATETIME NOT NULL DEFAULT now(), " +
+            colReadDate + " DATETIME DEFAULT NULL, " +
             "PRIMARY KEY (" + colPk + "), " +
             "CONSTRAINT chat_from_user_fk FOREIGN KEY (" + colFromUserFk + ") REFERENCES " +
             UserService.table + " (" + UserService.colPk + ")" +
@@ -46,15 +51,18 @@ public class ChatService {
     public static String combinedCols = colPk + ", " +
             colFromUserFk + ", " +
             colToUserFk + ", " +
+            colMessage + ", " +
+            colSentDate + ", " +
+            colReadDate + ", " +
             colRequestFk;
 
     private String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
     private String queryByUserID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colFromUserFk + " = ? OR " + colToUserFk + " = ?";
     private String queryByRequestID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colRequestFk + " = ? AND (" + colFromUserFk + " = ? OR " + colToUserFk + " = ?)";
+    private String queryByUserAndRequestID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colRequestFk + " = ? AND " + colFromUserFk + " = ? AND " + colToUserFk + " = ?";
+    private String queryAdd = "INSERT INTO " + table + " (" + colFromUserFk + ", " + colToUserFk + ", " + colMessage +
+            ", " + colRequestFk + ") VALUE (?, ?, ?, ?)";
 
-
-    @Autowired
-    private ChatMessageService cms;
     @Autowired
     private DataSource ds;
 
@@ -63,19 +71,13 @@ public class ChatService {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByID);
             pstmt.setInt(1, pk);
             ResultSet results = pstmt.executeQuery();
-            List<ChatMessage> chatMessages = new ArrayList<ChatMessage>();
-            Chat chat = null;
-            while (results.next()) {
-                if (chat == null) {
-                    chat = new Chat(results);
-                }
-                chatMessages.add(new ChatMessage(results));
+            if (results.next()) {
+                Chat chat = new Chat(results);
+                ChatMessage message = new ChatMessage(results);
+                chat.addChatMessage(message);
+                return chat;
             }
-            assert chat != null;
-            chat.setChatMessages(chatMessages);
-            return chat;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -85,32 +87,20 @@ public class ChatService {
         return null;
     }
 
-    public Chat save(Chat chat) {
-        return null;
-    }
-
-
     public List<Chat> getByUser(User user) {
         try {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByUserID);
             pstmt.setInt(1, user.getPk());
             pstmt.setInt(2, user.getPk());
             ResultSet results = pstmt.executeQuery();
-            List<Chat> chats = new ArrayList<Chat>();
-            while (results.next()) {
-                Chat chat = new Chat(results);
-                chat.setChatMessages(cms.getByChatID(chat.getPk()));
-                chats.add(chat);
-            }
-            return chats;
+            return parseChatListFromResult(results);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
     }
 
-    public Chat getByRequestID(User user, String requestId) {
+    public List<Chat> getByRequestID(User user, String requestId) {
         try {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByRequestID);
             int requestIdInt = Integer.parseInt(requestId);
@@ -118,15 +108,74 @@ public class ChatService {
             pstmt.setInt(2, user.getPk());
             pstmt.setInt(3, user.getPk());
             ResultSet results = pstmt.executeQuery();
-            if (results.next()) {
-                Chat chat = new Chat(results);
-                chat.setChatMessages(cms.getByChatID(chat.getPk()));
-                return chat;
-            }
+            return parseChatListFromResult(results);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
+    }
+
+    private List<Chat> parseChatListFromResult(ResultSet results) throws SQLException {
+        List<Chat> chats = new ArrayList<Chat>();
+        while (results.next()) {
+            Chat newChat = new Chat(results);
+            ChatMessage message = new ChatMessage(results);
+            boolean add = true;
+            for (Chat chat : chats) {
+                if (chat.equals(newChat)) {
+                    chat.addChatMessage(message);
+                    add = false;
+                }
+            }
+            if (add) {
+                newChat.addChatMessage(message);
+                chats.add(newChat);
+            }
+        }
+        return chats;
+    }
+
+    public Chat getByUsersAndRequestID(User to, User from, String requestId) {
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByUserAndRequestID);
+            int requestIdInt = Integer.parseInt(requestId);
+            pstmt.setInt(1, requestIdInt);
+            pstmt.setInt(2, from.getPk());
+            pstmt.setInt(3, to.getPk());
+            ResultSet results = pstmt.executeQuery();
+            Chat chat = null;
+            while (results.next()) {
+                if (chat == null) {
+                    chat = new Chat(results);
+                } else if (!chat.equals(new Chat(results))) {
+                    throw new SQLException("Only one chat allowed");
+                }
+                chat.addChatMessage(new ChatMessage(results));
+            }
+            return chat;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public boolean addChatMessage(User to, User from, String requestId, String message) {
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryAdd, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, from.getPk());
+            pstmt.setInt(2, to.getPk());
+            pstmt.setString(3, message);
+            pstmt.setInt(4, Integer.getInteger(requestId));
+            pstmt.executeUpdate();
+            ResultSet results = pstmt.getGeneratedKeys();
+            if (results.next()) {
+                int id = results.getInt(colPk);
+                return true;
+            }
+        } catch (SQLException | NullPointerException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

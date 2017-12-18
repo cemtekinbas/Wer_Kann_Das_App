@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 @Service
 public class UserService {
@@ -44,7 +42,12 @@ public class UserService {
     private String combinedCols = colPk + ", " + colMail + ", " + colUserName + ", " + colPlz + ", " +
             colPassword + ", " + colForename + ", " + colSurname + ", " + colVillage + ", " +
             colStreetWithNumber + ", " + colBirthday;
+
     private String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
+    private String queryByUserName = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colUserName + " = ?";
+    private String queryAdd = "INSERT INTO " + table + "(" + colMail + ", " + colUserName +", " + colPassword +", " +
+            colForename +  ", " + colSurname +  ", " + colBirthday +  ", " + colPlz +  ", " + colVillage +  ", " +
+            colStreetWithNumber + ") VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     @Autowired
     private DataSource ds;
@@ -70,14 +73,58 @@ public class UserService {
         return null;
     }
 
-    public User getByName(String name) { return null; }
-
-    public User update(User user){
+    public User getByName(String name) {
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByUserName);
+            pstmt.setString(1, name);
+            ResultSet results = pstmt.executeQuery();
+            if (results.next()) {
+                User user = new User(results);
+                return user;
+                //PersonalData personalData = personalDataService.getByID(personalDataID);
+                //Account account = new Account(id, personalData);
+                //account.setBalance(balance);
+                //List<Transaction> transactions = transactionService.getByAccount(account, null);
+                //account.getTransactions().addAll(transactions);
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return null;
     }
 
-    public User save(User user){
+    public User save(User user) {
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryAdd, Statement.RETURN_GENERATED_KEYS);
+            String mail = user.getMail();
+            String userName = user.getUser_name();
+            String password = user.getPassword();
+            String forename = user.getForename();
+            String surname = user.getSurname();
+            Date birthday = user.getBirthday();
+            String plz = user.getPlz();
+            String village = user.getVillage();
+            String streetWithNumber = user.getStreet_with_number();
+            pstmt.setString(1, mail);
+            pstmt.setString(2, userName);
+            pstmt.setString(3, password);
+            pstmt.setString(4, forename);
+            pstmt.setString(5, surname);
+            pstmt.setDate(6, birthday);
+            pstmt.setString(7, plz);
+            pstmt.setString(8, village);
+            pstmt.setString(9, streetWithNumber);
+            pstmt.executeUpdate();
+            ResultSet results = pstmt.getGeneratedKeys();
+            if(results.next()) {
+                int id = results.getInt(colPk);
+                return getByID(id);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
-
 }
