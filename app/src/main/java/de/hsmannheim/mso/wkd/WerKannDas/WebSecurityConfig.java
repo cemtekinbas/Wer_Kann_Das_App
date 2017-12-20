@@ -1,5 +1,6 @@
 package de.hsmannheim.mso.wkd.WerKannDas;
 
+import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,9 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .formLogin()
                 .loginPage("/login")
-                .passwordParameter("password")
-                .usernameParameter("username")
-                .failureForwardUrl("/login")
+                .passwordParameter(UserService.colPassword)
+                .usernameParameter(UserService.colUserName)
+                .failureForwardUrl("/login?error")
                 .successForwardUrl("/")
                 .permitAll()
                 .and()
@@ -42,11 +43,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        /*auth.jdbcAuthentication()
+        //auth.inMemoryAuthentication()
+        //        .withUser("user").password("password").roles("USER");
+        auth.jdbcAuthentication()
                 .dataSource(ds)
-                .usersByUsernameQuery("select username,password, enabled from users where username=?")
-                .passwordEncoder(bcryptPasswordEncoder);*/
-        auth.inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+                .usersByUsernameQuery(UserService.queryLogin)
+                .authoritiesByUsernameQuery("select username, role from user_roles where username=?")
+                .passwordEncoder(bcryptPasswordEncoder);
     }
 }

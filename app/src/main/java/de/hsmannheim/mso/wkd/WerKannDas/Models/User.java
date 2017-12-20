@@ -12,18 +12,20 @@ public class User {
     private String user_name;
     private String plz;
     private String password;
+    private String passwordClear;
     private String forename;
     private String surname;
     private String village;
     private String street_with_number;
     private Date birthday;
 
-    public User(int pk, String mail, String user_name, String plz, String password, String forename, String surname, String village, String street_with_number, Date birthday) {
+    public User(int pk, String mail, String user_name, String plz, String password, String passwordClear, String forename, String surname, String village, String street_with_number, Date birthday) {
         this.pk = pk;
         this.mail = mail;
         this.user_name = user_name;
         this.plz = plz;
         this.password = password;
+        this.passwordClear = passwordClear;
         this.forename = forename;
         this.surname = surname;
         this.village = village;
@@ -37,6 +39,7 @@ public class User {
         this.user_name = results.getString(UserService.colUserName);
         this.plz = results.getString(UserService.colPlz);
         this.password = results.getString(UserService.colPassword);
+        this.passwordClear = "";
         this.forename = results.getString(UserService.colForename);
         this.surname = results.getString(UserService.colSurname);
         this.village = results.getString(UserService.colVillage);
@@ -122,5 +125,13 @@ public class User {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getPasswordClear() {
+        return passwordClear;
+    }
+
+    public void setPasswordClear(String passwordClear) {
+        this.passwordClear = passwordClear;
     }
 }
