@@ -34,26 +34,31 @@ public class RequestController {
         Request request = new Request(-1,user.getPk(), "", "", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
         model.addAttribute("user", user);
         model.addAttribute("newRequest", request);
-        return "request";
+        return "anfrageErstellen";
     }
 
     @RequestMapping(value = "/request", method = RequestMethod.POST)
-    public String createRequest(@RequestParam("newRequest") Request requestData, Model model)
+    public String createRequest(Request newRequest, Model model)
     {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        Request request = requestService.save(requestData);
+
+        newRequest.setCreateDate(Date.valueOf(LocalDate.now()));
+        newRequest.setState(RequestState.OPEN);
+        newRequest.setFromUserFk(user.getPk());
+
+        Request request = requestService.save(newRequest);
         model.addAttribute("user", user);
         if(request != null) {
-            model.addAttribute("request", request);
+            model.addAttribute("newRequest", request);
             model.addAttribute("success", true);
         }
         else
         {
-            model.addAttribute("newRequest", requestData);
+            model.addAttribute("newRequest", newRequest);
             model.addAttribute("success", false);
         }
-        return "request";
+        return "anfrageErstellen";
     }
 
     @RequestMapping(value = "/request/{requestId}", method = RequestMethod.GET, params = {"requestId"})
@@ -64,7 +69,13 @@ public class RequestController {
         Request request = requestService.getByID(Integer.parseInt(requestId));
         model.addAttribute("user", user);
         model.addAttribute("request", request);
-        return "request";
+        if(request.getFromUserFk() == user.getPk())
+        {
+            return "anfrageErstellen";
+        }
+        else {
+            return "request";
+        }
     }
 
     @RequestMapping(value = "/request/{requestId}", method = RequestMethod.POST, params = {"requestId"})

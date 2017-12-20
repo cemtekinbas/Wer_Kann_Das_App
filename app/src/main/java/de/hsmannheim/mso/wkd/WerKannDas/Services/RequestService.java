@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +43,11 @@ public class RequestService {
             colIsPremium + ", " + colCreateDate + ", " + colState;
 
     private String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
+    private String queryByUser = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colFromUserFk + " = ?";
+    private String queryByState = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colState + " = ?";
+
+    public static String queryAdd = "INSERT INTO " + table + "(" + colCreateDate + ", " + colFromUserFk +", " + colIsPremium +", " +
+            colMessage +  ", " + colState +  ", " + colTitle + ") VALUES ( ?, ?, ?, ?, ?, ?)";
 
     @Autowired
     private DataSource ds;
@@ -72,18 +74,53 @@ public class RequestService {
         return null;
     }
 
-    public Request save(Request request) { return null; }
+    public Request save(Request request) {
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryAdd, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setDate(1, request.getCreateDate());
+            pstmt.setInt(2, request.getFromUserFk());
+            pstmt.setBoolean(3, request.isPremium());
+            pstmt.setString(4, request.getMessage());
+            pstmt.setInt(5, request.getState().getId());
+            pstmt.setString(6, request.getTitle());
+            pstmt.executeUpdate();
+            ResultSet results = pstmt.getGeneratedKeys();
+            if(results.next()) {
+                int id = results.getInt(colPk);
+                return getByID(id);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<Request> getByUser(User user) { return null; }
 
     public List<Request> getList() {
         List<Request> requestList = new ArrayList<Request>(3);
+        /*
         Request r = new Request(0, 0, "Titel1", "Message1", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
         requestList.add(r);
         r = new Request(1, 1, "Titel2", "Message2", true, Date.valueOf(LocalDate.now()), RequestState.OPEN);
         requestList.add(r);
         r = new Request(2, 1, "Titel3", "Message3", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
         requestList.add(r);
+        */
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByState);
+            pstmt.setInt(1, RequestState.OPEN.getId());
+            ResultSet results = pstmt.executeQuery();
+            if (results.next()) {
+                Request request = new Request(results);
+                requestList.add(request);
+            }
+            return requestList;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return requestList;
     }
 

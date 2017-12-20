@@ -15,6 +15,11 @@ public class Request {
     private Date createDate;
     private RequestState state;
 
+    public Request()
+    {
+
+    }
+
     public Request(int pk, int fromUserFk, String title, String message, boolean isPremium, Date createDate, RequestState state) {
         this.pk = pk;
         this.fromUserFk = fromUserFk;
@@ -62,4 +67,33 @@ public class Request {
     public RequestState getState() {
         return state;
     }
+
+    public void setPk(int pk) {
+        this.pk = pk;
+    }
+
+    public void setFromUserFk(int fromUserFk) {
+        this.fromUserFk = fromUserFk;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setPremium(boolean premium) {
+        isPremium = premium;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public void setState(RequestState state) {
+        this.state = state;
+    }
+
 }
