@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Introducing Lollipop, a sweet new take on Android." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <title>Android</title>
 
     <!-- Page styles -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.green-purple.min.css" />
 </head>
 <body>
@@ -29,7 +29,7 @@
                     <i class="material-icons">search</i>
                 </label>
                 <div class="mdl-textfield__expandable-holder">
-                    <input class="mdl-textfield__input" type="text" id="search-field">
+                    <input class="mdl-textfield__input" type="text" id="search-field" />
                 </div>
             </div>
             <!-- Navigation -->
@@ -51,13 +51,13 @@
         </div>
     </div>
 
-    <img class="android-drawer mdl-layout__drawer"></img>
-        <img class="mdl-layout-title"></img>
-            <img class="android-logo-image" src="img/Logo2_minimal_klein.png"></img>
+    <div class="android-drawer mdl-layout__drawer">
+        <span class="mdl-layout-title">
+            <img class="android-logo-image" src="img/Logo2_minimal_klein.png" />
         </span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Profil</a>
-            <a class="mdl-navigation__link" href="">Achievments</a>
+            <a class="mdl-navigation__link" href="/user">Profil</a>
+            <a class="mdl-navigation__link" href="/achievements">Achievments</a>
             <a class="mdl-navigation__link" href="">Einstellungen</a>
             <a class="mdl-navigation__link" href="">Logout</a>
         </nav>
@@ -71,73 +71,19 @@
 <div class="android-more-section">
     <div class="android-section-title mdl-typography--display-1-color-contrast">Wer kann das?</div>
     <div class="android-card-container mdl-grid">
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" th:each="request:${requestList}">
             <div class="mdl-card__media">
-                <img src="img/more-from-1.png"></img>
+                <img src="img/more-from-1.png" />
             </div>
             <div class="mdl-card__title">
-                <h4 class="mdl-card__title-text">Get going on Android</h4>
+                <h4 class="mdl-card__title-text" th:text="${request.title}" />
             </div>
             <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">Four tips to make your switch to Android quick and easy</span>
+                <span class="mdl-typography--font-light mdl-typography--subhead" th:text="${request.message}" />
             </div>
             <div class="mdl-card__actions">
-                <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
+                <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" th:href="@{/request/{requestId}(requestId=${request.pk})}">
                     Make the switch
-                    <i class="material-icons">chevron_right</i>
-                </a>
-            </div>
-        </div>
-
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-            <div class="mdl-card__media">
-                <img src="img/more-from-4.png"></img>
-            </div>
-            <div class="mdl-card__title">
-                <h4 class="mdl-card__title-text">Create your own Android character</h4>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">Turn the little green Android mascot into you, your friends, anyone!</span>
-            </div>
-            <div class="mdl-card__actions">
-                <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
-                    androidify.com
-                    <i class="material-icons">chevron_right</i>
-                </a>
-            </div>
-        </div>
-
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-            <div class="mdl-card__media">
-                <img src="img/more-from-2.png"></img>
-            </div>
-            <div class="mdl-card__title">
-                <h4 class="mdl-card__title-text">Get a clean customisable home screen</h4>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">A clean, simple, customisable home screen that comes with the power of Google Now: Traffic alerts, weather and much more, just a swipe away.</span>
-            </div>
-            <div class="mdl-card__actions">
-                <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
-                    Download now
-                    <i class="material-icons">chevron_right</i>
-                </a>
-            </div>
-        </div>
-
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-            <div class="mdl-card__media">
-                <img src="img/more-from-3.png"></img>
-            </div>
-            <div class="mdl-card__title">
-                <h4 class="mdl-card__title-text">Millions to choose from</h4>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">Hail a taxi, find a recipe, run through a temple – Google Play has all the apps and games that let you make your Android device uniquely yours.</span>
-            </div>
-            <div class="mdl-card__actions">
-                <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
-                    Find apps
                     <i class="material-icons">chevron_right</i>
                 </a>
             </div>

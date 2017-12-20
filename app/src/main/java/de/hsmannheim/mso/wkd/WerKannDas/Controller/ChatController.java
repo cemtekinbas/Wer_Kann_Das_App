@@ -42,7 +42,7 @@ public class ChatController {
         User user = userService.getByName(username);
         List<Chat> chats = chatService.getByRequestID(user, requestId);
         model.addAttribute("user", user);
-        model.addAttribute("chat", chats);
+        model.addAttribute("chats", chats);
         return "chat";
     }
 
