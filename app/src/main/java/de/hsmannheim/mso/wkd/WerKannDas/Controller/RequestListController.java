@@ -24,12 +24,12 @@ public class RequestListController {
     @Autowired
     RequestService requestService;
 
-    @RequestMapping(value="/user/{userId}/requests", method = RequestMethod.GET, params = {"userId"})
-    public String showUserDasboard(@PathVariable("userId") String userId, Model model)
+    @RequestMapping(value="/user/{userId}/requests", method = RequestMethod.GET)
+    public String showUserDasboard(@PathVariable("userId") int userId, Model model)
     {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        User viewUser = userService.getByID(Integer.parseInt(userId));
+        User viewUser = userService.getByID(userId);
         List<Request> requestList = requestService.getByUser(viewUser);
         model.addAttribute("user", user);
         model.addAttribute("viewUser", viewUser);

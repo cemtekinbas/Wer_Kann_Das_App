@@ -39,9 +39,9 @@ public class AchievementController {
     }
 
     @RequestMapping(value = "/achievements/{id}", method = RequestMethod.GET)
-    public String showAchievemnts(@PathVariable("id") String id, Model model)
+    public String showAchievemnts(@PathVariable("id") int id, Model model)
     {
-        Achievement achievement = achievementService.getByID(Integer.parseInt(id));
+        Achievement achievement = achievementService.getByID(id);
         String userName = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(userName);
         model.addAttribute("achievement", achievement);

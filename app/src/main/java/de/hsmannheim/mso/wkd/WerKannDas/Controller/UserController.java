@@ -28,11 +28,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public String showUser(@PathVariable("id") String userId, Model model)
+    public String showUser(@PathVariable("id") int userId, Model model)
     {
         String username = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        User viewUser = userService.getByID(Integer.parseInt(userId));
+        User viewUser = userService.getByID(userId);
         model.addAttribute("user", user);
         model.addAttribute("viewUser", viewUser);
         return "user";
