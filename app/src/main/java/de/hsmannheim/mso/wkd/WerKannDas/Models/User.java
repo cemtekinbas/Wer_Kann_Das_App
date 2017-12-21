@@ -5,6 +5,7 @@ import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class User {
     private int pk;
@@ -18,6 +19,11 @@ public class User {
     private String village;
     private String street_with_number;
     private Date birthday;
+
+    public User()
+    {
+        this(-1, "", "", "", "", "", "", "", "", "", Date.valueOf(LocalDate.now()));
+    }
 
     public User(int pk, String mail, String user_name, String plz, String password, String passwordClear, String forename, String surname, String village, String street_with_number, Date birthday) {
         this.pk = pk;

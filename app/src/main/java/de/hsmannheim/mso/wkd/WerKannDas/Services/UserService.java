@@ -133,8 +133,8 @@ public class UserService {
             pstmt.setBoolean(10, true);
             pstmt.executeUpdate();
             pstmt = ds.getConnection().prepareStatement("insert into user_roles values(?,?)");
-            pstmt.setString(0, userName);
-            pstmt.setString(1, "USER");
+            pstmt.setString(1, userName);
+            pstmt.setString(2, "USER");
             pstmt.execute();
             ResultSet results = pstmt.getGeneratedKeys();
             if(results.next()) {

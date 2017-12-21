@@ -17,20 +17,20 @@
   limitations under the License
 -->
 
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Introducing Lollipop, a sweet new take on Android." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <title>Android</title>
 
     <!-- Page styles -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css">
-    <link rel="stylesheet" href="styles.css">
-      <link rel="stylesheet" href="styleChat.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+      <link rel="stylesheet" href="styleChat.css" />
   <link rel="stylesheet" href="material.green-purple.min.css" />
   </head>
   <body>
@@ -57,7 +57,7 @@
 
       <div class="android-drawer mdl-layout__drawer">
         <span class="mdl-layout-title">
-          <img class="android-logo-image" src="images/Logo2_minimal_klein.png">
+          <img class="android-logo-image" src="images/Logo2_minimal_klein.png" />
         </span>
         <nav class="mdl-navigation">
           <a class="mdl-navigation__link" href="">Profil</a>
@@ -76,94 +76,77 @@
       <main class="demo-main mdl-layout__content">
         <div class="demo-container mdl-grid">
           <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+            <form action="#" th:action="@{/register}" th:object="${user}" method="post">
           <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
             <h4>Registrieren</h4>
             <h4>E-Mail Adresse*</h4>
               <!-- Textfield with Floating Label -->
                <!-- Simple Textfield -->
-                <form action="#">
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">E-Mail Adresse...</label>
+                    <input class="mdl-textfield__input" type="text" id="mail" th:field="*{mail}" />
+                    <label class="mdl-textfield__label" for="mail">E-Mail Adresse...</label>
                   </div>
-                </form>
-              
+
             <h4>Passwort*</h4>
              <!-- Textfield with Floating Label -->
                <!-- Simple Textfield -->
-                <form action="#">
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Passwort...</label>
+                    <input class="mdl-textfield__input" type="text" id="passwordClear" th:field="*{passwordClear}" />
+                    <label class="mdl-textfield__label" for="passwordClear">Passwort...</label>
                   </div>
-                </form>
               <h4>Passwort wiederholen*</h4>
               <!-- Floating Multiline Textfield -->
                 <!-- Textfield with Floating Label -->
                <!-- Simple Textfield -->
-                <form action="#">
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Passwort wiederholen...</label>
+                    <input class="mdl-textfield__input" type="text" id="passwordRepeat" />
+                    <label class="mdl-textfield__label" for="passwordRepeat">Passwort wiederholen...</label>
                   </div>
-                </form>
               <h4>Benutzername*</h4>
               <!-- Textfield with Floating Label -->
                <!-- Simple Textfield -->
-                <form action="#">
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Benutzername...</label>
+                    <input class="mdl-textfield__input" type="text" id="user_name" th:field="*{user_name}" />
+                    <label class="mdl-textfield__label" for="user_name">Benutzername...</label>
                   </div>
-                </form>
                <h4>Vorname</h4>
               <!-- Textfield with Floating Label -->
                <!-- Simple Textfield -->
-                <form action="#">
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Vorname...</label>
+                    <input class="mdl-textfield__input" type="text" id="forename" th:field="*{forename}" />
+                    <label class="mdl-textfield__label" for="forename">Vorname...</label>
                   </div>
-                </form>
                <h4>Nachname</h4>
               <!-- Textfield with Floating Label -->
                <!-- Simple Textfield -->
-                <form action="#">
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Nachname...</label>
+                    <input class="mdl-textfield__input" type="text" id="surname" th:field="*{surname}" />
+                    <label class="mdl-textfield__label" for="surname">Nachname...</label>
                   </div>
-                </form>
                <h4>Straße und Nr.</h4>
               <!-- Textfield with Floating Label -->
                <!-- Simple Textfield -->
-                <form action="#">
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Straße und Nr....</label>
+                    <input class="mdl-textfield__input" type="text" id="street_with_number" th:field="*{street_with_number}" />
+                    <label class="mdl-textfield__label" for="street_with_number">Straße und Nr....</label>
                   </div>
-                </form>
                <h4>PLZ*</h4>
               <!-- Textfield with Floating Label -->
                <!-- Simple Textfield -->
-                <form action="#">
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Postleitzahl...</label>
+                    <input class="mdl-textfield__input" type="text" id="plz" th:field="*{plz}" />
+                    <label class="mdl-textfield__label" for="plz">Postleitzahl...</label>
                   </div>
-                </form>
                <h4>Ort</h4>
               <!-- Textfield with Floating Label -->
                <!-- Simple Textfield -->
-                <form action="#">
                   <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Ort...</label>
+                    <input class="mdl-textfield__input" type="text" id="village" th:field="*{village}" />
+                    <label class="mdl-textfield__label" for="village">Ort...</label>
                   </div>
-                </form>
               <p>Mit * gekennzeichente Felder sind Pflichtfelder.</p>
               <!-- Colored raised button -->
-<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
   Registrieren
 </button>
               <!-- Flat button -->
@@ -171,6 +154,7 @@
   Abbrechen
 </button>
           </div>
+            </form>
         </div>
 
            </main>
