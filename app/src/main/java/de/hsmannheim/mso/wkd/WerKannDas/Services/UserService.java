@@ -26,7 +26,7 @@ public class UserService {
     public static String colEnabled = "enabled";
 
 
-    public static String schema = "CREATE TABLE " + table + " ( " +
+    public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " ( " +
             colPk + " INTEGER IDENTITY PRIMARY KEY, " +
             colMail + " VARCHAR(250) NOT NULL, " +
             colUserName + " VARCHAR(50) NOT NULL UNIQUE, " +
@@ -40,11 +40,12 @@ public class UserService {
             colEnabled + " BOOLEAN " +
             ");";
 
-    public static String schemaAuthorities = "create table user_roles (" +
-            "username varchar(255) not null," +
-            "role varchar(255) not null, " +
-            "constraint fk_authorities_users foreign key(username) references " + table + "(" + colUserName + ") );";
+    public static String tableAuthorities = "user_roles";
 
+    public static String schemaAuthorities = "CREATE TABLE IF NOT EXISTS " + tableAuthorities + " (" +
+            "username VARCHAR(255) NOT NULL," +
+            "role VARCHAR(255) NOT NULL, " +
+            "CONSTRAINT fk_authorities_users FOREIGN KEY(username) REFERENCES " + table + "(" + colUserName + ") );";
 
 
     public static String combinedCols = colPk + ", " + colMail + ", " + colUserName + ", " + colPlz + ", " +
@@ -54,8 +55,8 @@ public class UserService {
     public static String queryLogin = "SELECT " + colUserName + "," + colPassword + "," + colEnabled + " FROM " + table + " WHERE " + colUserName + " = ?";
     public static String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
     public static String queryByUserName = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colUserName + " = ?";
-    public static String queryAdd = "INSERT INTO " + table + "(" + colMail + ", " + colUserName +", " + colPassword +", " +
-            colForename +  ", " + colSurname +  ", " + colBirthday +  ", " + colPlz +  ", " + colVillage +  ", " +
+    public static String queryAdd = "INSERT INTO " + table + "(" + colMail + ", " + colUserName + ", " + colPassword + ", " +
+            colForename + ", " + colSurname + ", " + colBirthday + ", " + colPlz + ", " + colVillage + ", " +
             colStreetWithNumber + ", " + colEnabled + ") VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     @Autowired
@@ -112,7 +113,7 @@ public class UserService {
             String mail = user.getMail();
             String userName = user.getUser_name();
             String password = user.getPassword();
-            if(user.getPasswordClear() != "") {
+            if (user.getPasswordClear() != "") {
                 password = bcryptPasswordEncoder.encode(user.getPasswordClear());
             }
             String forename = user.getForename();
@@ -132,17 +133,18 @@ public class UserService {
             pstmt.setString(9, streetWithNumber);
             pstmt.setBoolean(10, true);
             pstmt.executeUpdate();
+
             pstmt = ds.getConnection().prepareStatement("insert into user_roles values(?,?)");
             pstmt.setString(1, userName);
             pstmt.setString(2, "USER");
             pstmt.execute();
+
             ResultSet results = pstmt.getGeneratedKeys();
-            if(results.next()) {
+            if (results.next()) {
                 int id = results.getInt(colPk);
                 return getByID(id);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;

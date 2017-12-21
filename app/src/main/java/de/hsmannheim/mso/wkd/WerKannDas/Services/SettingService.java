@@ -12,7 +12,7 @@ public class SettingService {
     public static String colPk = "pk";
     public static String colName = "name";
 
-    public static String schema = "CREATE TABLE " + table + " (" +
+    public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " (" +
             colPk + " INTEGER IDENTITY PRIMARY KEY, " +
             colName + " VARCHAR(250) " +
             ");";

@@ -20,7 +20,7 @@ public class AchievementService {
     public static String colUnlockCondition = "unlock_condition";
 
 
-    public static String schema = "CREATE TABLE " + table + " ( " +
+    public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " ( " +
             colPk + " INTEGER IDENTITY PRIMARY KEY, " +
             colName + " VARCHAR(250), " +
             colDescription + " VARCHAR(250), " +
