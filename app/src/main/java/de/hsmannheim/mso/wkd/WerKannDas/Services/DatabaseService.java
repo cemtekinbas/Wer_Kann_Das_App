@@ -22,7 +22,7 @@ public class DatabaseService {
     private static String queryAdd = "INSERT INTO " + table + " (" + colVersion + ") VALUES (?)";
 
     public void checkVersion(DriverManagerDataSource ds, PasswordEncoder bcryptPasswordEncoder) {
-        int version = 0;
+        int version = -1;
         try {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryGet);
             ResultSet results = pstmt.executeQuery();
@@ -30,10 +30,13 @@ public class DatabaseService {
                 version = results.getInt(colVersion);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            version = -1;
         }
         if (version < currentVersion) {
-            dropTables(ds);
+            if(version != -1) {
+                dropTables(ds);
+            }
             createTables(ds);
             insertDefaults(ds, bcryptPasswordEncoder);
         }
