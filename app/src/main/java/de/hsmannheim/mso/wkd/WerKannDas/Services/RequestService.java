@@ -80,9 +80,19 @@ public class RequestService {
             pstmt.setDate(1, request.getCreateDate());
             pstmt.setInt(2, request.getFromUserFk());
             pstmt.setBoolean(3, request.isPremium());
-            pstmt.setString(4, request.getMessage());
+            if(request.getMessage().length() > 250) {
+                pstmt.setString(4, request.getMessage().substring(0, 250));
+            }
+            else {
+                pstmt.setString(4, request.getMessage());
+            }
             pstmt.setInt(5, request.getState().getId());
-            pstmt.setString(6, request.getTitle());
+            if(request.getTitle().length() > 250) {
+                pstmt.setString(6, request.getTitle().substring(0, 250));
+            }
+            else {
+                pstmt.setString(6, request.getTitle());
+            }
             pstmt.executeUpdate();
             ResultSet results = pstmt.getGeneratedKeys();
             if(results.next()) {
@@ -112,7 +122,7 @@ public class RequestService {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByState);
             pstmt.setInt(1, RequestState.OPEN.getId());
             ResultSet results = pstmt.executeQuery();
-            if (results.next()) {
+            while(results.next()) {
                 Request request = new Request(results);
                 requestList.add(request);
             }

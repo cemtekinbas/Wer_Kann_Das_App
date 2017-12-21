@@ -52,23 +52,25 @@ public class RequestController {
         if(request != null) {
             model.addAttribute("newRequest", request);
             model.addAttribute("success", true);
+            return "redirect:/";
         }
         else
         {
             model.addAttribute("newRequest", newRequest);
             model.addAttribute("success", false);
+            return "anfrageErstellen";
         }
-        return "anfrageErstellen";
+
     }
 
-    @RequestMapping(value = "/request/{requestId}", method = RequestMethod.GET, params = {"requestId"})
-    public String showRequest(@PathVariable("requestId") String requestId, Model model)
+    @RequestMapping(value = "/request/{requestId}", method = RequestMethod.GET)
+    public String showRequest(@PathVariable("requestId") int requestId, Model model)
     {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        Request request = requestService.getByID(Integer.parseInt(requestId));
+        Request request = requestService.getByID(requestId);
         model.addAttribute("user", user);
-        model.addAttribute("request", request);
+        model.addAttribute("newRequest", request);
         if(request.getFromUserFk() == user.getPk())
         {
             return "anfrageErstellen";
@@ -78,8 +80,8 @@ public class RequestController {
         }
     }
 
-    @RequestMapping(value = "/request/{requestId}", method = RequestMethod.POST, params = {"requestId"})
-    public String editRequest(@PathVariable("requestId") String requestId, @RequestParam("request") Request requestData, Model model)
+    @RequestMapping(value = "/request/{requestId}", method = RequestMethod.POST)
+    public String editRequest(@PathVariable("requestId") int requestId, Request requestData, Model model)
     {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
