@@ -133,10 +133,12 @@ public class UserService {
             pstmt.setString(9, streetWithNumber);
             pstmt.setBoolean(10, true);
             pstmt.executeUpdate();
-            pstmt = ds.getConnection().prepareStatement("INSERT INTO user_roles VALUES(?,?)");
-            pstmt.setString(0, userName);
-            pstmt.setString(1, "USER");
+
+            pstmt = ds.getConnection().prepareStatement("insert into user_roles values(?,?)");
+            pstmt.setString(1, userName);
+            pstmt.setString(2, "USER");
             pstmt.execute();
+
             ResultSet results = pstmt.getGeneratedKeys();
             if (results.next()) {
                 int id = results.getInt(colPk);

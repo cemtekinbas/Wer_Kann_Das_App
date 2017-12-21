@@ -18,18 +18,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/home", "/css/**", "/font/**", "/fonts/**", "/img/**", "/js/**", "/sass/**").permitAll()
+                .antMatchers("/", "/home", "/css/**", "/font/**", "/fonts/**", "/img/**", "/js/**", "/sass/**", "/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")
                 .passwordParameter(UserService.colPassword)
                 .usernameParameter(UserService.colUserName)
-                .failureForwardUrl("/login?error")
-                .successForwardUrl("/")
+                .failureUrl("/login?error")
                 .permitAll()
                 .and()
             .logout()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutUrl("/logout")
                 .permitAll()
                 .and()
             .exceptionHandling().accessDeniedPage("/403");
