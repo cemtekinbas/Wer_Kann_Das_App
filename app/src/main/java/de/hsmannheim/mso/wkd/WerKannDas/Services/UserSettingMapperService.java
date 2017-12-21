@@ -13,7 +13,7 @@ public class UserSettingMapperService {
     public static String colSettingFk = "setting_fk";
     public static String colSettingValue = "setting_value";
 
-    public static String schema = "CREATE TABLE user_has_setting (" +
+    public static String schema = "CREATE TABLE IF NOT EXISTS user_has_setting (" +
             colUserFk + " INTEGER NOT NULL, " +
             colSettingFk + " INTEGER NOT NULL, " +
             colSettingValue + " VARCHAR(250), " +

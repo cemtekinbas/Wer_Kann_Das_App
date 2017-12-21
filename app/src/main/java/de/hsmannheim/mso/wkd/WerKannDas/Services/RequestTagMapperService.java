@@ -12,7 +12,7 @@ public class RequestTagMapperService {
     public static String colRequestFk = "request_fk";
     public static String colTagFk = "tag_fk";
 
-    public static String schema = "CREATE TABLE " + table + " (" +
+    public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " (" +
             colRequestFk + " INTEGER NOT NULL, " +
             colTagFk + " INTEGER NOT NULL, " +
             " PRIMARY KEY (" + colRequestFk + ", " + colTagFk + ")," +

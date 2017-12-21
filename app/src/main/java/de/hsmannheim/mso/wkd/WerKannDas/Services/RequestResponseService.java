@@ -15,7 +15,7 @@ public class RequestResponseService {
     public static String colUserFk = "user_fk";
     public static String colResponseDate = "response_date";
 
-    public static String schema = "CREATE TABLE " + table + " ( " +
+    public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " ( " +
             colRequestFk + " INTEGER NOT NULL, " +
             colUserFk + " INTEGER NOT NULL, " +
             colResponseDate + " TIMESTAMP DEFAULT NOW, " +

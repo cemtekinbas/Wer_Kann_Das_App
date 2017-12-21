@@ -12,7 +12,7 @@ public class RequestTagService {
     public static String colPk = "pk";
     public static String colTag = "tag";
 
-    public static String schema = "CREATE TABLE " + table + " (" +
+    public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " (" +
             colPk + " INTEGER IDENTITY PRIMARY KEY, " +
             colTag + " VARCHAR(50) NOT NULL " +
             ");";

@@ -25,11 +25,11 @@ public class RequestService {
     public static String colState = "state";
 
 
-    public static String schema = "CREATE TABLE " + table + " (" +
+    public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " (" +
             colPk + " INTEGER IDENTITY PRIMARY KEY, " +
             colFromUserFk + " INTEGER NOT NULL, " +
             colTitle + " VARCHAR(250) NOT NULL, " + // -- limit size!?
-            colMessage + " VARCHAR(250) NOT NULL, " + // -- limit size!?
+            colMessage + " VARCHAR(2500) NOT NULL, " + // -- limit size!?
             colIsPremium + " BOOLEAN DEFAULT FALSE, " + // -- validate datatype bit, replace with TINYINT(1) if invalid
             colCreateDate + " TIMESTAMP DEFAULT NOW, " + // -- validate now(), remove if invalid
             colState + " INTEGER DEFAULT 1, " +

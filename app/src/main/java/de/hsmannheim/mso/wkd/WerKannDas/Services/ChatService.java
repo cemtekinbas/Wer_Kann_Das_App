@@ -25,7 +25,7 @@ public class ChatService {
     public static String colSentDate = "sent_date";
     public static String colReadDate = "read_date";
 
-    public static String schema = "CREATE TABLE " + table + " ( " +
+    public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " ( " +
             colPk + " INTEGER IDENTITY PRIMARY KEY, " +
             colFromUserFk + " INT NOT NULL, " +
             colToUserFk + " INT NOT NULL, " +

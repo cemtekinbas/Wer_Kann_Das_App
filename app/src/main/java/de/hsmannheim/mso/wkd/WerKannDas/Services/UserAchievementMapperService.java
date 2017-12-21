@@ -18,7 +18,7 @@ public class UserAchievementMapperService {
     public static String colUserFk = "user_fk";
     public static String colAchievementFk = "achievement_fk";
 
-    public static String schema = "CREATE TABLE " + table + " (" +
+    public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " (" +
             colUserFk + " INTEGER NOT NULL, " +
             colAchievementFk + " INTEGER NOT NULL, " +
             "  PRIMARY KEY (" + colUserFk + ", " + colAchievementFk + ")," +
