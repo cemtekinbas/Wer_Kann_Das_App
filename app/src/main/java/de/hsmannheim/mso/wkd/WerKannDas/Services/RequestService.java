@@ -1,6 +1,5 @@
 package de.hsmannheim.mso.wkd.WerKannDas.Services;
 
-import de.hsmannheim.mso.wkd.WerKannDas.Models.Achievement;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Request;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.RequestState;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.User;
@@ -8,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,14 +47,14 @@ public class RequestService {
     private String queryByUser = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colFromUserFk + " = ?";
     private String queryByState = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colState + " = ?";
 
-    public static String queryAdd = "INSERT INTO " + table + "(" + colCreateDate + ", " + colFromUserFk +", " + colIsPremium +", " +
-            colMessage +  ", " + colState +  ", " + colTitle + ") VALUES ( ?, ?, ?, ?, ?, ?)";
+    public static String queryAdd = "INSERT INTO " + table + "(" + colCreateDate + ", " + colFromUserFk + ", " + colIsPremium + ", " +
+            colMessage + ", " + colState + ", " + colTitle + ") VALUES ( ?, ?, ?, ?, ?, ?)";
 
     @Autowired
     private DataSource ds;
 
 
-    public Request getByID(int pk) {        //Prepared Statements in allen Service Klassen
+    public Request getByID(int pk) {
         try {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByID);
             pstmt.setInt(1, pk);
@@ -68,7 +69,6 @@ public class RequestService {
                 //account.getTransactions().addAll(transactions);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -80,33 +80,45 @@ public class RequestService {
             pstmt.setDate(1, request.getCreateDate());
             pstmt.setInt(2, request.getFromUserFk());
             pstmt.setBoolean(3, request.isPremium());
-            if(request.getMessage().length() > 250) {
+            if (request.getMessage().length() > 250) {
                 pstmt.setString(4, request.getMessage().substring(0, 250));
-            }
-            else {
+            } else {
                 pstmt.setString(4, request.getMessage());
             }
             pstmt.setInt(5, request.getState().getId());
-            if(request.getTitle().length() > 250) {
+            if (request.getTitle().length() > 250) {
                 pstmt.setString(6, request.getTitle().substring(0, 250));
-            }
-            else {
+            } else {
                 pstmt.setString(6, request.getTitle());
             }
             pstmt.executeUpdate();
             ResultSet results = pstmt.getGeneratedKeys();
-            if(results.next()) {
+            if (results.next()) {
                 int id = results.getInt(colPk);
                 return getByID(id);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<Request> getByUser(User user) { return null; }
+    public List<Request> getByUser(User user) {
+        List<Request> requestList = new ArrayList<Request>(3);
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByUser);
+            pstmt.setInt(1, user.getPk());
+            ResultSet results = pstmt.executeQuery();
+            while (results.next()) {
+                Request request = new Request(results);
+                requestList.add(request);
+            }
+            return requestList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return requestList;
+    }
 
     public List<Request> getList() {
         List<Request> requestList = new ArrayList<Request>(3);
@@ -122,13 +134,12 @@ public class RequestService {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByState);
             pstmt.setInt(1, RequestState.OPEN.getId());
             ResultSet results = pstmt.executeQuery();
-            while(results.next()) {
+            while (results.next()) {
                 Request request = new Request(results);
                 requestList.add(request);
             }
             return requestList;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return requestList;

@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 @Service
 public class AchievementService {
@@ -31,6 +32,9 @@ public class AchievementService {
     private String combinedCols = colPk + ", " + colName + ", " + colDescription + ", " + colIconPath + ", " + colUnlockCondition;
 
     private String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
+    private String queryAdd = "INSERT INTO " + table + " (" +
+            colName + ", " + colDescription + ", " +
+            colIconPath + ", " + colUnlockCondition + ") VALUES (?,?,?,?)";
 
     @Autowired
     private DataSource ds;
@@ -51,17 +55,32 @@ public class AchievementService {
                 //account.getTransactions().addAll(transactions);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
     }
 
-    public Achievement update(Achievement achievement){
+    public Achievement update(Achievement achievement) {
         return null;
     }
 
-    public Achievement save(Achievement achievement){
+    public Achievement save(Achievement achievement) {
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = ds.getConnection().prepareStatement(queryAdd, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, achievement.getName());
+            pstmt.setString(2, achievement.getDescription());
+            pstmt.setString(3, achievement.getIcon_path());
+            pstmt.setString(4, achievement.getUnlock_condition());
+            pstmt.executeQuery();
+            ResultSet results = pstmt.getGeneratedKeys();
+            if (results.next()) {
+                int id = results.getInt(colPk);
+                return getByID(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
