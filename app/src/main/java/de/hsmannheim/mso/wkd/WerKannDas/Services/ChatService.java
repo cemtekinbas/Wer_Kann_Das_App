@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +57,11 @@ public class ChatService {
     private String queryByRequestID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colRequestFk + " = ?";
     private String queryByOtherUserAndRequestID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colRequestFk + " = ? AND (" + colFromUserFk + " = ? OR " + colToUserFk + " = ?)";
     private String queryAdd = "INSERT INTO " + table + " (" + colFromUserFk + ", " + colToUserFk + ", " + colMessage +
-            ", " + colRequestFk + ") VALUE (?, ?, ?, ?)";
+            ", " + colRequestFk + ") VALUES (?, ?, ?, ?)";
+    private String queryUpdate = "UPDATE " + table +
+            " SET (" + colFromUserFk + ", " + colToUserFk + ", " + colMessage + ", " + colSentDate + ", " +
+            colReadDate + ") = (?,?,?,?,?) " +
+            "WHERE " + colPk + " = ?";
 
     @Autowired
     private DataSource ds;
@@ -82,7 +83,24 @@ public class ChatService {
         return null;
     }
 
-    public Chat update(Chat chat) {
+    public Chat update(ChatMessage chatMessage) {
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryUpdate, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, chatMessage.getFrom_user_fk());
+            pstmt.setInt(2, chatMessage.getTo_user_fk());
+            pstmt.setString(3, chatMessage.getMessage());
+            pstmt.setDate(4, chatMessage.getSent_date());
+            pstmt.setDate(5, chatMessage.getRead_date());
+            pstmt.setInt(6, chatMessage.getPk());
+            pstmt.executeUpdate();
+            ResultSet results = pstmt.getGeneratedKeys();
+            if (results.next()) {
+                int id = results.getInt(colPk);
+                return getByID(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

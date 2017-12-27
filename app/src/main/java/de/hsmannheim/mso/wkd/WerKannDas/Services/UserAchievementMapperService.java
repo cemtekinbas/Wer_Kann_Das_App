@@ -53,7 +53,6 @@ public class UserAchievementMapperService {
                 list.add(achievement);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return list;
