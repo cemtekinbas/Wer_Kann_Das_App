@@ -76,7 +76,7 @@ public class RequestController {
             return "anfrageErstellen";
         }
         else {
-            return "request";
+            return "anfrageDetail";
         }
     }
 
@@ -96,7 +96,7 @@ public class RequestController {
             model.addAttribute("success", false);
             model.addAttribute("newRequest", requestData);
         }
-        return "request";
+        return "anfrageDetail";
     }
 
 }
