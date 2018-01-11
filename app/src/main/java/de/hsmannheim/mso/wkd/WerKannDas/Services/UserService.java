@@ -52,7 +52,7 @@ public class UserService {
             colPassword + ", " + colForename + ", " + colSurname + ", " + colVillage + ", " +
             colStreetWithNumber + ", " + colBirthday;
 
-    public static String queryLogin = "SELECT " + colUserName + "," + colPassword + "," + colEnabled + " FROM " + table + " WHERE " + colUserName + " = ?";
+    public static String queryLogin = "SELECT " + colUserName + "," + colPassword + "," + colEnabled + " FROM " + table + " WHERE ? in (" + colUserName + " , " + colMail + ")";
     public static String queryByID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colPk + " = ?";
     public static String queryByUserName = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colUserName + " = ?";
     public static String queryAdd = "INSERT INTO " + table + "(" + colMail + ", " + colUserName + ", " + colPassword + ", " +
