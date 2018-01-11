@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head(title)">
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -58,6 +58,7 @@
         <span class="mdl-layout-title">
             <img class="android-logo-image" src="img/Logo2_minimal_klein.png" />
         </span>
+    <div th:if="${#authentication != null && #authentication.isAuthenticated()}">
     <nav class="mdl-navigation">
         <a class="mdl-navigation__link" href="/request">New Request</a>
         <a class="mdl-navigation__link" href="/user">Profil</a>
@@ -66,6 +67,12 @@
         <a class="mdl-navigation__link" href="/settings">Einstellungen</a>
         <a class="mdl-navigation__link" href="/logout">Logout</a>
     </nav>
+    </div>
+    <div th:unless="${#authentication != null && #authentication.isAuthenticated()}">
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="/login">Login</a>
+        </nav>
+    </div>
 </div>
 
 <div th:fragment="footer">
@@ -92,7 +99,7 @@
 </div>
 
 
-    <div th:fragment="logout" class="logout"
+    <div th:fragment="logout" class="logout" th:if="${#authentication != null}"
          sec:authorize="isAuthenticated()">
         Eingeloggt als: <span sec:authentication="name"></span> | Berechtigung: <span
             sec:authentication="principal.authorities"></span>
