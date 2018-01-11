@@ -3,17 +3,21 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head(title)">
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="Introducing Lollipop, a sweet new take on Android." />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content="Introducing Lollipop, a sweet new take on Android."/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
 
-        <!-- Page styles -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css" />
-        <link rel="stylesheet" href="/css/style.css" />
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.green-purple.min.css" />
+    <!-- Page styles -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/styleChat.css">
+    <link rel="stylesheet" href="/css/material.green-purple.min.css"/>
+    <link rel="stylesheet" href="/css/styleDetail.css"/>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.green-purple.min.css"/>
     <title th:replace="${title}">Android</title>
 </head>
 <body>
@@ -31,7 +35,7 @@
                 <i class="material-icons">search</i>
             </label>
             <div class="mdl-textfield__expandable-holder">
-                <input class="mdl-textfield__input" type="text" id="search-field" />
+                <input class="mdl-textfield__input" type="text" id="search-field"/>
             </div>
         </div>
         <!-- Navigation -->
@@ -43,7 +47,8 @@
         <span class="android-mobile-title mdl-layout-title">
               <p>Wer kann das?</p>
           </span>
-        <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
+        <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect"
+                id="more-button">
             <i class="material-icons">more_vert</i>
         </button>
         <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
@@ -56,17 +61,17 @@
 
 <div th:fragment="menu" class="android-drawer mdl-layout__drawer">
         <span class="mdl-layout-title">
-            <img class="android-logo-image" src="img/Logo2_minimal_klein.png" />
+            <img class="android-logo-image" src="img/Logo2_minimal_klein.png"/>
         </span>
     <div th:if="${#authentication != null && #authentication.isAuthenticated()}">
-    <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="/request">New Request</a>
-        <a class="mdl-navigation__link" href="/user">Profil</a>
-        <a class="mdl-navigation__link" href="/chat">Chats</a>
-        <a class="mdl-navigation__link" href="/achievements">Achievements</a>
-        <a class="mdl-navigation__link" href="/settings">Einstellungen</a>
-        <a class="mdl-navigation__link" href="/logout">Logout</a>
-    </nav>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="/request">New Request</a>
+            <a class="mdl-navigation__link" href="/user">Profil</a>
+            <a class="mdl-navigation__link" href="/chat">Chats</a>
+            <a class="mdl-navigation__link" href="/achievements">Achievements</a>
+            <a class="mdl-navigation__link" href="/settings">Einstellungen</a>
+            <a class="mdl-navigation__link" href="/logout">Logout</a>
+        </nav>
     </div>
     <div th:unless="${#authentication != null && #authentication.isAuthenticated()}">
         <nav class="mdl-navigation">
@@ -99,10 +104,10 @@
 </div>
 
 
-    <div th:fragment="logout" class="logout" th:if="${#authentication != null}"
-         sec:authorize="isAuthenticated()">
-        Eingeloggt als: <span sec:authentication="name"></span> | Berechtigung: <span
-            sec:authentication="principal.authorities"></span>
-    </div>
+<div th:fragment="logout" class="logout" th:if="${#authentication != null}"
+     sec:authorize="isAuthenticated()">
+    Eingeloggt als: <span sec:authentication="name"></span> | Berechtigung: <span
+        sec:authentication="principal.authorities"></span>
+</div>
 </body>
 </html>

@@ -36,7 +36,7 @@ public class ChatController {
         List<Chat> chats = chatService.getByUser(user);
         model.addAttribute("user", user);
         model.addAttribute("chats", chats);
-        return "chat";
+        return "chat_demo";
     }
 
     @RequestMapping(value = "/chat/{requestId}", method = RequestMethod.GET)

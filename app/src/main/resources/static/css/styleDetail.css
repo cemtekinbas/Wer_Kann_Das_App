@@ -306,6 +306,15 @@ body .demo-blog {
   margin-right: 16px;
   color: rgba(0, 0, 0, 0.24);
 }
+
+.chat_message_mine {
+  text-align: right;
+}
+
+.chat_message_other {
+  text-align: left;
+}
+
 .demo-blog--blogpost .comments .comment > .comment__answers {
   padding-top: 32px;
   padding-left: 48px;

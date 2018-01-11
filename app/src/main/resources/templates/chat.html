@@ -1,4 +1,3 @@
-
 <!doctype html>
 <!--
   Material Design Lite
@@ -16,27 +15,13 @@
   See the License for the specific language governing permissions and
   limitations under the License
 -->
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Android</title>
-
-    <!-- Page styles -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/styleChat.css">
-    <link rel="stylesheet" href="/css/material.green-purple.min.css" />
-      <link rel="stylesheet" href="/css/styleDetail.css"/>
-  </head>
-  <body>
-       <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
-     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+<html lang="de" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:insert="base :: head(~{::title})">
+    <title>Chat</title>
+</head>
+<body>
+<div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
             <div class="mdl-layout__header-row">
                 <span class="android-title mdl-layout-title">
@@ -52,73 +37,83 @@
             </div>
         </div>
 
-        <div class="android-drawer mdl-layout__drawer">
-            <span class="mdl-layout-title">
-                <img class="android-logo-image" src="./resources/static/img/Logo2_minimal_klein.png">
-            </span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Profil</a>
-                <a class="mdl-navigation__link" href="home.html">Anfragen</a>
-                <a class="mdl-navigation__link" href="anfrageErstellen.html">Neue Anfrage erstellen</a>
-                <a class="mdl-navigation__link" href="">Chats</a>
-                <a class="mdl-navigation__link" href="achievements.html">Achievements</a>
-                <a class="mdl-navigation__link" href="">Einstellungen</a>
-                <a class="mdl-navigation__link" href="">Logout</a>
-            </nav>
-        </div>
+        <div th:replace="base :: menu"/>
         <div class="android-content mdl-layout__content">
         </div>
     </div>
-        <div class="demo-ribbon"></div>
-      <main class="demo-main mdl-layout__content">
+    <div class="demo-ribbon"></div>
+    <main class="demo-main mdl-layout__content">
         <div class="demo-container mdl-grid">
-          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-            <h4>Chat mit XY</h4>
-            <div class="comment mdl-color-text--grey-700">
-                <header class="comment__header">
-                  <img src="img/co1.jpg" class="comment__avatar">
-                  <div class="comment__author">
-                    <strong>James Splayd</strong>
-                    <span>2 days ago</span>
-                  </div>
-                </header>
-                <div class="comment__text">
-                  In in culpa nulla elit esse. Ex cillum enim aliquip sit sit ullamco ex eiusmod fugiat. Cupidatat ad minim officia mollit laborum magna dolor tempor cupidatat mollit. Est velit sit ad aliqua ullamco laborum excepteur dolore proident incididunt in labore elit.
-                </div>
-                <div class="comment__answers">
-                  <div class="comment">
-                    <header class="comment__header">
-                      <img src="img/co2.jpg" class="comment__avatar">
-                      <div class="comment__author">
-                        <strong>John Dufry</strong>
-                        <span>2 days ago</span>
-                      </div>
-                    </header>
-                    <div class="comment__text">
-                      Yep, agree!
+            <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+            <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+                <h4>Chat mit XY</h4>
+                <div class="comment mdl-color-text--grey-700" th:each="message:${chat}">
+                    th:text="${request.title}
+                    <div class="chat_message_mine">
+                        <header class="comment__header">
+                            <img src="img/co1.jpg" class="comment__avatar">
+                            <div class="comment__author">
+                                <strong>James Splayd</strong>
+                                <span>2 days ago</span>
+                            </div>
+                        </header>
+                        <div class="comment__text">
+                            In in culpa nulla elit esse. Ex cillum enim aliquip sit sit ullamco ex eiusmod fugiat.
+                            Cupidatat
+                            ad minim officia mollit laborum magna dolor tempor cupidatat mollit. Est velit sit ad aliqua
+                            ullamco laborum excepteur dolore proident incididunt in labore elit.
+                        </div>
                     </div>
-                  </div>
-              <!-- Textfield with Floating Label -->
-               <!-- Simple Textfield -->
-                <form action="#">
-                  <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Schreibe deine Nachricht...</label>
-                  </div>
-                </form>
-              
-              <!-- Colored raised button -->
-<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-  Absenden
-</button>
-            
-          </div>
+                    <div class="chat_message_other">
+                        <div class="comment">
+                            <header class="comment__header">
+                                <img src="img/co2.jpg" class="comment__avatar">
+                                <div class="comment__author">
+                                    <strong>John Dufry</strong>
+                                    <span>2 days ago</span>
+                                </div>
+                            </header>
+                            <div class="comment__text">
+                                Yep, agree!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat_message_mine">
+                        <header class="comment__header">
+                            <img src="img/co1.jpg" class="comment__avatar">
+                            <div class="comment__author">
+                                <strong>James Splayd</strong>
+                                <span>2 days ago</span>
+                            </div>
+                        </header>
+                        <div class="comment__text">
+                            In in culpa nulla elit esse. Ex cillum enim aliquip sit sit ullamco ex eiusmod fugiat.
+                            Cupidatat
+                            ad minim officia mollit laborum magna dolor tempor cupidatat mollit. Est velit sit ad aliqua
+                            ullamco laborum excepteur dolore proident incididunt in labore elit.
+                        </div>
+                    </div>
+                    <div class="comment__answers chat_message_mine">
+                        <!-- Textfield with Floating Label -->
+                        <!-- Simple Textfield -->
+                        <form action="#">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input class="mdl-textfield__input" type="text" id="sample1">
+                                <label class="mdl-textfield__label" for="sample1">Schreibe deine Nachricht...</label>
+                            </div>
+                            <!-- Colored raised button -->
+                            <button type="submit"
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                                Absenden
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+    </main>
+</div>
 
-           </main>
-           </div>
-    
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  </body>
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</body>
 </html>
