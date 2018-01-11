@@ -65,7 +65,15 @@
         <a class="mdl-navigation__link" href="/chat">Chats</a>
         <a class="mdl-navigation__link" href="/achievements">Achievements</a>
         <a class="mdl-navigation__link" href="/settings">Einstellungen</a>
-        <a class="mdl-navigation__link" href="/logout">Logout</a>
+        <form th:action="@{/logout}" method="post" id="logoutForm">
+            <input type="hidden" name="${_csrf.parameterName}"
+                   value="${_csrf.token}"></input>
+        </form> <script>
+        function formSubmit() {
+            document.getElementById("logoutForm").submit();
+        }
+    </script><a
+            href="javascript:formSubmit()" class="mdl-navigation__link"> Logout</a>
     </nav>
     </div>
     <div sec:authorize="!isAuthenticated()">
