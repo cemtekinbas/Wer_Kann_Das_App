@@ -176,7 +176,7 @@ a img{
     height: 800px;
     width: auto;
     background-color: #f3f3f3;
-    background: url('img/city-2042634.png') center 40% no-repeat;
+    background: url('../img/city-2042634.png') center 40% no-repeat;
     background-size: contain;
 }
 @media (max-width:400px){
@@ -186,7 +186,7 @@ a img{
         height: 800px;
         width: auto;
         background-color: #f3f3f3;
-        background: url('img/city-2042634.png') center 40% no-repeat;
+        background: url('../img/city-2042634.png') center 40% no-repeat;
         background-size: 500px;
     }
 
@@ -314,7 +314,7 @@ a img{
 
 .android-wear-section {
     position: relative;
-    background: url('img/superhero-2503808.jpg') center top no-repeat;
+    background: url('../img/superhero-2503808.jpg') center top no-repeat;
     background-size: cover;
     height: 800px;
 }
@@ -385,7 +385,7 @@ a img{
 }
 
 .android-customized-section-image {
-    background: url('img/team-spirit-2447163.jpg') center top no-repeat;
+    background: url('../img/team-spirit-2447163.jpg') center top no-repeat;
     background-size: cover;
     height: 400px;
 }

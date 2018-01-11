@@ -27,7 +27,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         //registry.addViewController("/home").setViewName("home");
         //registry.addViewController("/").setViewName("home");
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/logout").setViewName("home");
+        //registry.addViewController("/logout").setViewName("logout");
     }
 
     @Bean(name = "bcryptPasswordEncoder")

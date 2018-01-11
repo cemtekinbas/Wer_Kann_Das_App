@@ -63,17 +63,27 @@
         <span class="mdl-layout-title">
             <img class="android-logo-image" src="img/Logo2_minimal_klein.png"/>
         </span>
-    <div th:if="${#authentication != null && #authentication.isAuthenticated()}">
+    <div sec:authorize="isAuthenticated()">
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="/request">New Request</a>
             <a class="mdl-navigation__link" href="/user">Profil</a>
             <a class="mdl-navigation__link" href="/chat">Chats</a>
             <a class="mdl-navigation__link" href="/achievements">Achievements</a>
             <a class="mdl-navigation__link" href="/settings">Einstellungen</a>
-            <a class="mdl-navigation__link" href="/logout">Logout</a>
+            <form th:action="@{/logout}" method="post" id="logoutForm">
+                <input type="hidden" name="${_csrf.parameterName}"
+                       value="${_csrf.token}"></input>
+            </form>
+            <script>
+                function formSubmit() {
+                    document.getElementById("logoutForm").submit();
+                }
+            </script>
+            <a
+                    href="javascript:formSubmit()" class="mdl-navigation__link"> Logout</a>
         </nav>
     </div>
-    <div th:unless="${#authentication != null && #authentication.isAuthenticated()}">
+    <div sec:authorize="!isAuthenticated()">
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="/login">Login</a>
         </nav>
