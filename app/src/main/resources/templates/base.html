@@ -58,7 +58,7 @@
         <span class="mdl-layout-title">
             <img class="android-logo-image" src="img/Logo2_minimal_klein.png" />
         </span>
-    <div th:if="${#authentication != null && #authentication.isAuthenticated()}">
+    <div sec:authorize="isAuthenticated()">
     <nav class="mdl-navigation">
         <a class="mdl-navigation__link" href="/request">New Request</a>
         <a class="mdl-navigation__link" href="/user">Profil</a>
@@ -68,7 +68,7 @@
         <a class="mdl-navigation__link" href="/logout">Logout</a>
     </nav>
     </div>
-    <div th:unless="${#authentication != null && #authentication.isAuthenticated()}">
+    <div sec:authorize="!isAuthenticated()">
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="/login">Login</a>
         </nav>
