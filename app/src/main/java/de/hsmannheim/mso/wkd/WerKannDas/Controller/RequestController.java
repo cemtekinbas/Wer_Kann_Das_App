@@ -70,12 +70,13 @@ public class RequestController {
         User user = userService.getByName(username);
         Request request = requestService.getByID(requestId);
         model.addAttribute("user", user);
-        model.addAttribute("newRequest", request);
         if(request.getFromUserFk() == user.getPk())
         {
+            model.addAttribute("newRequest", request);
             return "anfrageErstellen";
         }
         else {
+            model.addAttribute("request", request);
             return "anfrageDetail";
         }
     }
