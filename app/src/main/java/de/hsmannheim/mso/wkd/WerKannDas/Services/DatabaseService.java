@@ -138,7 +138,7 @@ public class DatabaseService {
             String sql = "INSERT INTO " + AchievementService.table + " (" + AchievementService.colName + ", " +
                     AchievementService.colDescription + ", " + AchievementService.colIconPath + ") VALUES (?,?,?)";
             pstmt = ds.getConnection().prepareStatement(sql, Statement.NO_GENERATED_KEYS);
-            pstmt.setString(1, "Erst-Helfer");
+            pstmt.setString(1, "Ersthelfer");
             pstmt.setString(2, "Helfe einem anderen Dorfbewohner");
             pstmt.setString(3, "&#62133;");
             pstmt.execute();

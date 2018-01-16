@@ -36,11 +36,11 @@ public class AchievementController {
         User user = userService.getByName(userName);
         updateAchievements(user);
         achievements = userAchievmentService.getByID(user);
-        List<String> activeAchievements = new ArrayList<String>();
+        List<String[]> activeAchievements = new ArrayList<String[]>();
         List<String> inactiveAchievements = new ArrayList<String>();
         for(Achievement a : achievements)
         {
-            activeAchievements.add(a.getIcon_path());
+            activeAchievements.add(new String[]{a.getName(), a.getIcon_path()});
         }
         for(int i = 0; i < 8 - activeAchievements.size(); i++)
         {

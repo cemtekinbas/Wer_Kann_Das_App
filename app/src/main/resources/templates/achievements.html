@@ -42,11 +42,11 @@
                 <div class="mdl-card__media">
                     <span class="fa-stack fa-5x active">
                     <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-stack-1x fa-inverse" th:utext="${achievement}"></i>
+                    <i class="fa fa-stack-1x fa-inverse" th:utext="${achievement[1]}"></i>
                     </span>
                 </div>
                 <div class="mdl-card__title">
-                    <h4 class="mdl-card__title-text"></h4>
+                    <h4 class="mdl-card__title-text" th:text="${achievement[0]}"></h4>
                 </div>
 
             </div>
