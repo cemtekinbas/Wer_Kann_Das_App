@@ -134,14 +134,16 @@ public class RequestController {
         User user = userService.getByName(username);
         User helpingUser = userService.getByID(user2Id);
         Request request = requestService.getByID(requestId, user);
-        if (user.getPk() == request.getFromUserFk()){
+        RequestResponse response = requestResponseService.getByUserIDAndRequestId(helpingUser.getPk(),requestId);
+        if (user.getPk() == request.getFromUserFk() && response != null){
             request.setState(RequestState.FULFILLED);
             requestService.save(request,user);
+            response.setSuccess(true);
+            requestResponseService.save(response);
         }
         model.addAttribute("user", user);
         return "redirect:/";
     }
-
 
     private List<ViewChat> generateViewChats(List<Chat> chats, User currentUser) {
         List<ViewChat> viewChats = new ArrayList<>(chats.size());;
@@ -176,7 +178,7 @@ public class RequestController {
         User user = userService.getByName(username);
         Request request = requestService.getByID(requestId, user);
         if (user.getPk() != request.getFromUserFk()) {
-            RequestResponse response = new RequestResponse(requestId, user.getPk(), Date.valueOf(LocalDate.now()), can);
+            RequestResponse response = new RequestResponse(requestId, user.getPk(), Date.valueOf(LocalDate.now()), can, false);
             requestResponseService.save(response);
             return chatController.sendChatMessage(requestId, request.getFromUserFk(), "Ich kann's!", model);
         }

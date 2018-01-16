@@ -53,6 +53,7 @@ public class RequestService {
     public static String queryUpdate = "UPDATE " + table +
             " SET " + colCreateDate + " = ?, " + colFromUserFk + " = ?, " + colIsPremium + " = ?, " +
             colMessage + " = ?, " + colState + " = ?, " + colTitle + " = ? WHERE " + colPk + " = ?";
+    private String queryCount = "SELECT COUNT(*) FROM " + table + " WHERE " + colState + " = " + RequestState.FULFILLED.getId() + " AND " + colFromUserFk + " = ?";
 
     @Autowired
     private DataSource ds;
@@ -87,7 +88,7 @@ public class RequestService {
         try {
             boolean update = false;
             PreparedStatement pstmt;
-            if (request.getPk() >= 0 && getByID(request.getPk(), currentUser) != null){
+            if (request.getPk() >= 0 && getByID(request.getPk(), currentUser) != null) {
                 pstmt = ds.getConnection().prepareStatement(queryUpdate, Statement.RETURN_GENERATED_KEYS);
                 pstmt.setInt(7, request.getPk());
                 update = true;
@@ -121,6 +122,21 @@ public class RequestService {
         }
         return null;
     }
+
+    public int countMyFullfilledRequests(User user) {
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryCount);
+            pstmt.setInt(1, user.getPk());
+            ResultSet results = pstmt.executeQuery();
+            if (results.next()) {
+                return results.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
     public List<Request> getByUser(User user) {
         List<Request> requestList = new ArrayList<Request>(3);
