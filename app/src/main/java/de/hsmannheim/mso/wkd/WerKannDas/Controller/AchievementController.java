@@ -34,11 +34,11 @@ public class AchievementController {
         String userName = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(userName);
         achievements = userAchievmentService.getByID(user);
-        List<String> activeAchievements = new ArrayList<String>();
+        List<String[]> activeAchievements = new ArrayList<String[]>();
         List<String> inactiveAchievements = new ArrayList<String>();
         for(Achievement a : achievements)
         {
-            activeAchievements.add(a.getIcon_path());
+            activeAchievements.add(new String[]{a.getName(), a.getIcon_path()});
         }
         for(int i = 0; i < 8 - activeAchievements.size(); i++)
         {
