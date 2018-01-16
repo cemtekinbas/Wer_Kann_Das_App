@@ -38,11 +38,18 @@
             <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp chatcard"
              th:each="chat:${chats}">
                 <div class="mdl-card__title">
+                    <div class="comment">
+                        <img class="comment__avatar" src="/img/oma mit hintergrund.png"
+                             th:if="${chat.userId % 2 == 0 }"/>
+                        <img class="comment__avatar" src="/img/opa blauer hintergrund.png"
+                             th:if="${chat.userId % 2 != 0 }"/>
+                        <span class="comment__avatar__unread" th:text="${chat.unreadMessages}"></span>
+                    </div>
                     <h4 class="mdl-card__title-text" th:text="${chat.userTo}">Chat mit XY</h4>
                 </div>
-                <div class="mdl-card__title" th:if="${chat.unreadMessages > 0}">
-                    <h4>Unread Messages: <span th:text="${chat.unreadMessages}"></span></h4>
-                </div>
+                <dic class="mdl-card__supporting-text" >
+
+                </dic>
                 <div class="mdl-card__actions">
                     <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" th:href="@{/chat/{requestId}/{userId}(requestId=${chat.requestId},userId=${chat.userId})}">
                    Öffnen

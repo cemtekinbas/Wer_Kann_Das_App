@@ -31,7 +31,7 @@ public class ChatController {
     private class ViewChat
     {
         public String userTo;
-        public String userId;
+        public int userId;
         public String requestId;
         public int unreadMessages;
     }
@@ -70,14 +70,14 @@ public class ChatController {
             Request request = requestService.getByID(c.getRequest_fk(), currentUser);
             if(request.getFromUserFk() == c.getUserFks()[0])
             {
-                vc.userId = c.getUserFks()[1] + "";
+                vc.userId = c.getUserFks()[1];
                 User toUser = userService.getByID(c.getUserFks()[1]);
                 vc.userTo = toUser.getUser_name();
                 vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
             }
             else
             {
-                vc.userId = c.getUserFks()[0] + "";
+                vc.userId = c.getUserFks()[0];
                 User toUser = userService.getByID(c.getUserFks()[0]);
                 vc.userTo = toUser.getUser_name();
                 vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
