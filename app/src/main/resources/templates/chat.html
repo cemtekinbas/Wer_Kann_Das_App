@@ -38,9 +38,9 @@
                     <div th:each="message:${chat.chatMessages}">
                         <div class="comment" th:if="${message.from_user_fk == user.pk}">
                             <header class="comment__header">
-                                <img class="comment__avatar" src="/img/oma mit hintergrund.png"
+                                <img class="comment__avatar" src="/img/oma.png"
                                      th:if="${message.from_user_fk % 2 == 0 }"/>
-                                <img class="comment__avatar" src="/img/opa blauer hintergrund.png"
+                                <img class="comment__avatar" src="/img/opa.png"
                                      th:if="${message.from_user_fk % 2 != 0 }"/>
                                 <div class="comment__author">
                                     <strong th:text="${user.user_name}">James Splayd</strong>
@@ -53,9 +53,9 @@
                         </div>
                         <div class="comment_answer" th:if="${message.from_user_fk != user.pk}">
                             <header class="comment__header">
-                                <img class="comment__avatar" src="/img/oma mit hintergrund.png"
+                                <img class="comment__avatar" src="/img/oma.png"
                                      th:if="${message.from_user_fk % 2 == 0 }"/>
-                                <img class="comment__avatar" src="/img/opa blauer hintergrund.png"
+                                <img class="comment__avatar" src="/img/opa.png"
                                      th:if="${message.from_user_fk % 2 != 0 }"/>
                                 <div class="comment__author">
                                     <strong th:text="${user2.user_name}">John Dufry</strong>
