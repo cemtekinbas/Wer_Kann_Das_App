@@ -216,7 +216,6 @@ body .demo-blog {
   background-color: transparent;
 }
 .demo-blog--blogpost .demo-blog__posts > .mdl-card .mdl-card__media {
-  background-image: url('../img/repairing-388551.jpg');
   height: 280px;
 }
 .demo-blog--blogpost .comments {
