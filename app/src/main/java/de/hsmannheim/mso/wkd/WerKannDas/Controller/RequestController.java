@@ -89,11 +89,12 @@ public class RequestController {
             model.addAttribute("newRequest", request);
             return "anfrageErstellen";
         } else {
-
             RequestResponse response = requestResponseService.getByUserIDAndRequestId(user.getPk(), request.getPk());
             if (response != null) {
                 model.addAttribute("response", response);
             }
+            User owner = userService.getByID(request.getFromUserFk());
+            model.addAttribute("owner", owner);
             model.addAttribute("request", request);
             return "anfrageDetail";
         }
