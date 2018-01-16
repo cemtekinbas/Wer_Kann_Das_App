@@ -66,7 +66,7 @@ public class UserAchievementMapperService {
             pstmt = ds.getConnection().prepareStatement(queryUnlock, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, user.getPk());
             pstmt.setInt(2, achievement.getPk());
-            pstmt.executeQuery();
+            pstmt.executeUpdate();
             ResultSet results = pstmt.getGeneratedKeys();
             if (results.next()) {
                 return true;

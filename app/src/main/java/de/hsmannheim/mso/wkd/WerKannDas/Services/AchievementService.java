@@ -37,6 +37,7 @@ public class AchievementService {
     private String queryAdd = "INSERT INTO " + table + " (" +
             colName + ", " + colDescription + ", " +
             colIconPath + ", " + colUnlockCondition + ") VALUES (?,?,?,?)";
+    private String queryAll = "SELECT " + combinedCols + " FROM " + table;
 
     @Autowired
     private DataSource ds;
@@ -65,7 +66,7 @@ public class AchievementService {
     public List<Achievement> getAll() {        //Prepared Statements in allen Service Klassen
         List<Achievement> list = new ArrayList<Achievement>();
         try {
-            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByID);
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryAll);
             ResultSet results = pstmt.executeQuery();
             while (results.next()) {
                 Achievement achievement = new Achievement(results);

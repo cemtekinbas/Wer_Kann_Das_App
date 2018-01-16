@@ -138,6 +138,7 @@ public class RequestController {
         if (user.getPk() == request.getFromUserFk() && response != null){
             request.setState(RequestState.FULFILLED);
             requestService.save(request,user);
+            response.setSuccess(true);
             requestResponseService.save(response);
         }
         model.addAttribute("user", user);

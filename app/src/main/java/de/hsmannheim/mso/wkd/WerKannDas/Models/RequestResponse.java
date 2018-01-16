@@ -11,6 +11,11 @@ public class RequestResponse {
     private int userFk;
     private Date responseDate;
     private boolean can;
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
     private boolean success;
 
     public int getRequestFk() {

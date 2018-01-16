@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -35,7 +34,7 @@ public class AchievementController {
         List<Achievement> achievements;
         String userName = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(userName);
-        updateAchievments(user);
+        updateAchievements(user);
         achievements = userAchievmentService.getByID(user);
         List<String> activeAchievements = new ArrayList<String>();
         List<String> inactiveAchievements = new ArrayList<String>();
@@ -53,14 +52,14 @@ public class AchievementController {
         return "achievements";
     }
 
-    private void updateAchievments(User user) {
+    private void updateAchievements(User user) {
         int gotHelp = requestService.countMyFullfilledRequests(user);
         int helped = requestResponseService.countMyHelpedRequests(user);
         List<Achievement> userHasAchievements = userAchievmentService.getByID(user);
         List<Achievement> achievements = achievementService.getAll();
         for (Achievement achievement:achievements) {
             if (!userHasAchievements.contains(achievement)){
-                if (achievement.getName()=="Erst-Helfer" && helped > 0){
+                if (achievement.getName().equals("Erst-Helfer") && helped > 0){
                     userAchievmentService.save(user, achievement);
                 }
 
