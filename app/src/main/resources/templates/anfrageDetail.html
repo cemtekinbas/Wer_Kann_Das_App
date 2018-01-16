@@ -1,4 +1,3 @@
-
 <!doctype html>
 <!--
   Material Design Lite
@@ -21,104 +20,84 @@
 <head th:insert="base :: head(~{::title})">
     <title>Anfrage Details</title>
 </head>
-  <body>
-   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-       <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-           <div th:replace="base :: header"/>
-           <div th:replace="base :: menu"/>
-           <div class="android-content mdl-layout__content">
-           </div>
-       </div>
-        <!--<div class="android-header mdl-layout__header mdl-layout__header&#45;&#45;waterfall">-->
-            <!--<div class="mdl-layout__header-row">-->
-                <!--<span class="android-title mdl-layout-title">-->
-                    <!--<p>Wer kann das?</p>-->
-                <!--</span>-->
-                <!--&lt;!&ndash; Navigation &ndash;&gt;-->
-                <!--<div class="android-navigation-container">-->
-                    <!--<nav class="android-navigation mdl-navigation"></nav>-->
-                <!--</div>-->
-                <!--<span class="android-mobile-title mdl-layout-title">-->
-                  <!--<p>Wer kann das?</p>-->
-                <!--</span>-->
-            <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="android-drawer mdl-layout__drawer">-->
-            <!--<span class="mdl-layout-title">-->
-                <!--<img class="android-logo-image" src="img/Logo2_minimal_klein.png">-->
-            <!--</span>-->
-            <!--<nav class="mdl-navigation">-->
-                <!--<a class="mdl-navigation__link" href="">Profil</a>-->
-                <!--<a class="mdl-navigation__link" href="home.html">Anfragen</a>-->
-                <!--<a class="mdl-navigation__link" href="anfrageErstellen.html">Neue Anfrage erstellen</a>-->
-                <!--<a class="mdl-navigation__link" href="">Chats</a>-->
-                <!--<a class="mdl-navigation__link" href="achievements.html">Achievements</a>-->
-                <!--<a class="mdl-navigation__link" href="">Einstellungen</a>-->
-                <!--<a class="mdl-navigation__link" href="">Logout</a>-->
-            <!--</nav>-->
-        <!--</div>-->
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <div th:replace="base :: header"/>
+        <div th:replace="base :: menu"/>
         <div class="android-content mdl-layout__content">
         </div>
     </div>
-      
-        <div class="demo-blog demo-blog--blogpost mdl-layout mdl-js-layout has-drawer is-upgraded">
-      <main class="mdl-layout__content">
+    <div class="android-content mdl-layout__content">
+    </div>
+</div>
+
+<div class="demo-blog demo-blog--blogpost mdl-layout mdl-js-layout has-drawer is-upgraded">
+    <main class="mdl-layout__content">
         <div class="demo-back">
-          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="index.html" title="go back" role="button">
-            <i class="material-icons" role="presentation">arrow_back</i>
-          </a>
+            <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="index.html" title="go back"
+               role="button">
+                <i class="material-icons" role="presentation">arrow_back</i>
+            </a>
         </div>
         <div class="demo-blog__posts mdl-grid">
-          <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-            <div class="mdl-card__media mdl-color-text--grey-50">
-              <h3 th:text="${request.title}"/>
-            </div>
-            <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-              <div><img src="img/co2.jpg" class="comment__avatar"></div>
-              <div>
-                <strong>Erstellt von
-                    <strong th:text="${user.getUser_name()}"/>
-                </strong>
-                  <span>Vor <span th:text="${request.getDaysSinceCreation()}"/> Tagen erstellt</span>
-              </div>
-              <div class="section-spacer"></div>
-              
-              <div>
-                <i class="material-icons" role="presentation">share</i>
-                <span class="visuallyhidden">share</span>
-              </div>
-            </div>
-            <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
-              <p th:text="${request.message}"/>
-            </div>
-            <div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments">
-             
-              <div class="comment mdl-color-text--grey-700">
-               
-                <nav class="comment__actions">
-                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                    <i class="material-icons" role="presentation">thumb_up</i><span class="visuallyhidden">Ich kann's</span>
-                  </button>
-                    <p>Ich kann's</p>
-                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                    <i class="material-icons" role="presentation">thumb_down</i><span class="visuallyhidden">dislike comment</span>
-                  </button>
-                     <p>Ich kann's nicht</p>
-                    <a th:href="@{/chat/{requestId}/{userId}(requestId=${request.pk},userId=${user.pk})}">
-                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                    <i class="material-icons" role="presentation">chat</i><span class="visuallyhidden">share comment</span>
-                  </button>
-                    </a>
-                </nav>
-               
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+                <div class="mdl-card__media mdl-color-text--grey-50">
+                    <h3 th:text="${request.title}"/>
                 </div>
-              </div>
+                <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+                    <div><img src="img/co2.jpg" class="comment__avatar"></div>
+                    <div>
+                        <strong>Erstellt von
+                            <strong th:text="${user.getUser_name()}"/>
+                        </strong>
+                        <span>Vor <span th:text="${request.getDaysSinceCreation()}"/> Tagen erstellt</span>
+                    </div>
+                    <div class="section-spacer"></div>
+
+                    <div>
+                        <i class="material-icons" role="presentation">share</i>
+                        <span class="visuallyhidden">share</span>
+                    </div>
+                </div>
+                <textarea readonly class="mdl-color-text--grey-700 mdl-card__supporting-text" rows="9" th:text="${request.message}">
+                </textarea>
+                <div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments">
+
+                    <div class="comment mdl-color-text--grey-700">
+
+                        <nav class="comment__actions">
+                            <div th:if="${response != null && response.can}">
+                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon response_can">
+                                    <i class="material-icons" role="presentation">thumb_up</i><span class="visuallyhidden">Ich kann's</span>
+                                </button>
+                            </div>
+                            <div th:unless="${response != null && response.can}">
+                                <a th:href="@{/request/{requestId}/{responseValue}(requestId=${request.pk},responseValue=true)}">
+                                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                                        <i class="material-icons" role="presentation">thumb_up</i><span class="visuallyhidden">Ich kann's</span>
+                                    </button>
+                                </a>
+                            </div>
+                            <p>Ich kann's</p>
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                                <i class="material-icons" role="presentation">thumb_down</i><span
+                                    class="visuallyhidden">dislike comment</span>
+                            </button>
+                            <p>Ich kann's nicht</p>
+                            <a th:href="@{/chat/{requestId}/{userId}(requestId=${request.pk},userId=${user.pk})}">
+                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                                    <i class="material-icons" role="presentation">chat</i><span class="visuallyhidden">share comment</span>
+                                </button>
+                            </a>
+                        </nav>
+
+                    </div>
+                </div>
             </div>
-          </div>
-        
-      
-    
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  </body>
+        </div>
+
+
+        <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</body>
 </html>

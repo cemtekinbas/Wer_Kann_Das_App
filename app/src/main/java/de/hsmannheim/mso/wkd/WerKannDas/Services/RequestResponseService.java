@@ -20,10 +20,13 @@ public class RequestResponseService {
     public static String colRequestFk = "request_fk";
     public static String colUserFk = "user_fk";
     public static String colResponseDate = "response_date";
+    public static String colResponseCan = "response";
+
 
     public static String schema = "CREATE TABLE IF NOT EXISTS " + table + " ( " +
             colRequestFk + " INTEGER NOT NULL, " +
             colUserFk + " INTEGER NOT NULL, " +
+            colResponseCan + " BOOLEAN NOT NULL, " +
             colResponseDate + " TIMESTAMP DEFAULT NOW, " +
             " PRIMARY KEY (" + colRequestFk + ", " + colUserFk + ")," +
             " CONSTRAINT request_response_user_fk FOREIGN KEY (" + colUserFk + ") REFERENCES " +
@@ -36,11 +39,11 @@ public class RequestResponseService {
             " ON UPDATE CASCADE" +
             ");";
 
-    public static String combinedCols = colRequestFk + ", " + colUserFk + ", " + colResponseDate;
+    public static String combinedCols = colRequestFk + ", " + colUserFk + ", " + colResponseDate + ", " + colResponseCan;
     private String queryByUserAndRequest = "SELECT " + combinedCols + " FROM " + table + " WHERE " +
             colRequestFk + " = ? AND " + colUserFk + " = ?";
     private String queryAdd = "INSERT INTO " + table +
-            "(" + colRequestFk + ", " + colUserFk + ", " + colResponseDate + ") VALUES (?,?,?)";
+            "(" + colRequestFk + ", " + colUserFk + ", " + colResponseDate + ", " + colResponseCan + ") VALUES (?,?,?,?)";
 
     @Autowired
     private DataSource ds;
@@ -72,11 +75,15 @@ public class RequestResponseService {
     public RequestResponse save(RequestResponse requestResponse) {
         PreparedStatement pstmt;
         try {
+            if (getByUserIDAndRequestId(requestResponse.getUserFk(), requestResponse.getRequestFk()) != null) {
+                return requestResponse;
+            }
             pstmt = ds.getConnection().prepareStatement(queryAdd, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, requestResponse.getRequestFk());
             pstmt.setInt(2, requestResponse.getUserFk());
             pstmt.setDate(3, requestResponse.getResponseDate());
-            pstmt.executeQuery();
+            pstmt.setBoolean(4, requestResponse.isCan());
+            pstmt.executeUpdate();
             ResultSet results = pstmt.getGeneratedKeys();
             if (results.next()) {
                 return requestResponse;

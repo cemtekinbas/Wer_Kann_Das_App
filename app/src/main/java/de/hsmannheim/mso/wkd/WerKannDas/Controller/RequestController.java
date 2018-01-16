@@ -1,8 +1,10 @@
 package de.hsmannheim.mso.wkd.WerKannDas.Controller;
 
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Request;
+import de.hsmannheim.mso.wkd.WerKannDas.Models.RequestResponse;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.RequestState;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.User;
+import de.hsmannheim.mso.wkd.WerKannDas.Services.RequestResponseService;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.RequestService;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -26,20 +27,24 @@ public class RequestController {
     @Autowired
     RequestService requestService;
 
+    @Autowired
+    RequestResponseService requestResponseService;
+
+    @Autowired
+    ChatController chatController;
+
     @RequestMapping(value = "/request", method = RequestMethod.GET)
-    public String newRequest(Model model)
-    {
+    public String newRequest(Model model) {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        Request request = new Request(-1,user.getPk(), "", "", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
+        Request request = new Request(-1, user.getPk(), "", "", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
         model.addAttribute("user", user);
         model.addAttribute("newRequest", request);
         return "anfrageErstellen";
     }
 
     @RequestMapping(value = "/request", method = RequestMethod.POST)
-    public String createRequest(Request newRequest, Model model)
-    {
+    public String createRequest(Request newRequest, Model model) {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
 
@@ -50,13 +55,11 @@ public class RequestController {
 
         Request request = requestService.save(newRequest);
         model.addAttribute("user", user);
-        if(request != null) {
+        if (request != null) {
             model.addAttribute("newRequest", request);
             model.addAttribute("success", true);
             return "redirect:/";
-        }
-        else
-        {
+        } else {
             model.addAttribute("newRequest", newRequest);
             model.addAttribute("success", false);
             return "anfrageErstellen";
@@ -65,40 +68,52 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/request/{requestId}", method = RequestMethod.GET)
-    public String showRequest(@PathVariable("requestId") int requestId, Model model)
-    {
+    public String showRequest(@PathVariable("requestId") int requestId, Model model) {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = requestService.getByID(requestId);
         model.addAttribute("user", user);
-        if(request.getFromUserFk() == user.getPk())
-        {
+        if (request.getFromUserFk() == user.getPk()) {
             model.addAttribute("newRequest", request);
             return "anfrageErstellen";
-        }
-        else {
+        } else {
+
+            RequestResponse response = requestResponseService.getByUserIDAndRequestId(user.getPk(), request.getPk());
+            if (response != null) {
+                model.addAttribute("response", response);
+            }
             model.addAttribute("request", request);
             return "anfrageDetail";
         }
     }
 
     @RequestMapping(value = "/request/{requestId}", method = RequestMethod.POST)
-    public String editRequest(@PathVariable("requestId") int requestId, Request requestData, Model model)
-    {
+    public String editRequest(@PathVariable("requestId") int requestId, Request requestData, Model model) {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         Request request = requestService.save(requestData);
         model.addAttribute("user", user);
-        if(request != null) {
+        if (request != null) {
             model.addAttribute("success", true);
             model.addAttribute("request", request);
-        }
-        else
-        {
+        } else {
             model.addAttribute("success", false);
             model.addAttribute("newRequest", requestData);
         }
         return "anfrageDetail";
+    }
+
+    @RequestMapping(value = "/request/{requestId}/{responseValue}", method = RequestMethod.GET)
+    public String openChat(@PathVariable("requestId") int requestId, @PathVariable("responseValue") boolean can, Model model) {
+        String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        User user = userService.getByName(username);
+        Request request = requestService.getByID(requestId);
+        if (user.getPk() != request.getFromUserFk()) {
+            RequestResponse response = new RequestResponse(requestId, user.getPk(), Date.valueOf(LocalDate.now()), can);
+            requestResponseService.save(response);
+            return chatController.sendChatMessage(requestId, request.getFromUserFk(), "Ich kann's!", model);
+        }
+        return showRequest(requestId, model);
     }
 
 }

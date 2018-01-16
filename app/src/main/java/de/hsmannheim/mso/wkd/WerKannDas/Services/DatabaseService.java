@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public class DatabaseService {
 
-    private static int currentVersion = 2;
+    private static int currentVersion = 4;
 
 
     public static String table = "database_version";

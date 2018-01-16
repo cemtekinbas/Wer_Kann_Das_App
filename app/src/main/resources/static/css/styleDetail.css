@@ -311,6 +311,10 @@ body .demo-blog {
   text-align: right;
 }
 
+.response_can {
+  color: green !important;
+}
+
 .chat_message_other {
   text-align: left;
 }
