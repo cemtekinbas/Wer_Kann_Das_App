@@ -37,17 +37,18 @@ public class AchievementController {
         User user = userService.getByName(userName);
         updateAchievments(user);
         achievements = userAchievmentService.getByID(user);
-        model.addAttribute("achievements", achievements);
-        List<String> achivementIcons = new ArrayList<String>(8);
-        for(int i = 0; i < 8; i++)
-        {
-            achivementIcons.add("\uf29c");
-        }
+        List<String> activeAchievements = new ArrayList<String>();
+        List<String> inactiveAchievements = new ArrayList<String>();
         for(Achievement a : achievements)
         {
-            achivementIcons.set(a.getPk(), a.getIcon_path());
+            activeAchievements.add(a.getIcon_path());
         }
-        model.addAttribute("achievements", achivementIcons);
+        for(int i = 0; i < 8 - activeAchievements.size(); i++)
+        {
+            inactiveAchievements.add("\uf29c");
+        }
+        model.addAttribute("activeAchievements", activeAchievements);
+        model.addAttribute("inactiveAchievements", inactiveAchievements);
         model.addAttribute("user", user);
         return "achievements";
     }

@@ -51,7 +51,7 @@ public class UserAchievementMapperService {
             pstmt.setInt(1, user.getPk());
             ResultSet results = pstmt.executeQuery();
             while (results.next()) {
-                Achievement achievement = as.getByID(results.getInt(colUserFk));
+                Achievement achievement = as.getByID(results.getInt(colAchievementFk));
                 list.add(achievement);
             }
         } catch (SQLException e) {
