@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 
 public class Request {
-    private int pk;
+    private int pk = -1;
     private int fromUserFk;
     private String title;
     private String message;

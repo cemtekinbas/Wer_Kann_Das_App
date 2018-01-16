@@ -16,44 +16,55 @@
   limitations under the License
 -->
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head th:insert="base :: head(~{::title})">
     <title>Chats</title>
 </head>
 
 <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <div th:replace="base :: header" />
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div th:replace="base :: header"/>
 
-        <div th:replace="base :: menu" />
+    <div th:replace="base :: menu"/>
 
-        <div class="android-content mdl-layout__content">
-        </div>
+    <div class="android-content mdl-layout__content">
     </div>
+</div>
 
-    <div class="android-more-section">
-        <div class="android-section-title mdl-typography--display-1-color-contrast">Wer kann das? - Deine Chats</div>
-        <div class="android-card-container mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp chatcard"
+<div class="android-more-section">
+    <div class="android-section-title mdl-typography--display-1-color-contrast">Wer kann das? - Deine Chats</div>
+    <div class="android-card-container mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp chatcard"
              th:each="chat:${chats}">
+            <div class="row">
                 <div class="mdl-card__title">
                     <h4 class="mdl-card__title-text" th:text="${chat.userTo}">Chat mit XY</h4>
+                    <img class="comment__avatar" src="/img/oma mit hintergrund.png"
+                         th:if="${chat.userId % 2 == 0 }"/>
+                    <img class="comment__avatar" src="/img/opa blauer hintergrund.png"
+                         th:if="${chat.userId % 2 != 0 }"/>
                 </div>
                 <div class="mdl-card__title" th:if="${chat.unreadMessages > 0}">
                     <h4>Unread Messages: <span th:text="${chat.unreadMessages}"></span></h4>
                 </div>
-                <div class="mdl-card__actions">
-                    <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" th:href="@{/chat/{requestId}/{userId}(requestId=${chat.requestId},userId=${chat.userId})}">
-                   Öffnen
-                   <i class="material-icons">chevron_right</i>
-                 </a>
+            </div>
+            <div class="myrow">
+            </div>
+            <div class="row">
+                <div class="row mdl-card__actions">
+                    <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase"
+                       th:href="@{/chat/{requestId}/{userId}(requestId=${chat.requestId},userId=${chat.userId})}">
+                        Öffnen
+                        <i class="material-icons">chevron_right</i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
 
 </html>

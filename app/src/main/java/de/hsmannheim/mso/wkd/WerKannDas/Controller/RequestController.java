@@ -1,9 +1,7 @@
 package de.hsmannheim.mso.wkd.WerKannDas.Controller;
 
-import de.hsmannheim.mso.wkd.WerKannDas.Models.Request;
-import de.hsmannheim.mso.wkd.WerKannDas.Models.RequestResponse;
-import de.hsmannheim.mso.wkd.WerKannDas.Models.RequestState;
-import de.hsmannheim.mso.wkd.WerKannDas.Models.User;
+import de.hsmannheim.mso.wkd.WerKannDas.Models.*;
+import de.hsmannheim.mso.wkd.WerKannDas.Services.ChatService;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.RequestResponseService;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.RequestService;
 import de.hsmannheim.mso.wkd.WerKannDas.Services.UserService;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class RequestController {
@@ -28,10 +28,22 @@ public class RequestController {
     RequestService requestService;
 
     @Autowired
+    private ChatService chatService;
+
+    @Autowired
     RequestResponseService requestResponseService;
 
     @Autowired
     ChatController chatController;
+
+
+    protected class ViewChat
+    {
+        public String userTo;
+        public int userId;
+        public String requestId;
+        public int unreadMessages;
+    }
 
     @RequestMapping(value = "/request", method = RequestMethod.GET)
     public String newRequest(Model model) {
@@ -102,6 +114,61 @@ public class RequestController {
         }
         return "anfrageDetail";
     }
+
+    @RequestMapping(value = "/request_done/{requestId}", method = RequestMethod.GET)
+    public String finishRequest(@PathVariable("requestId") int requestId, Model model) {
+        String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        User user = userService.getByName(username);
+        List<Chat> chats = chatService.getByRequestID(requestId);
+        List<ViewChat> viewChats = generateViewChats(chats, user);
+        model.addAttribute("user", user);
+        model.addAttribute("chats", viewChats);
+        model.addAttribute("requestId", requestId);
+        return "requestDoneUebersicht";
+    }
+
+
+    @RequestMapping(value = "/request_done/{requestId}/{userId}", method = RequestMethod.GET)
+    public String finishRequest(@PathVariable("requestId") int requestId, @PathVariable("userId") int user2Id, Model model) {
+        String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        User user = userService.getByName(username);
+        User helpingUser = userService.getByID(user2Id);
+        Request request = requestService.getByID(requestId, user);
+        if (user.getPk() == request.getFromUserFk()){
+            request.setState(RequestState.FULFILLED);
+            requestService.save(request,user);
+        }
+        model.addAttribute("user", user);
+        return "redirect:/";
+    }
+
+
+    private List<ViewChat> generateViewChats(List<Chat> chats, User currentUser) {
+        List<ViewChat> viewChats = new ArrayList<>(chats.size());;
+        for(Chat c : chats)
+        {
+            ViewChat vc = new ViewChat();
+            vc.requestId = c.getRequest_fk() + "";
+            Request request = requestService.getByID(c.getRequest_fk(), currentUser);
+            if(request.getFromUserFk() == c.getUserFks()[0])
+            {
+                vc.userId = c.getUserFks()[1];
+                User toUser = userService.getByID(c.getUserFks()[1]);
+                vc.userTo = toUser.getUser_name();
+                vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
+            }
+            else
+            {
+                vc.userId = c.getUserFks()[0];
+                User toUser = userService.getByID(c.getUserFks()[0]);
+                vc.userTo = toUser.getUser_name();
+                vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
+            }
+            viewChats.add(vc);
+        }
+        return viewChats;
+    }
+
 
     @RequestMapping(value = "/request/{requestId}/{responseValue}", method = RequestMethod.GET)
     public String openChat(@PathVariable("requestId") int requestId, @PathVariable("responseValue") boolean can, Model model) {

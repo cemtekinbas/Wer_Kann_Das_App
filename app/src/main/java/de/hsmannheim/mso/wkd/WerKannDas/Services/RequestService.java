@@ -50,6 +50,10 @@ public class RequestService {
     public static String queryAdd = "INSERT INTO " + table + "(" + colCreateDate + ", " + colFromUserFk + ", " + colIsPremium + ", " +
             colMessage + ", " + colState + ", " + colTitle + ") VALUES ( ?, ?, ?, ?, ?, ?)";
 
+    public static String queryUpdate = "UPDATE " + table +
+            " SET " + colCreateDate + " = ?, " + colFromUserFk + " = ?, " + colIsPremium + " = ?, " +
+            colMessage + " = ?, " + colState + " = ?, " + colTitle + " = ? WHERE " + colPk + " = ?";
+
     @Autowired
     private DataSource ds;
 
@@ -81,7 +85,15 @@ public class RequestService {
 
     public Request save(Request request, User currentUser) {
         try {
-            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryAdd, Statement.RETURN_GENERATED_KEYS);
+            boolean update = false;
+            PreparedStatement pstmt;
+            if (request.getPk() >= 0 && getByID(request.getPk(), currentUser) != null){
+                pstmt = ds.getConnection().prepareStatement(queryUpdate, Statement.RETURN_GENERATED_KEYS);
+                pstmt.setInt(7, request.getPk());
+                update = true;
+            } else {
+                pstmt = ds.getConnection().prepareStatement(queryAdd, Statement.RETURN_GENERATED_KEYS);
+            }
             pstmt.setDate(1, request.getCreateDate());
             pstmt.setInt(2, request.getFromUserFk());
             pstmt.setBoolean(3, request.isPremium());
@@ -101,6 +113,8 @@ public class RequestService {
             if (results.next()) {
                 int id = results.getInt(colPk);
                 return getByID(id, currentUser);
+            } else if (update) {
+                return request;
             }
         } catch (SQLException e) {
             e.printStackTrace();

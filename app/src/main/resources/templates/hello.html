@@ -39,9 +39,14 @@
             <div class="mdl-card__supporting-text">
                 <span class="mdl-typography--font-light mdl-typography--subhead" th:text="${request.message}" />
             </div>
-            <div class="mdl-card__actions">
+            <div class="mdl-card__actions col-xs-6" >
                 <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" th:href="@{/request/{requestId}(requestId=${request.pk})}">
-                    Details
+                    <p th:if="${(request.fromUserFk != user.pk)}">Details</p>
+                    <p th:if="${(request.fromUserFk == user.pk)}">Bearbeiten</p>
+                    <i class="material-icons">chevron_right</i>
+                </a>
+                <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" th:if="${(request.fromUserFk == user.pk)}" th:href="@{/request_done/{requestId}(requestId=${request.pk})}">
+                    <p>Erledigt</p>
                     <i class="material-icons">chevron_right</i>
                 </a>
             </div>

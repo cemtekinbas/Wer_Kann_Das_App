@@ -23,6 +23,9 @@ a img{
     border: 0px;
 }
 
+.myrow {
+ margin-bottom: 10px;
+}
 ::-moz-selection {
     background-color: #6ab344;
     color: #fff;
