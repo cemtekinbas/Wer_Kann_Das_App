@@ -47,7 +47,7 @@ public class RequestController {
         newRequest.setState(RequestState.OPEN);
         newRequest.setFromUserFk(user.getPk());
 
-        Request request = requestService.save(newRequest);
+        Request request = requestService.save(newRequest, user);
         model.addAttribute("user", user);
         if(request != null) {
             model.addAttribute("newRequest", request);
@@ -68,7 +68,7 @@ public class RequestController {
     {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        Request request = requestService.getByID(requestId);
+        Request request = requestService.getByID(requestId, user);
         model.addAttribute("user", user);
         if(request.getFromUserFk() == user.getPk())
         {
@@ -86,7 +86,7 @@ public class RequestController {
     {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        Request request = requestService.save(requestData);
+        Request request = requestService.save(requestData, user);
         model.addAttribute("user", user);
         if(request != null) {
             model.addAttribute("success", true);

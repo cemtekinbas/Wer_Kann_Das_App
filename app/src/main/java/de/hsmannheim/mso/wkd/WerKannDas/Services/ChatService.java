@@ -62,9 +62,30 @@ public class ChatService {
             " SET (" + colFromUserFk + ", " + colToUserFk + ", " + colMessage + ", " + colSentDate + ", " +
             colReadDate + ") = (?,?,?,?,?) " +
             "WHERE " + colPk + " = ?";
+    private String queryUnread = "SELECT COUNT(*) FROM " + table + " WHERE " + colReadDate + " IS NULL AND "
+            + colToUserFk + " = ? AND " + colRequestFk + " = ?";
 
     @Autowired
     private DataSource ds;
+
+    public int getUnreadCount(int userId, int requestId)
+    {
+        try
+        {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryUnread);
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, requestId);
+            ResultSet results = pstmt.executeQuery();
+            if(results.next()) {
+                int ret = results.getInt(1);
+                return ret;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
 
     public Chat getByID(int pk) {        //Prepared Statements in allen Service Klassen
         try {

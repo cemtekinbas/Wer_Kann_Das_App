@@ -41,7 +41,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         List<Chat> chats = chatService.getByUser(user);
-        List<ViewChat> viewChats = generateViewChats(chats);
+        List<ViewChat> viewChats = generateViewChats(chats, user);
         model.addAttribute("user", user);
         model.addAttribute("chats", viewChats);
         return "chatUebersicht";
@@ -54,19 +54,19 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         List<Chat> chats = chatService.getByRequestID(requestId);
-        List<ViewChat> viewChats = generateViewChats(chats);
+        List<ViewChat> viewChats = generateViewChats(chats, user);
         model.addAttribute("user", user);
         model.addAttribute("chats", viewChats);
         return "chatUebersicht";
     }
 
-    private List<ViewChat> generateViewChats(List<Chat> chats) {
+    private List<ViewChat> generateViewChats(List<Chat> chats, User currentUser) {
         List<ViewChat> viewChats = new ArrayList<>(chats.size());;
         for(Chat c : chats)
         {
             ViewChat vc = new ViewChat();
             vc.requestId = c.getRequest_fk() + "";
-            Request request = requestService.getByID(c.getRequest_fk());
+            Request request = requestService.getByID(c.getRequest_fk(), currentUser);
             if(request.getFromUserFk() == c.getUserFks()[0])
             {
                 vc.userId = c.getUserFks()[1] + "";
@@ -91,7 +91,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         User userTo = userService.getByID(user2Id);
-        Request request = requestService.getByID(requestId);
+        Request request = requestService.getByID(requestId, user);
         Chat chat = chatService.getByUsersAndRequestID(userTo, requestId);
         if (chat == null)
         {
@@ -122,7 +122,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         User userTo = userService.getByID(user2Id);
-        Request request = requestService.getByID(requestId);
+        Request request = requestService.getByID(requestId, user);
         Chat chat = null;
         if(request.getFromUserFk() == user.getPk())
         {

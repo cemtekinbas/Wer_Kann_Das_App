@@ -14,6 +14,7 @@ public class Request {
     private boolean isPremium;
     private Date createDate;
     private RequestState state;
+    private int unreadCount;
 
     public Request()
     {
@@ -68,6 +69,8 @@ public class Request {
         return state;
     }
 
+    public int getUnreadCount() { return unreadCount; }
+
     public void setPk(int pk) {
         this.pk = pk;
     }
@@ -96,4 +99,5 @@ public class Request {
         this.state = state;
     }
 
+    public void setUnreadCount(int unreadCount) { this.unreadCount = unreadCount; }
 }
