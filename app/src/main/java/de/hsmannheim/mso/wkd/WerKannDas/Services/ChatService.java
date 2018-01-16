@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,8 @@ public class ChatService {
             + colToUserFk + " = ? AND " + colRequestFk + " = ?";
     private String queryUnreadChat = "SELECT COUNT(*) FROM " + table + " WHERE " + colReadDate + " IS NULL AND "
             + colToUserFk + " = ? AND " + colFromUserFk + " = ? AND " + colRequestFk + " = ?";
+    private String querySetRead = "UPDATE " + table + " SET " + colReadDate + " = ?" + " WHERE " + colReadDate + " IS NULL AND "
+            + colToUserFk + " = ? AND " + colFromUserFk + " = ? AND " + colRequestFk + " = ? ";
 
     @Autowired
     private DataSource ds;
@@ -107,6 +110,23 @@ public class ChatService {
         }
 
         return -1;
+    }
+
+    public void setRead(int toUserId, int fromUserId, int requestId)
+    {
+        try
+        {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(querySetRead);
+            pstmt.setDate(1, Date.valueOf(LocalDate.now()));
+            pstmt.setInt(2, toUserId);
+            pstmt.setInt(3, fromUserId);
+            pstmt.setInt(4, requestId);
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public Chat getByID(int pk) {        //Prepared Statements in allen Service Klassen

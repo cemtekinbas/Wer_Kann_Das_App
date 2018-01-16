@@ -114,6 +114,9 @@ public class ChatController {
             model.addAttribute("userId", user.getPk()+"");
         }
         model.addAttribute("chat", chat);
+
+        chatService.setRead(user.getPk(), user2Id, requestId);
+
         return "chat";
     }
 
