@@ -33,6 +33,7 @@ public class ChatController {
         public String userTo;
         public String userId;
         public String requestId;
+        public int unreadMessages;
     }
 
     @RequestMapping(value = "/chat", method = RequestMethod.GET)
@@ -41,7 +42,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         List<Chat> chats = chatService.getByUser(user);
-        List<ViewChat> viewChats = generateViewChats(chats);
+        List<ViewChat> viewChats = generateViewChats(chats, user);
         model.addAttribute("user", user);
         model.addAttribute("chats", viewChats);
         return "chatUebersicht";
@@ -54,30 +55,32 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         List<Chat> chats = chatService.getByRequestID(requestId);
-        List<ViewChat> viewChats = generateViewChats(chats);
+        List<ViewChat> viewChats = generateViewChats(chats, user);
         model.addAttribute("user", user);
         model.addAttribute("chats", viewChats);
         return "chatUebersicht";
     }
 
-    private List<ViewChat> generateViewChats(List<Chat> chats) {
+    private List<ViewChat> generateViewChats(List<Chat> chats, User currentUser) {
         List<ViewChat> viewChats = new ArrayList<>(chats.size());;
         for(Chat c : chats)
         {
             ViewChat vc = new ViewChat();
             vc.requestId = c.getRequest_fk() + "";
-            Request request = requestService.getByID(c.getRequest_fk());
+            Request request = requestService.getByID(c.getRequest_fk(), currentUser);
             if(request.getFromUserFk() == c.getUserFks()[0])
             {
                 vc.userId = c.getUserFks()[1] + "";
                 User toUser = userService.getByID(c.getUserFks()[1]);
                 vc.userTo = toUser.getUser_name();
+                vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
             }
             else
             {
                 vc.userId = c.getUserFks()[0] + "";
                 User toUser = userService.getByID(c.getUserFks()[0]);
                 vc.userTo = toUser.getUser_name();
+                vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
             }
             viewChats.add(vc);
         }
@@ -91,7 +94,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         User userTo = userService.getByID(user2Id);
-        Request request = requestService.getByID(requestId);
+        Request request = requestService.getByID(requestId, user);
         Chat chat = chatService.getByUsersAndRequestID(userTo, requestId);
         if (chat == null)
         {
@@ -111,6 +114,9 @@ public class ChatController {
             model.addAttribute("userId", user.getPk()+"");
         }
         model.addAttribute("chat", chat);
+
+        chatService.setRead(user.getPk(), user2Id, requestId);
+
         return "chat";
     }
 
@@ -122,7 +128,7 @@ public class ChatController {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
         User userTo = userService.getByID(user2Id);
-        Request request = requestService.getByID(requestId);
+        Request request = requestService.getByID(requestId, user);
         Chat chat = null;
         if(request.getFromUserFk() == user.getPk())
         {

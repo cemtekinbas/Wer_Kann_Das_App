@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,9 +63,71 @@ public class ChatService {
             " SET (" + colFromUserFk + ", " + colToUserFk + ", " + colMessage + ", " + colSentDate + ", " +
             colReadDate + ") = (?,?,?,?,?) " +
             "WHERE " + colPk + " = ?";
+    private String queryUnread = "SELECT COUNT(DISTINCT " + colFromUserFk + ") FROM " + table + " WHERE " + colReadDate + " IS NULL AND "
+            + colToUserFk + " = ? AND " + colRequestFk + " = ?";
+    private String queryUnreadChat = "SELECT COUNT(*) FROM " + table + " WHERE " + colReadDate + " IS NULL AND "
+            + colToUserFk + " = ? AND " + colFromUserFk + " = ? AND " + colRequestFk + " = ?";
+    private String querySetRead = "UPDATE " + table + " SET " + colReadDate + " = ?" + " WHERE " + colReadDate + " IS NULL AND "
+            + colToUserFk + " = ? AND " + colFromUserFk + " = ? AND " + colRequestFk + " = ? ";
 
     @Autowired
     private DataSource ds;
+
+    public int getUnreadCount(int userId, int requestId)
+    {
+        try
+        {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryUnread);
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, requestId);
+            ResultSet results = pstmt.executeQuery();
+            if(results.next()) {
+                int ret = results.getInt(1);
+                return ret;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    public int getUnreadCount(int toUserId, int fromUserId, int requestId)
+    {
+        try
+        {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryUnreadChat);
+            pstmt.setInt(1, toUserId);
+            pstmt.setInt(2, fromUserId);
+            pstmt.setInt(3, requestId);
+            ResultSet results = pstmt.executeQuery();
+            if(results.next()) {
+                int ret = results.getInt(1);
+                return ret;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    public void setRead(int toUserId, int fromUserId, int requestId)
+    {
+        try
+        {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(querySetRead);
+            pstmt.setDate(1, Date.valueOf(LocalDate.now()));
+            pstmt.setInt(2, toUserId);
+            pstmt.setInt(3, fromUserId);
+            pstmt.setInt(4, requestId);
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     public Chat getByID(int pk) {        //Prepared Statements in allen Service Klassen
         try {
@@ -176,6 +239,9 @@ public class ChatService {
 
     public boolean addChatMessage(User from, User to, int requestId, String message) {
         try {
+            if (message.equals("")){
+                return false;
+            }
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryAdd, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, from.getPk());
             pstmt.setInt(2, to.getPk());

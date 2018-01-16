@@ -53,14 +53,19 @@ public class RequestService {
     @Autowired
     private DataSource ds;
 
+    @Autowired
+    private ChatService chatService;
 
-    public Request getByID(int pk) {
+
+    public Request getByID(int pk, User currentUser) {
         try {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByID);
             pstmt.setInt(1, pk);
             ResultSet results = pstmt.executeQuery();
             if (results.next()) {
                 Request request = new Request(results);
+                int count = chatService.getUnreadCount(currentUser.getPk(), request.getPk());
+                request.setUnreadCount(count);
                 return request;
                 //PersonalData personalData = personalDataService.getByID(personalDataID);
                 //Account account = new Account(id, personalData);
@@ -74,7 +79,7 @@ public class RequestService {
         return null;
     }
 
-    public Request save(Request request) {
+    public Request save(Request request, User currentUser) {
         try {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryAdd, Statement.RETURN_GENERATED_KEYS);
             pstmt.setDate(1, request.getCreateDate());
@@ -95,7 +100,7 @@ public class RequestService {
             ResultSet results = pstmt.getGeneratedKeys();
             if (results.next()) {
                 int id = results.getInt(colPk);
-                return getByID(id);
+                return getByID(id, currentUser);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,6 +116,8 @@ public class RequestService {
             ResultSet results = pstmt.executeQuery();
             while (results.next()) {
                 Request request = new Request(results);
+                int count = chatService.getUnreadCount(user.getPk(), request.getPk());
+                request.setUnreadCount(count);
                 requestList.add(request);
             }
             return requestList;
@@ -120,7 +127,7 @@ public class RequestService {
         return requestList;
     }
 
-    public List<Request> getList() {
+    public List<Request> getList(User currentUser) {
         List<Request> requestList = new ArrayList<Request>(3);
         /*
         Request r = new Request(0, 0, "Titel1", "Message1", false, Date.valueOf(LocalDate.now()), RequestState.OPEN);
@@ -136,6 +143,8 @@ public class RequestService {
             ResultSet results = pstmt.executeQuery();
             while (results.next()) {
                 Request request = new Request(results);
+                int count = chatService.getUnreadCount(currentUser.getPk(), request.getPk());
+                request.setUnreadCount(count);
                 requestList.add(request);
             }
             return requestList;

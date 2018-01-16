@@ -28,7 +28,7 @@ public class HomeController {
 	    if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof org.springframework.security.core.userdetails.User) {
             String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
             User user = userService.getByName(username);
-            List<Request> requests = requestService.getList();
+            List<Request> requests = requestService.getList(user);
             model.addAttribute("user", user);
             model.addAttribute("requestList", requests);
             return "hello";
@@ -55,7 +55,7 @@ public class HomeController {
         if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof org.springframework.security.core.userdetails.User) {
             String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
             User user = userService.getByName(username);
-            List<Request> requests = requestService.getList();
+            List<Request> requests = requestService.getList(user);
             switch (sort) {
                 case "up":
                     break;

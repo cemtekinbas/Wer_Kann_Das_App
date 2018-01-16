@@ -2,6 +2,7 @@ package de.hsmannheim.mso.wkd.WerKannDas.Services;
 
 import de.hsmannheim.mso.wkd.WerKannDas.Models.Request;
 import de.hsmannheim.mso.wkd.WerKannDas.Models.RequestTag;
+import de.hsmannheim.mso.wkd.WerKannDas.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +62,7 @@ public class RequestTagMapperService {
         return requestTags;
     }
 
-    public List<Request> getRequestsForTag(RequestTag requestTag) {
+    public List<Request> getRequestsForTag(RequestTag requestTag, User currentUser) {
         List<Request> requests = new ArrayList<>();
         try {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByRequestTag);
@@ -69,7 +70,7 @@ public class RequestTagMapperService {
             ResultSet results = pstmt.executeQuery();
             while (results.next()) {
                 int requestPk = results.getInt(RequestTagService.colPk);
-                requests.add(requestService.getByID(requestPk));
+                requests.add(requestService.getByID(requestPk, currentUser));
             }
         } catch (SQLException e) {
             e.printStackTrace();

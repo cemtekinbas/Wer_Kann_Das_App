@@ -60,7 +60,8 @@
                         <span class="visuallyhidden">share</span>
                     </div>
                 </div>
-                <textarea readonly class="mdl-color-text--grey-700 mdl-card__supporting-text" rows="9" th:text="${request.message}">
+                <textarea readonly class="mdl-color-text--grey-700 mdl-card__supporting-text" rows="9"
+                          th:text="${request.message}">
                 </textarea>
                 <div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments">
 
@@ -69,13 +70,15 @@
                         <nav class="comment__actions">
                             <div th:if="${response != null && response.can}">
                                 <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon response_can">
-                                    <i class="material-icons" role="presentation">thumb_up</i><span class="visuallyhidden">Ich kann's</span>
+                                    <i class="material-icons" role="presentation">thumb_up</i><span
+                                        class="visuallyhidden">Ich kann's</span>
                                 </button>
                             </div>
                             <div th:unless="${response != null && response.can}">
                                 <a th:href="@{/request/{requestId}/{responseValue}(requestId=${request.pk},responseValue=true)}">
                                     <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                                        <i class="material-icons" role="presentation">thumb_up</i><span class="visuallyhidden">Ich kann's</span>
+                                        <i class="material-icons" role="presentation">thumb_up</i><span
+                                            class="visuallyhidden">Ich kann's</span>
                                     </button>
                                 </a>
                             </div>
@@ -96,8 +99,9 @@
                 </div>
             </div>
         </div>
+    </main>
+</div>
 
-
-        <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
 </html>

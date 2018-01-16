@@ -53,7 +53,7 @@ public class RequestController {
         newRequest.setFromUserFk(user.getPk());
         newRequest.setPremium(false);
 
-        Request request = requestService.save(newRequest);
+        Request request = requestService.save(newRequest, user);
         model.addAttribute("user", user);
         if (request != null) {
             model.addAttribute("newRequest", request);
@@ -71,7 +71,7 @@ public class RequestController {
     public String showRequest(@PathVariable("requestId") int requestId, Model model) {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        Request request = requestService.getByID(requestId);
+        Request request = requestService.getByID(requestId, user);
         model.addAttribute("user", user);
         if (request.getFromUserFk() == user.getPk()) {
             model.addAttribute("newRequest", request);
@@ -91,7 +91,7 @@ public class RequestController {
     public String editRequest(@PathVariable("requestId") int requestId, Request requestData, Model model) {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        Request request = requestService.save(requestData);
+        Request request = requestService.save(requestData, user);
         model.addAttribute("user", user);
         if (request != null) {
             model.addAttribute("success", true);
@@ -107,7 +107,7 @@ public class RequestController {
     public String openChat(@PathVariable("requestId") int requestId, @PathVariable("responseValue") boolean can, Model model) {
         String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(username);
-        Request request = requestService.getByID(requestId);
+        Request request = requestService.getByID(requestId, user);
         if (user.getPk() != request.getFromUserFk()) {
             RequestResponse response = new RequestResponse(requestId, user.getPk(), Date.valueOf(LocalDate.now()), can);
             requestResponseService.save(response);

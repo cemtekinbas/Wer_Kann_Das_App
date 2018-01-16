@@ -19,11 +19,22 @@
     <div class="android-section-title mdl-typography--display-1-color-contrast">Wer kann das?</div>
     <div class="android-card-container mdl-grid">
         <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" th:each="request:${requestList}">
-            <div class="mdl-card__media">
-                <img src="img/more-from-1.png" />
+            <div class="mdl-card__media" th:if="${request.getPk() % 2 == 0 }">
+                <img src="/img/more-from-1.png" />
+            </div>
+            <div class="mdl-card__media" th:unless="${request.getPk() % 2 == 0 }">
+                <img src="/img/more-from-2.png" />
             </div>
             <div class="mdl-card__title">
                 <h4 class="mdl-card__title-text" th:text="${request.title}" />
+            </div>
+            <div class="mdl-card__supporting-text" th:if="${(request.unreadCount > 0) && (request.fromUserFk != user.pk)}">
+                <a class="android-link mdl-button mdl-js-button" th:href="@{/chat/{requestId}/{userId}(requestId=${request.pk},userId=${user.pk})}">
+                    <span th:text="${request.unreadCount}"></span> unread Chats</a>
+            </div>
+            <div class="mdl-card__supporting-text" th:if="${(request.unreadCount > 0) && (request.fromUserFk == user.pk)}">
+                <a class="android-link mdl-button mdl-js-button" th:href="@{/chat/{requestId}(requestId=${request.pk})}">
+                    <span th:text="${request.unreadCount}"></span> unread Chats</a>
             </div>
             <div class="mdl-card__supporting-text">
                 <span class="mdl-typography--font-light mdl-typography--subhead" th:text="${request.message}" />
