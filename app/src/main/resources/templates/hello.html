@@ -25,6 +25,14 @@
             <div class="mdl-card__title">
                 <h4 class="mdl-card__title-text" th:text="${request.title}" />
             </div>
+            <div class="mdl-card__supporting-text" th:if="${(request.unreadCount > 0) && (request.fromUserFk != user.pk)}">
+                <a class="android-link mdl-button mdl-js-button" th:href="@{/chat/{requestId}/{userId}(requestId=${request.pk},userId=${user.pk})}">
+                    <span th:text="${request.unreadCount}"></span> unread Messages</a>
+            </div>
+            <div class="mdl-card__supporting-text" th:if="${(request.unreadCount > 0) && (request.fromUserFk == user.pk)}">
+                <a class="android-link mdl-button mdl-js-button" th:href="@{/chat/{requestId}(requestId=${request.pk})}">
+                    <span th:text="${request.unreadCount}"></span> unread Messages</a>
+            </div>
             <div class="mdl-card__supporting-text">
                 <span class="mdl-typography--font-light mdl-typography--subhead" th:text="${request.message}" />
             </div>
