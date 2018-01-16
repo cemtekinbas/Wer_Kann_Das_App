@@ -11,6 +11,7 @@ public class RequestResponse {
     private int userFk;
     private Date responseDate;
     private boolean can;
+    private boolean success;
 
     public int getRequestFk() {
         return requestFk;
@@ -24,11 +25,12 @@ public class RequestResponse {
         return responseDate;
     }
 
-    public RequestResponse(int requestFk, int userFk, Date responseDate, boolean can) {
+    public RequestResponse(int requestFk, int userFk, Date responseDate, boolean can, boolean success) {
         this.requestFk = requestFk;
         this.userFk = userFk;
         this.responseDate = responseDate;
         this.can = can;
+        this.success = success;
     }
 
     public RequestResponse(ResultSet results) throws SQLException {
@@ -36,9 +38,14 @@ public class RequestResponse {
         this.userFk = results.getInt(RequestResponseService.colUserFk);
         this.responseDate = results.getDate(RequestResponseService.colResponseDate);
         this.can = results.getBoolean(RequestResponseService.colResponseCan);
+        this.success = results.getBoolean(RequestResponseService.colResponseSuccess);
     }
 
     public boolean isCan() {
         return can;
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 }
