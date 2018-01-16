@@ -47,10 +47,6 @@
                         <span class="comment__avatar__unread" th:text="${chat.unreadMessages}"></span>
                     </div>
                     <h4 class="mdl-card__title-text" th:text="${chat.userTo}">Chat mit XY</h4>
-                    <img class="comment__avatar" src="/img/oma mit hintergrund.png"
-                         th:if="${chat.userId % 2 == 0 }"/>
-                    <img class="comment__avatar" src="/img/opa blauer hintergrund.png"
-                         th:if="${chat.userId % 2 != 0 }"/>
                 </div>
                 <div class="mdl-card__supporting-text" >
 
