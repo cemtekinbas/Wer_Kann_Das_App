@@ -33,6 +33,7 @@ public class ChatController {
         public String userTo;
         public String userId;
         public String requestId;
+        public int unreadMessages;
     }
 
     @RequestMapping(value = "/chat", method = RequestMethod.GET)
@@ -72,12 +73,14 @@ public class ChatController {
                 vc.userId = c.getUserFks()[1] + "";
                 User toUser = userService.getByID(c.getUserFks()[1]);
                 vc.userTo = toUser.getUser_name();
+                vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
             }
             else
             {
                 vc.userId = c.getUserFks()[0] + "";
                 User toUser = userService.getByID(c.getUserFks()[0]);
                 vc.userTo = toUser.getUser_name();
+                vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
             }
             viewChats.add(vc);
         }
