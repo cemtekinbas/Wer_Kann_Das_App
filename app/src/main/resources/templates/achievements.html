@@ -38,7 +38,22 @@
         <div class="android-card-container mdl-grid">
 
             <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp centered"
-                th:each="achievement:${achievements}">
+                th:each="achievement:${activeAchievements}">
+                <div class="mdl-card__media">
+                    <span class="fa-stack fa-5x active">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-stack-1x fa-inverse" th:utext="${achievement}"></i>
+                    </span>
+                </div>
+                <div class="mdl-card__title">
+                    <h4 class="mdl-card__title-text"></h4>
+                </div>
+
+            </div>
+
+
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp centered"
+                 th:each="achievement:${inactiveAchievements}">
                 <div class="mdl-card__media">
                     <span class="fa-stack fa-5x">
                     <i class="fa fa-circle fa-stack-2x"></i>
