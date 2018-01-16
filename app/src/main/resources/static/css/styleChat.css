@@ -199,6 +199,12 @@ html, body {
 .mdl-demo section .section__text a {
     text-decoration: none;
 }
+
+.profile-img {
+    max-height: 12% !important;
+    max-width: 12% !important;
+}
+
 .mdl-demo section .section__circle-container > .section__circle-container__circle {
     width: 64px;
     height: 64px;

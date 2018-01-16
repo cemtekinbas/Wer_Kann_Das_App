@@ -38,16 +38,13 @@
                     <div th:each="message:${chat.chatMessages}">
                         <div class="comment" th:if="${message.from_user_fk == user.pk}">
                             <header class="comment__header">
-                                <div class="mdl-card__media" th:if="${message.from_user_fk % 2 == 0 }">
-                                    <img src="/img/co1.jpg" />
-                                </div>
-                                <div class="mdl-card__media" th:unless="${message.from_user_fk % 2 == 0 }">
-                                    <img src="/img/co2.jpg" />
-                                </div>
-                                <img src="" class="comment__avatar">
+                                <img class="comment__avatar" src="/img/oma mit hintergrund.png"
+                                     th:if="${message.from_user_fk % 2 == 0 }"/>
+                                <img class="comment__avatar" src="/img/opa blauer hintergrund.png"
+                                     th:if="${message.from_user_fk % 2 != 0 }"/>
                                 <div class="comment__author">
                                     <strong th:text="${user.user_name}">James Splayd</strong>
-                                    <span th:text="${message.sent_date}">2 days ago</span>
+                                    <span th:text="${message.getDaysSinceCreation()}">2 days ago</span>
                                 </div>
                             </header>
                             <div class="comment__text">
@@ -56,15 +53,13 @@
                         </div>
                         <div class="comment_answer" th:if="${message.from_user_fk != user.pk}">
                             <header class="comment__header">
-                                <div class="mdl-card__media" th:if="${message.from_user_fk % 2 == 0 }">
-                                    <img src="/img/co1.jpg" />
-                                </div>
-                                <div class="mdl-card__media" th:unless="${message.from_user_fk % 2 == 0 }">
-                                    <img src="/img/co2.jpg" />
-                                </div>
+                                <img class="comment__avatar" src="/img/oma mit hintergrund.png"
+                                     th:if="${message.from_user_fk % 2 == 0 }"/>
+                                <img class="comment__avatar" src="/img/opa blauer hintergrund.png"
+                                     th:if="${message.from_user_fk % 2 != 0 }"/>
                                 <div class="comment__author">
                                     <strong th:text="${user2.user_name}">John Dufry</strong>
-                                    <span th:text="${message.sent_date}">2 days ago</span>
+                                    <span th:text="${message.getDaysSinceCreation()}">2 days ago</span>
                                 </div>
                             </header>
                             <div class="comment__text">

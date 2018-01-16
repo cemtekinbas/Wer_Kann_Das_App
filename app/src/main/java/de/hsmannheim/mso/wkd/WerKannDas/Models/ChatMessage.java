@@ -5,6 +5,8 @@ import de.hsmannheim.mso.wkd.WerKannDas.Services.ChatService;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class ChatMessage {
     private int pk;
@@ -46,6 +48,13 @@ public class ChatMessage {
 
     public String getMessage() {
         return message;
+    }
+
+
+    public String getDaysSinceCreation() {
+        Date now = Date.valueOf(LocalDate.now());
+
+        return "Vor " + ChronoUnit.DAYS.between(LocalDate.parse(sent_date.toString()),LocalDate.parse(now.toString())) + " Tagen";
     }
 
     public Date getSent_date() {

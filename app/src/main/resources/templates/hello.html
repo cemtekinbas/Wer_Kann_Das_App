@@ -20,10 +20,10 @@
     <div class="android-card-container mdl-grid">
         <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" th:each="request:${requestList}">
             <div class="mdl-card__media" th:if="${request.getPk() % 2 == 0 }">
-                <img src="/img/more-from-1.png" />
+                <img src="/img/Garten mit Baum.png" />
             </div>
-            <div class="mdl-card__media" th:unless="${request.getPk() % 2 == 0 }">
-                <img src="/img/more-from-2.png" />
+            <div class="mdl-card__media" th:if="${request.getPk() % 2 != 0 }">
+                <img src="/img/co2.png" />
             </div>
             <div class="mdl-card__title">
                 <h4 class="mdl-card__title-text" th:text="${request.title}" />
