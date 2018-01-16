@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,7 +34,16 @@ public class AchievementController {
         String userName = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userService.getByName(userName);
         achievements = userAchievmentService.getByID(user);
-        model.addAttribute("achievements", achievements);
+        List<String> achivementIcons = new ArrayList<String>(8);
+        for(int i = 0; i < 8; i++)
+        {
+            achivementIcons.add("\uf29c");
+        }
+        for(Achievement a : achievements)
+        {
+            achivementIcons.set(a.getPk(), a.getIcon_path());
+        }
+        model.addAttribute("achievements", achivementIcons);
         model.addAttribute("user", user);
         return "achievements";
     }
