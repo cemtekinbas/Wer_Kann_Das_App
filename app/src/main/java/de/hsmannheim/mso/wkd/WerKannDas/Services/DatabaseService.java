@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public class DatabaseService {
 
-    private static int currentVersion = 4;
+    private static int currentVersion = 5;
 
 
     public static String table = "database_version";
@@ -34,7 +34,7 @@ public class DatabaseService {
             version = -1;
         }
         if (version < currentVersion) {
-            if(version != -1) {
+            if (version != -1) {
                 dropTables(ds);
             }
             createTables(ds);
@@ -135,6 +135,14 @@ public class DatabaseService {
             pstmt.setString(1, userName);
             pstmt.setString(2, "USER");
             pstmt.execute();
+            String sql = "INSERT INTO " + AchievementService.table + " (" + AchievementService.colName + ", " +
+                    AchievementService.colDescription + ", " + AchievementService.colIconPath + ") VALUES (?,?,?)";
+            pstmt = ds.getConnection().prepareStatement(sql, Statement.NO_GENERATED_KEYS);
+            pstmt.setString(1, "Erst-Helfer");
+            pstmt.setString(2, "Helfe einem anderen Dorfbewohner");
+            pstmt.setString(3, "&#62133;");
+            pstmt.execute();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

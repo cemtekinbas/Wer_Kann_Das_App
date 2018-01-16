@@ -129,8 +129,7 @@ public class RequestService {
             pstmt.setInt(1, user.getPk());
             ResultSet results = pstmt.executeQuery();
             if (results.next()) {
-                System.out.println("results = " + results.getInt(0));
-                return results.getInt(0);
+                return results.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();

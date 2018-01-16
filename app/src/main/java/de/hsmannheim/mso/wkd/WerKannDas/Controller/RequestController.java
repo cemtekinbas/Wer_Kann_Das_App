@@ -134,10 +134,10 @@ public class RequestController {
         User user = userService.getByName(username);
         User helpingUser = userService.getByID(user2Id);
         Request request = requestService.getByID(requestId, user);
-        if (user.getPk() == request.getFromUserFk()){
+        RequestResponse response = requestResponseService.getByUserIDAndRequestId(helpingUser.getPk(),requestId);
+        if (user.getPk() == request.getFromUserFk() && response != null){
             request.setState(RequestState.FULFILLED);
             requestService.save(request,user);
-            RequestResponse response = requestResponseService.getByUserIDAndRequestId(helpingUser.getPk(),requestId);
             requestResponseService.save(response);
         }
         model.addAttribute("user", user);

@@ -59,8 +59,8 @@ public class RequestResponseService {
     public RequestResponse getByUserIDAndRequestId(int userPk, int requestPk) {        //Prepared Statements in allen Service Klassen
         try {
             PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByUserAndRequest);
-            pstmt.setInt(1, userPk);
-            pstmt.setInt(2, requestPk);
+            pstmt.setInt(1, requestPk);
+            pstmt.setInt(2, userPk);
             ResultSet results = pstmt.executeQuery();
             if (results.next()) {
                 return new RequestResponse(results);
@@ -81,8 +81,7 @@ public class RequestResponseService {
             pstmt.setInt(1, user.getPk());
             ResultSet results = pstmt.executeQuery();
             if (results.next()) {
-                System.out.println("results = " + results.getInt(0));
-                return results.getInt(0);
+                return results.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();

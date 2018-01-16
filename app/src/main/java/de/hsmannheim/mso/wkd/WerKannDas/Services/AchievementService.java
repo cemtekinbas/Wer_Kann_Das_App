@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AchievementService {
@@ -58,6 +60,26 @@ public class AchievementService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Achievement> getAll() {        //Prepared Statements in allen Service Klassen
+        List<Achievement> list = new ArrayList<Achievement>();
+        try {
+            PreparedStatement pstmt = ds.getConnection().prepareStatement(queryByID);
+            ResultSet results = pstmt.executeQuery();
+            while (results.next()) {
+                Achievement achievement = new Achievement(results);
+                list.add(achievement);
+                //PersonalData personalData = personalDataService.getByID(personalDataID);
+                //Account account = new Account(id, personalData);
+                //account.setBalance(balance);
+                //List<Transaction> transactions = transactionService.getByAccount(account, null);
+                //account.getTransactions().addAll(transactions);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public Achievement update(Achievement achievement) {

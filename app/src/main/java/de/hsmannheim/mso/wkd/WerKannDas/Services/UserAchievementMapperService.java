@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class UserAchievementMapperService {
     private String combinedCols = colUserFk + ", " + colAchievementFk;
 
     private String queryByUserID = "SELECT " + combinedCols + " FROM " + table + " WHERE " + colUserFk + " = ?";
+    private String queryUnlock = "INSERT INTO " + table + " ( " + colUserFk + ", " + colAchievementFk + " ) VALUES (?,?)";
 
     @Autowired
     private DataSource ds;
@@ -59,7 +61,20 @@ public class UserAchievementMapperService {
     }
 
     public boolean save(User user, Achievement achievement){
-        return true;
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = ds.getConnection().prepareStatement(queryUnlock, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, user.getPk());
+            pstmt.setInt(2, achievement.getPk());
+            pstmt.executeQuery();
+            ResultSet results = pstmt.getGeneratedKeys();
+            if (results.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
