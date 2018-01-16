@@ -5,6 +5,9 @@ import de.hsmannheim.mso.wkd.WerKannDas.Services.RequestService;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
 
 public class Request {
     private int pk;
@@ -63,6 +66,12 @@ public class Request {
 
     public Date getCreateDate() {
         return createDate;
+    }
+
+    public int getDaysSinceCreation() {
+        Date now = Date.valueOf(LocalDate.now());
+
+        return (int) ChronoUnit.DAYS.between(LocalDate.parse(createDate.toString()),LocalDate.parse(now.toString()));
     }
 
     public RequestState getState() {

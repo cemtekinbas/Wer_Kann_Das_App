@@ -15,9 +15,8 @@
   See the License for the specific language governing permissions and
   limitations under the License
 -->
-
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:insert="base :: head(~{::title})">
     <title>Chat</title>
 </head>
@@ -25,7 +24,6 @@
 <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <div th:replace="base :: header"/>
-
         <div th:replace="base :: menu"/>
         <div class="android-content mdl-layout__content">
         </div>
@@ -66,7 +64,8 @@
                     <!-- Textfield with Floating Label -->
                     <!-- Simple Textfield -->
 
-                    <form th:action="@{/chat/{requestId}/{userId}(requestId=${chat.request_fk},userId=${userId})}" method="post">
+                    <form th:action="@{/chat/{requestId}/{userId}(requestId=${chat.request_fk},userId=${userId})}"
+                          method="post">
                         <div class="mdl-textfield mdl-js-textfield">
                             <input class="mdl-textfield__input" type="text" id="message" name="message">
                             <label class="mdl-textfield__label" for="message">Schreibe deine Nachricht...</label>
@@ -78,7 +77,8 @@
                         </button>
                     </form>
                 </div>
-
+            </div>
+        </div>
     </main>
 </div>
 

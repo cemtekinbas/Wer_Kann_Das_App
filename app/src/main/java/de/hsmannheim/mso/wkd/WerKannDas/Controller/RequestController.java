@@ -46,6 +46,7 @@ public class RequestController {
         newRequest.setCreateDate(Date.valueOf(LocalDate.now()));
         newRequest.setState(RequestState.OPEN);
         newRequest.setFromUserFk(user.getPk());
+        newRequest.setPremium(false);
 
         Request request = requestService.save(newRequest, user);
         model.addAttribute("user", user);
