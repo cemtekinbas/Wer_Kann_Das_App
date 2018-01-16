@@ -46,6 +46,7 @@ public class RequestController {
         newRequest.setCreateDate(Date.valueOf(LocalDate.now()));
         newRequest.setState(RequestState.OPEN);
         newRequest.setFromUserFk(user.getPk());
+        newRequest.setPremium(false);
 
         Request request = requestService.save(newRequest);
         model.addAttribute("user", user);
@@ -70,13 +71,14 @@ public class RequestController {
         User user = userService.getByName(username);
         Request request = requestService.getByID(requestId);
         model.addAttribute("user", user);
-        model.addAttribute("newRequest", request);
         if(request.getFromUserFk() == user.getPk())
         {
+            model.addAttribute("newRequest", request);
             return "anfrageErstellen";
         }
         else {
-            return "request";
+            model.addAttribute("request", request);
+            return "anfrageDetail";
         }
     }
 
@@ -96,7 +98,7 @@ public class RequestController {
             model.addAttribute("success", false);
             model.addAttribute("newRequest", requestData);
         }
-        return "request";
+        return "anfrageDetail";
     }
 
 }
