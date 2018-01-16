@@ -63,7 +63,7 @@ public class ChatService {
             " SET (" + colFromUserFk + ", " + colToUserFk + ", " + colMessage + ", " + colSentDate + ", " +
             colReadDate + ") = (?,?,?,?,?) " +
             "WHERE " + colPk + " = ?";
-    private String queryUnread = "SELECT COUNT(*) FROM " + table + " WHERE " + colReadDate + " IS NULL AND "
+    private String queryUnread = "SELECT COUNT(DISTINCT " + colFromUserFk + ") FROM " + table + " WHERE " + colReadDate + " IS NULL AND "
             + colToUserFk + " = ? AND " + colRequestFk + " = ?";
     private String queryUnreadChat = "SELECT COUNT(*) FROM " + table + " WHERE " + colReadDate + " IS NULL AND "
             + colToUserFk + " = ? AND " + colFromUserFk + " = ? AND " + colRequestFk + " = ?";
