@@ -49,8 +49,8 @@
                     <h3 th:text="${request.title}"/>
                 </div>
                 <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-                    <div><img src="/img/Garten mit Baum.png" class="comment__avatar" th:if="${owner.getPk() % 2 == 0 }"></div>
-                    <div><img src="/img/co2.jpg" class="comment__avatar" th:if="${owner.getPk() % 2 != 0 }"></div>
+                    <div><img src="/img/oma.png" class="comment__avatar" th:if="${owner.getPk() % 2 == 0 }"></div>
+                    <div><img src="/img/opa.png" class="comment__avatar" th:if="${owner.getPk() % 2 != 0 }"></div>
                     <div>
                         <strong>Erstellt von
                             <strong th:text="${owner.getUser_name()}"/>

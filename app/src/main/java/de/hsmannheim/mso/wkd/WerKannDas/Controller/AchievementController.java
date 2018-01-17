@@ -59,7 +59,7 @@ public class AchievementController {
         List<Achievement> achievements = achievementService.getAll();
         for (Achievement achievement:achievements) {
             if (!userHasAchievements.contains(achievement)){
-                if (achievement.getName().equals("Erst-Helfer") && helped > 0){
+                if (achievement.getName().equals("Ersthelfer") && helped > 0){
                     userAchievmentService.save(user, achievement);
                 }
 
