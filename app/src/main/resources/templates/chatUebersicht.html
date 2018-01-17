@@ -40,9 +40,9 @@
             <div class="row">
                 <div class="mdl-card__title">
                     <div class="comment">
-                        <img class="comment__avatar" src="/img/oma mit hintergrund.png"
+                        <img class="comment__avatar" src="/img/oma.png"
                              th:if="${chat.userId % 2 == 0 }"/>
-                        <img class="comment__avatar" src="/img/opa blauer hintergrund.png"
+                        <img class="comment__avatar" src="/img/opa.png"
                              th:if="${chat.userId % 2 != 0 }"/>
                         <span class="comment__avatar__unread" th:text="${chat.unreadMessages}"></span>
                     </div>
