@@ -20,8 +20,7 @@ public class User {
     private String street_with_number;
     private Date birthday;
 
-    public User()
-    {
+    public User() {
         this(-1, "", "", "", "", "", "", "", "", "", Date.valueOf(LocalDate.now()));
     }
 
@@ -63,6 +62,23 @@ public class User {
 
     public String getMail() {
         return mail;
+    }
+
+    public String getImage() {
+        switch (pk % 5) {
+            case 0:
+                return "/img/co2.jpg";
+            case 1:
+                return "/img/co1.jpg";
+            case 2:
+                return "/img/oma.png";
+            case 3:
+                return "/img/co3.png";
+            case 4:
+                return "/img/opa.png";
+            default:
+                return "/img/andy.png";
+        }
     }
 
     public void setMail(String mail) {

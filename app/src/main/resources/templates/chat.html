@@ -38,10 +38,7 @@
                     <div th:each="message:${chat.chatMessages}">
                         <div class="comment" th:if="${message.from_user_fk == user.pk}">
                             <header class="comment__header">
-                                <img class="comment__avatar" src="/img/oma.png"
-                                     th:if="${message.from_user_fk % 2 == 0 }"/>
-                                <img class="comment__avatar" src="/img/opa.png"
-                                     th:if="${message.from_user_fk % 2 != 0 }"/>
+                                <div><img th:src="${user.getImage()}" class="comment__avatar"></div>
                                 <div class="comment__author">
                                     <strong th:text="${user.user_name}">James Splayd</strong>
                                     <span th:text="${message.getDaysSinceCreation()}">2 days ago</span>
@@ -53,10 +50,7 @@
                         </div>
                         <div class="comment_answer" th:if="${message.from_user_fk != user.pk}">
                             <header class="comment__header">
-                                <img class="comment__avatar" src="/img/oma.png"
-                                     th:if="${message.from_user_fk % 2 == 0 }"/>
-                                <img class="comment__avatar" src="/img/opa.png"
-                                     th:if="${message.from_user_fk % 2 != 0 }"/>
+                                <div><img th:src="${user2.getImage()}" class="comment__avatar"></div>
                                 <div class="comment__author">
                                     <strong th:text="${user2.user_name}">John Dufry</strong>
                                     <span th:text="${message.getDaysSinceCreation()}">2 days ago</span>

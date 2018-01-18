@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.LocalDate;
 
 public class Request {
     private int pk = -1;
@@ -19,8 +18,7 @@ public class Request {
     private RequestState state;
     private int unreadCount;
 
-    public Request()
-    {
+    public Request() {
 
     }
 
@@ -34,7 +32,7 @@ public class Request {
         this.state = state;
     }
 
-    public Request (ResultSet results) throws SQLException {
+    public Request(ResultSet results) throws SQLException {
         this.pk = results.getInt(RequestService.colPk);
         this.fromUserFk = results.getInt(RequestService.colFromUserFk);
         this.title = results.getString(RequestService.colTitle);
@@ -71,14 +69,16 @@ public class Request {
     public int getDaysSinceCreation() {
         Date now = Date.valueOf(LocalDate.now());
 
-        return (int) ChronoUnit.DAYS.between(LocalDate.parse(createDate.toString()),LocalDate.parse(now.toString()));
+        return (int) ChronoUnit.DAYS.between(LocalDate.parse(createDate.toString()), LocalDate.parse(now.toString()));
     }
 
     public RequestState getState() {
         return state;
     }
 
-    public int getUnreadCount() { return unreadCount; }
+    public int getUnreadCount() {
+        return unreadCount;
+    }
 
     public void setPk(int pk) {
         this.pk = pk;
@@ -108,5 +108,24 @@ public class Request {
         this.state = state;
     }
 
-    public void setUnreadCount(int unreadCount) { this.unreadCount = unreadCount; }
+    public void setUnreadCount(int unreadCount) {
+        this.unreadCount = unreadCount;
+    }
+
+    public String getImage() {
+        switch (pk % 5) {
+            case 0:
+                return "/img/brush.jpg";
+            case 1:
+                return "/img/repairing-388551.jpg";
+            case 2:
+                return "/img/baum.png";
+            case 3:
+                return "/img/dorf.png";
+            case 4:
+                return "/img/barnandhay.jpg";
+            default:
+                return "/img/andy.png";
+        }
+    }
 }

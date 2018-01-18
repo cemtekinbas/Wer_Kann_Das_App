@@ -19,11 +19,8 @@
     <div class="android-section-title mdl-typography--display-1-color-contrast">Wer kann das?</div>
     <div class="android-card-container mdl-grid">
         <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" th:each="request:${requestList}">
-            <div class="mdl-card__media" th:if="${request.getPk() % 2 == 0 }">
-                <img src="/img/Garten mit Baum.png" />
-            </div>
-            <div class="mdl-card__media" th:if="${request.getPk() % 2 != 0 }">
-                <img src="/img/repairing-388551.jpg" />
+            <div class="mdl-card__media">
+                <img th:src="${request.getImage()}" />
             </div>
             <div class="mdl-card__title">
                 <h4 class="mdl-card__title-text" th:text="${request.title}" />

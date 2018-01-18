@@ -42,15 +42,11 @@
         </div>
         <div class="demo-blog__posts mdl-grid" >
             <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-                <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/img/Garten mit Baum.png')" th:if="${request.getPk() % 2 == 0 }">
-                    <h3 th:text="${request.title}"/>
-                </div>
-                <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/img/repairing-388551.jpg')" th:if="${request.getPk() % 2 != 0 }">
+                <div class="mdl-card__media mdl-color-text--grey-50" th:style="'background-image:url(' + ${request.getImage()} + ');'">
                     <h3 th:text="${request.title}"/>
                 </div>
                 <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-                    <div><img src="/img/oma.png" class="comment__avatar" th:if="${owner.getPk() % 2 == 0 }"></div>
-                    <div><img src="/img/opa.png" class="comment__avatar" th:if="${owner.getPk() % 2 != 0 }"></div>
+                    <div><img th:src="${owner.getImage()}" class="comment__avatar"></div>
                     <div>
                         <strong>Erstellt von
                             <strong th:text="${owner.getUser_name()}"/>

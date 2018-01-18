@@ -32,6 +32,7 @@ public class ChatController {
     {
         public String userTo;
         public int userId;
+        public String image;
         public String requestId;
         public int unreadMessages;
     }
@@ -68,10 +69,11 @@ public class ChatController {
             ViewChat vc = new ViewChat();
             vc.requestId = c.getRequest_fk() + "";
             Request request = requestService.getByID(c.getRequest_fk(), currentUser);
-            if(request.getFromUserFk() == c.getUserFks()[0])
+            if(currentUser.getPk() == c.getUserFks()[0])
             {
                 vc.userId = c.getUserFks()[1];
                 User toUser = userService.getByID(c.getUserFks()[1]);
+                vc.image = toUser.getImage();
                 vc.userTo = toUser.getUser_name();
                 vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
             }
@@ -79,6 +81,7 @@ public class ChatController {
             {
                 vc.userId = c.getUserFks()[0];
                 User toUser = userService.getByID(c.getUserFks()[0]);
+                vc.image = toUser.getImage();
                 vc.userTo = toUser.getUser_name();
                 vc.unreadMessages = chatService.getUnreadCount(currentUser.getPk(), toUser.getPk(), request.getPk());
             }

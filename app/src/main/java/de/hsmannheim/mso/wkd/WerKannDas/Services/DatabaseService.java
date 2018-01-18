@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public class DatabaseService {
 
-    private static int currentVersion = 6;
+    private static int currentVersion = 8;
 
 
     public static String table = "database_version";
@@ -142,7 +142,26 @@ public class DatabaseService {
             pstmt.setString(2, "Helfe einem anderen Dorfbewohner");
             pstmt.setString(3, "&#62133;");
             pstmt.execute();
-
+            pstmt.setString(1, "Ich brauche Hilfe");
+            pstmt.setString(2, "Helfe einem anderen Dorfbewohner");
+            pstmt.setString(3, "&#128587;");
+            pstmt.execute();
+            pstmt.setString(1, "Gut gemacht!");
+            pstmt.setString(2, "Helfe einem anderen Dorfbewohner");
+            pstmt.setString(3, "&#128077;");
+            pstmt.execute();
+            pstmt.setString(1, "Held deines Dorf's");
+            pstmt.setString(2, "Helfe einem anderen Dorfbewohner");
+            pstmt.setString(3, "&#128170;");
+            pstmt.execute();
+            pstmt.setString(1, "Helfender Nachbar");
+            pstmt.setString(2, "Helfe einem anderen Dorfbewohner");
+            pstmt.setString(3, "&#127941;");
+            pstmt.execute();
+            pstmt.setString(1, "Hilfsbereites Dorf");
+            pstmt.setString(2, "Helfe einem anderen Dorfbewohner");
+            pstmt.setString(3, "&#127960;");
+            pstmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

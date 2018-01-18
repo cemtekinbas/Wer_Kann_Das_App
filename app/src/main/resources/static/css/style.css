@@ -23,6 +23,17 @@ a img{
     border: 0px;
 }
 
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}
+
+.a_locked {
+    background: black;
+    color: grey !important;
+    display: inline-block !important;;
+    text-shadow: 0 0 0 grey !important;;
+}
+
 .myrow {
  margin-bottom: 10px;
 }
