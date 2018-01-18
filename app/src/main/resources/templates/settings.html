@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="base :: head(~{::title})">
+    <title>Dein Profil</title>
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <div th:replace="base :: header"/>
+
+    <div th:replace="base :: menu"/>
+
+    <div class="android-content mdl-layout__content">
+
+    </div>
+
+</div>
+<div class="android-more-section">
+    <div class="android-section-title mdl-typography--display-1-color-contrast">Deine Einstellungen</div>
+    <div class="android-card-container mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+            <div class="mdl-card__title">
+                <img class="comment__avatar" th:src="${user.getImage()}"/>
+                <h4 class="mdl-card__title-text" th:text="${user.getUser_name()}"></h4>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <label for="ex1">Nachbarschafts Reichweite: </label>
+                <input id="ex1" data-slider-id='ex1Slider' type="range" data-slider-min="3" data-slider-max="20"
+                       data-slider-step="2" data-slider-value="8"/>
+
+            </div>
+            <div class="mdl-card__supporting-text">
+                <p>Privatsphäre:
+                <div class="btn-group">
+                    <button type="button" data-switch-set="size" data-switch-value="mini" class="btn btn-default">
+                        Sicher
+                    </button>
+                    <button type="button" data-switch-set="size" data-switch-value="small" class="btn btn-default">
+                        Normal
+                    </button>
+                    <button type="button" data-switch-set="size" data-switch-value="normal" class="btn btn-default">
+                        Mir egal!
+                    </button>
+                </div>
+                </p>
+            </div>
+            <div class="mdl-card__actions col-xs-6">
+                <button class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase">
+                    <p>Speichern</p>
+                    <i class="material-icons">chevron_right</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="base :: footer"/>
+</body>
+
+</html>

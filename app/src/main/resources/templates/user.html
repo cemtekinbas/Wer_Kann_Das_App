@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="base :: head(~{::title})">
+<title>Dein Profil</title>
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <div th:replace="base :: header" />
+
+    <div th:replace="base :: menu" />
+
+    <div class="android-content mdl-layout__content">
+
+    </div>
+
+</div>
+<div class="android-more-section">
+    <div class="android-section-title mdl-typography--display-1-color-contrast">Dein Profil</div>
+    <div class="android-card-container mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+            <div class="mdl-card__title">
+                <img class="comment__avatar" th:src="${user.getImage()}" />
+                <h4 class="mdl-card__title-text" th:text="${user.getUser_name()}"></h4>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <p>Vorname: <span th:text="${user.getForename()}"></span></p>
+                <p>Name: <span th:text="${user.getSurname()}"></span></p>
+                <p>Geburtsdatum: 12.05.1978</p>
+                <p>Plz: <span th:text="${user.getPlz()}"></span></p>
+                <p>Ort: <span th:text="${user.getVillage()}"></span></p>
+                <p>Straße: <span th:text="${user.getStreet_with_number()}"></span></p>
+            </div>
+            <div class="mdl-card__actions col-xs-6" >
+                <button class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase">
+                    <p>Bearbeiten</p>
+                    <i class="material-icons">chevron_right</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="base :: footer" />
+</body>
+
+</html>
